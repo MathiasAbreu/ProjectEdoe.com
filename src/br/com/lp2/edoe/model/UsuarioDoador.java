@@ -6,8 +6,6 @@ package br.com.lp2.edoe.model;
  * 
  */
 public class UsuarioDoador extends Usuario implements Doador {
-
-	private final String status = "Doador";
 	
 	/**
 	 * @param nome
@@ -18,27 +16,18 @@ public class UsuarioDoador extends Usuario implements Doador {
 	 */
 	public UsuarioDoador(String nome, String email, String celular, String classe, String identificacao) {
 		
-		super(nome, email, celular, classe, identificacao);
+		super(nome, email, celular, classe, identificacao,"doador");
 
 	}
 
 	/**
 	 * @return the status
 	 */
-	public String getStatus() {
-		return status;
-	}
 
 	@Override
 	public void RealizaDoacao() {
 		// TODO Auto-generated method stub
 
-	}
-
-	@Override
-	public String toString() {
-		
-		return String.format("%s/%s,%s,%s,status:%s",getNome(),getIdentificacao(),getEmail(),getCelular(),status);
 	}
 
 }

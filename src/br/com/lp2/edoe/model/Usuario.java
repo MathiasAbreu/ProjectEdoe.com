@@ -8,30 +8,13 @@ package br.com.lp2.edoe.model;
  */
 public abstract class Usuario {
 
-	/**
-	 * Nome do Usuário.
-	 */
 	private String nome;
-	
-	/**
-	 * Email do Usuário.
-	 */
 	private String email;
-	
-	/**
-	 * Número de celular do Usuário.
-	 */
 	private String celular;
-	
-	/**
-	 * Classe do Usuário.
-	 */
 	private String classe;
-	
-	/**
-	 * Identificação do Usuário. CPF se for uma pessoa fisica, CNPJ para demais usuários.
-	 */
 	private String identificacao;
+	
+	private String status;
 		
 	/**
 	 * @param nome
@@ -40,14 +23,29 @@ public abstract class Usuario {
 	 * @param classe
 	 * @param identificacao
 	 */
-	public Usuario(String nome, String email, String celular, String classe,String identificacao) {
+	public Usuario(String nome, String email, String celular, String classe,String identificacao,String status) {
 		
 		this.nome = nome;
 		this.email = email;
 		this.celular = celular;
 		this.classe = classe;
-		this.identificacao = identificacao;
+		this.identificacao = formatarId(identificacao);
+		this.status = status;
 		
+	}
+
+	private String formatarId(String id) {
+		
+		String[] separaId = id.split("");
+		
+		if(separaId.length == 11) {
+			
+			return String.format("%s%s%s.%s%s%s.%s%s%s-%s%s",separaId[0],separaId[1],separaId[2],separaId[3],separaId[4],separaId[5],separaId[6],separaId[7],separaId[8],separaId[9],separaId[10]);
+		}
+		else {
+			
+			return String.format("%s%s.%s%s%s.%s%s%s/%s%s%s%s-%s%s",separaId[0],separaId[1],separaId[2],separaId[3],separaId[4],separaId[5],separaId[6],separaId[7],separaId[8],separaId[9],separaId[10],separaId[11],separaId[12],separaId[13]);
+		}
 	}
 
 	/**
@@ -106,6 +104,13 @@ public abstract class Usuario {
 		return identificacao;
 	}
 
+	/**
+	 * @return the status
+	 */
+	public String getStatus() {
+		return status;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -130,6 +135,9 @@ public abstract class Usuario {
 	}
 	
 	@Override
-	public abstract String toString();
+	public String toString() {
+		
+		return String.format("%s/%s, %s, %s, status: %s",nome,identificacao,email,celular,status);
+	}
 	
 }

@@ -35,9 +35,9 @@ public class EdoeFacade {
 		
 	}
 	
-	public String lerReceptores(String caminho) {
+	public void lerReceptores(String caminho) {
 		
-		return controleUser.lerReceptores(caminho);
+		controleUser.lerReceptores(caminho);
 		
 	}
 	
