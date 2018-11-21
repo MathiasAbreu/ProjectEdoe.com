@@ -35,7 +35,7 @@ public class UsuarioReceptor extends Usuario implements Receptor,Doador {
 
 	@Override
 	public void RealizaDoacao() {
-		// TODO Auto-generated method stub
+
 		
 	}
 

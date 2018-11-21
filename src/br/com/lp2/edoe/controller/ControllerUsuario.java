@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import br.com.lp2.edoe.dao.ReceptoresDao;
+import br.com.lp2.edoe.model.InvalidArgumentException;
 import br.com.lp2.edoe.model.Usuario;
 import br.com.lp2.edoe.model.UsuarioDoador;
 import br.com.lp2.edoe.model.UsuarioReceptor;
@@ -59,15 +60,17 @@ public class ControllerUsuario {
 	 * 
 	 * @return Retorna a identificação do Usuário recém cadastrado.
 	 * 
+	 * @throws InvalidArgumentException 
+	 * 
 	 * @throws RuntimeException Exceção gerada caso algum dos parâmetros passados sejam nulos ou vazios.
 	 * @throws NullPointerException Exceção gerada caso o usuário já se encontre cadastrado no sistema.
 	 * @throws IllegalArgumentException Essa exceção é gerada caso seja passada uma classe de usuário que não conste no sistema.
 	 * 
 	 */
-	public String adicionarDoador(String id, String nome, String email, String celular, String classe) {
+	public String adicionarDoador(String id, String nome, String email, String celular, String classe) throws InvalidArgumentException {
 		
 		if(id == null || id.trim().isEmpty())
-			throw new RuntimeException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
+			throw new InvalidArgumentException("id");
 		
 		if(contemUsuario(id)) {
 			

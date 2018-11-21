@@ -1,6 +1,7 @@
 package br.com.lp2.edoe.facade;
 
 import br.com.lp2.edoe.controller.ControllerUsuario;
+import br.com.lp2.edoe.model.InvalidArgumentException;
 import easyaccept.EasyAccept;
 
 /**
@@ -20,7 +21,7 @@ public class EdoeFacade {
 		controleUser = new ControllerUsuario();
 		
 	}
-	public String adicionaDoador(String id,String nome,String email,String celular,String classe) {
+	public String adicionaDoador(String id,String nome,String email,String celular,String classe) throws InvalidArgumentException {
 		
 		return controleUser.adicionarDoador(id,nome,email,celular,classe);
 		
