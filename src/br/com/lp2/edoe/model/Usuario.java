@@ -133,14 +133,6 @@ public abstract class Usuario {
 	}
 
 	/**
-	 * Método que retorna o status do Usuário.
-	 * 
-	 * @return O status do Usuário.
-	 * 
-	 */
-	public abstract String getStatus();
-
-	/**
 	 * Método responsável por gerar um número de identificação que pode ser usado internamente para armazenar o usuário em 
 	 * alguma coleção de armazenamento especifica.
 	 * 

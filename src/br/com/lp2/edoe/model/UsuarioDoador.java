@@ -34,24 +34,13 @@ public class UsuarioDoador extends Usuario implements Doador {
 
 	}
 
-
-	/* (non-Javadoc)
-	 * @see br.com.lp2.edoe.model.Usuario#getStatus()
-	 */
-	@Override
-	public String getStatus() {
-		
-		return "doador";
-	}
-
-
 	/* (non-Javadoc)
 	 * @see br.com.lp2.edoe.model.Usuario#toString()
 	 */
 	@Override
 	public String toString() {
 		
-		return String.format("%s/%s, %s, %s, status: %s",getNome(),formatarId(),getEmail(),getCelular(),getStatus());
+		return String.format("%s/%s, %s, %s, status: doador",getNome(),formatarId(),getEmail(),getCelular());
 	}
 
 }
