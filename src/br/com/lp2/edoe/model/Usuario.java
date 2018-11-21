@@ -16,9 +16,7 @@ public abstract class Usuario {
 	private String celular;
 	private String classe;
 	private String identificacao;
-	
-	private String status;
-		
+			
 	/**
 	 * Construtor reponsável por instanciar um novo Usuario, ele recebe todos os parâmetros necessários para preencher 
 	 * os atributos básicos de um Usuario.
@@ -30,20 +28,19 @@ public abstract class Usuario {
 	 * @param identificacao número de identificação do usuário
 	 * 
 	 */
-	public Usuario(String nome, String email, String celular, String classe,String identificacao,String status) {
+	public Usuario(String nome, String email, String celular, String classe,String identificacao) {
 		
 		this.nome = nome;
 		this.email = email;
 		this.celular = celular;
 		this.classe = classe;
 		this.identificacao = identificacao;
-		this.status = status;
 		
 	}
 
-	private String formatarId(String id) {
+	protected String formatarId() {
 		
-		String[] separaId = id.split("");
+		String[] separaId = identificacao.split("");
 		
 		if(separaId.length == 11) {
 			
@@ -136,16 +133,6 @@ public abstract class Usuario {
 	}
 
 	/**
-	 * Método que retorna o status do Usuário.
-	 * 
-	 * @return O status do Usuário.
-	 * 
-	 */
-	public String getStatus() {
-		return status;
-	}
-
-	/**
 	 * Método responsável por gerar um número de identificação que pode ser usado internamente para armazenar o usuário em 
 	 * alguma coleção de armazenamento especifica.
 	 * 
@@ -190,9 +177,6 @@ public abstract class Usuario {
 	 * 
 	 */
 	@Override
-	public String toString() {
-		
-		return String.format("%s/%s, %s, %s, status: %s",nome,formatarId(identificacao),email,celular,status);
-	}
+	public abstract String toString();
 	
 }
