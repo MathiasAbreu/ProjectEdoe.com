@@ -7,12 +7,13 @@ import java.util.List;
 import java.util.Map;
 
 import br.com.lp2.edoe.dao.ReceptoresDao;
+import br.com.lp2.edoe.model.InvalidArgumentException;
 import br.com.lp2.edoe.model.Usuario;
 import br.com.lp2.edoe.model.UsuarioDoador;
 import br.com.lp2.edoe.model.UsuarioReceptor;
 
 /**
- * Classe responsável pelo controle, manipulação e armazenamento de Usuarios e suas especializações.
+ * Classe responsavel pelo controle, manipulacao e armazenamento de Usuarios e suas especializacoes.
  *
  * @author Caio Fernandes Moreira - caio.moreira@ccc.ufcg.edu.br
  * @author Klaywert Danillo Ferreira De Souza - klaywert.souza@ccc.ufcg.edu.br
@@ -25,8 +26,8 @@ public class ControllerUsuario {
 	private ReceptoresDao arquivoReceptores;
 	
 	/**
-	 * Construtor responsável pela construção da instância da classe, assim como da coleção de armazenamento dos 
-	 * usuários e o acesso aos arquivos de armazenamento.
+	 * Construtor responsavel pela construcao da instancia da classe, assim como da colecao de armazenamento dos 
+	 * usuarios e o acesso aos arquivos de armazenamento.
 	 * 
 	 */
 	public ControllerUsuario() {
@@ -47,27 +48,27 @@ public class ControllerUsuario {
 	}
 	
 	/**
-	 * Método responsável pelo cadastro de Usuários do tipo {@link UsuarioDoador} no sistema, ele recebe todos os parâmetros 
-	 * necessários para a criação dos mesmos. O processo começa verificando a validade dos dados recebidos, seguido pela verificação 
-	 * da existência de tal usuário no sistema e por fim armazena o mesmo na coleção.
+	 * Metodo responsavel pelo cadastro de Usuarios do tipo {@link UsuarioDoador} no sistema, ele recebe todos os parametros 
+	 * necessarios para a criacao dos mesmos. O processo comeca verificando a validade dos dados recebidos, seguido pela verificao 
+	 * da existencia de tal usuario no sistema e por fim armazena o mesmo na colecao.
 	 * 
-	 * @param id identificação do usuário. CPF para pessoa física, CNPJ para demais.
-	 * @param nome nome do usuário
-	 * @param email email do usuário
-	 * @param celular celular de contato do usuário
-	 * @param classe tipo de usuário
+	 * @param id identificao do usuario. CPF para pessoa fisica, CNPJ para demais.
+	 * @param nome nome do usuario
+	 * @param email email do usuario
+	 * @param celular celular de contato do usuario
+	 * @param classe tipo de usuario
 	 * 
-	 * @return Retorna a identificação do Usuário recém cadastrado.
-	 * 
+	 * @return Retorna a identificao do Usuario recem cadastrado.
+
 	 * @throws RuntimeException Exceção gerada caso algum dos parâmetros passados sejam nulos ou vazios.
 	 * @throws NullPointerException Exceção gerada caso o usuário já se encontre cadastrado no sistema.
 	 * @throws IllegalArgumentException Essa exceção é gerada caso seja passada uma classe de usuário que não conste no sistema.
 	 * 
 	 */
-	public String adicionarDoador(String id, String nome, String email, String celular, String classe) {
+	public String adicionarDoador(String id, String nome, String email, String celular, String classe) throws InvalidArgumentException {
 		
 		if(id == null || id.trim().isEmpty())
-			throw new RuntimeException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
+			throw new InvalidArgumentException("id");
 		
 		if(contemUsuario(id)) {
 			
@@ -104,15 +105,15 @@ public class ControllerUsuario {
 	}
 
 	/**
-	 * Método que busca pela identificação se determinado Usuário está cadastrado no sistema. O método verifica se o numero da 
-	 * identificação é válido antes de realizar a busca em si.
+	 * Metodo que busca pela identificao se determinado Usuario esta cadastrado no sistema. O metodo verifica se o numero da 
+	 * identificao eh valido antes de realizar a busca em si.
 	 * 
-	 * @param id identificação do usuário
+	 * @param id identificao do usuario
 	 * 
-	 * @return Retorna a representação textual do {@link Usuario}.
+	 * @return Retorna a representacao textual do {@link Usuario}.
 	 * 
-	 * @throws RuntimeException Exceção gerada caso o número de identificação recebido seja inválido.
-	 * @throws NullPointerException Essa exceção é gerada caso o usuário não seja encontrado no sistema.
+	 * @throws RuntimeException Excecao gerada caso o numero de identificao recebido seja invalido.
+	 * @throws NullPointerException Essa excecao eh gerada caso o usuario nao seja encontrado no sistema.
 	 * 
 	 */
 	public String buscarUsuarioPorId(String id) {
@@ -142,7 +143,7 @@ public class ControllerUsuario {
 	}
 
 	/**
-	 * Método que lê receptores a serem cadastrados no sistema a partir de arquivos externos que sejam fornecidos ao mesmo.
+	 * Metodo que le receptores a serem cadastrados no sistema a partir de arquivos externos que sejam fornecidos ao mesmo.
 	 * 
 	 * @param caminho caminho do arquivo a ser lido.
 	 * 
@@ -174,10 +175,10 @@ public class ControllerUsuario {
 	}
 
 	/**
-	 * Método que atualiza os usuários receptores cadastrados no sistema, modificando-os atraves da leitura de outro arquivo 
-	 * que contém os dados atualizados dos mesmos.
+	 * Metodo que atualiza os usuarios receptores cadastrados no sistema, modificando-os atraves da leitura de outro arquivo 
+	 * que contem os dados atualizados dos mesmos.
 	 * 
-	 * @param caminho caminho do arquivo que contém os dados atualizados.
+	 * @param caminho caminho do arquivo que contem os dados atualizados.
 	 * 
 	 */
 	public void atualizarReceptores(String caminho) {
