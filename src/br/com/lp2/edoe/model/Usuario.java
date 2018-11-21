@@ -133,10 +133,10 @@ public abstract class Usuario {
 	}
 
 	/**
-	 * Método responsável por gerar um número de identificação que pode ser usado internamente para armazenar o usuário em 
-	 * alguma coleção de armazenamento especifica.
+	 * Metodo responsavel por gerar um numero de identificao que pode ser usado internamente para armazenar o usuario em 
+	 * alguma colecao de armazenamento especifica.
 	 * 
-	 * @return Retorna o número usado para armazenar em determinado indice.
+	 * @return Retorna o numero usado para armazenar em determinado indice.
 	 * 
 	 */
 	@Override
@@ -148,11 +148,11 @@ public abstract class Usuario {
 	}
 
 	/**
-	 * Método responsável por verificar se dois usuários são iguais baseado nos seus documentos de identificação.
+	 * Metodo responsevel por verificar se dois usuarios sao iguais baseado nos seus documentos de identificao.
 	 * 
 	 * @param obj Recebe como parametro qualquer objeto.
 	 * 
-	 * @return Retorna uma confirmação ou não da igualdade entre dois Usuários.
+	 * @return Retorna uma confirmacao ou nao da igualdade entre dois Usuarios.
 	 * 
 	 */
 	@Override
@@ -171,9 +171,9 @@ public abstract class Usuario {
 	}
 	
 	/**
-	 * Método que gera e retorna uma representação textual do Usuário.
+	 * Metodo que gera e retorna uma representacao textual do Usuario.
 	 * 
-	 * @return Retorna a representação textual do Usuário.
+	 * @return Retorna a representacao textual do Usuario.
 	 * 
 	 */
 	@Override

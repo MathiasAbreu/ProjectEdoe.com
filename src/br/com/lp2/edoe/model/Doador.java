@@ -1,7 +1,7 @@
 package br.com.lp2.edoe.model;
 
 /**
- * Interface que implementa os métodos necessários para tornar um {@link Usuario} doador de itens.
+ * Interface que implementa os metodos necessarios para tornar um {@link Usuario} doador de itens.
  *
  * @author Caio Fernandes Moreira - caio.moreira@ccc.ufcg.edu.br
  * @author Klaywert Danillo Ferreira De Souza - klaywert.souza@ccc.ufcg.edu.br
