@@ -34,7 +34,6 @@ class UserDoadorTest {
 		assertEquals(usuarioDoador.getCelular(), "1234-5678");
 		assertEquals(usuarioDoador.getClasse(), "pessoa fisica");
 		assertEquals(usuarioDoador.getIdentificacao(), "01234567899");
-		assertEquals(usuarioDoador.getStatus(), "doador");
 	
 	}
 	

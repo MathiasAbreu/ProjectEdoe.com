@@ -40,21 +40,12 @@ public class UsuarioReceptor extends Usuario implements Receptor,Doador {
 	}
 
 	/* (non-Javadoc)
-	 * @see br.com.lp2.edoe.model.Usuario#getStatus()
-	 */
-	@Override
-	public String getStatus() {
-		
-		return "receptor";
-	}
-
-	/* (non-Javadoc)
 	 * @see br.com.lp2.edoe.model.Usuario#toString()
 	 */
 	@Override
 	public String toString() {
 		
-		return String.format("%s/%s, %s, %s, status: %s",getNome(),formatarId(),getEmail(),getCelular(),getStatus());
+		return String.format("%s/%s, %s, %s, status: receptor",getNome(),formatarId(),getEmail(),getCelular());
 
 	}
 

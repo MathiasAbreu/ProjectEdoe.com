@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Classe responsável por acessar e realizar a leitura dos arquivos que contém os dados dos Usuários Receptores a serem 
+ * Classe responsavel por acessar e realizar a leitura dos arquivos que contem os dados dos Usuarios Receptores a serem 
  * cadastrados no sistema.
  *
  * @author Caio Fernandes Moreira - caio.moreira@ccc.ufcg.edu.br
@@ -18,12 +18,12 @@ import java.util.List;
 public class ReceptoresDao {
 	
 	/**
-	 * Método que recebe o caminho do arquivo a ser lido, lê o determinado arquivo e retorna todos os usuários encontrados 
-	 * em concatenação String.
+	 * Metodo que recebe o caminho do arquivo a ser lido, le o determinado arquivo e retorna todos os usuarios encontrados 
+	 * em concatenacao String.
 	 * 
 	 * @param caminho caminho do arquivo a ser lido
 	 * 
-	 * @return Retorna um coleção com todos os Usuários lidos.
+	 * @return Retorna um colecao com todos os Usuarios lidos.
 	 * 
 	 */
 	public ArrayList<String> lerReceptores(String caminho) {
