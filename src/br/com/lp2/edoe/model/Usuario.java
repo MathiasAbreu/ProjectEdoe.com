@@ -18,14 +18,14 @@ public abstract class Usuario {
 	private String identificacao;
 			
 	/**
-	 * Construtor reponsável por instanciar um novo Usuario, ele recebe todos os parâmetros necessários para preencher 
-	 * os atributos básicos de um Usuario.
+	 * Construtor reponsavel por instanciar um novo Usuario, ele recebe todos os parametros necessarios para preencher 
+	 * os atributos basicos de um Usuario.
 	 * 
-	 * @param nome nome do usuário
-	 * @param email email do usuário
-	 * @param celular celular do usuário
-	 * @param classe classe do usuário
-	 * @param identificacao número de identificação do usuário
+	 * @param nome nome do usuario
+	 * @param email email do usuario
+	 * @param celular celular do usuario
+	 * @param classe classe do usuario
+	 * @param identificacao numero de identificacao do usuario
 	 * 
 	 */
 	public Usuario(String nome, String email, String celular, String classe,String identificacao) {
@@ -53,9 +53,9 @@ public abstract class Usuario {
 	}
 
 	/**
-	 * Método que retorna o nome do Usuário.
+	 * Metodo que retorna o nome do Usuario.
 	 * 
-	 * @return O nome do usuário.
+	 * @return O nome do usuario.
 	 * 
 	 */
 	public String getNome() {
@@ -63,9 +63,9 @@ public abstract class Usuario {
 	}
 
 	/**
-	 * Método que altera o nome do Usuário.
+	 * Metodo que altera o nome do Usuario.
 	 * 
-	 * @param nome O novo nome do usuário.
+	 * @param nome O novo nome do usuario.
 	 * 
 	 */
 	public void setNome(String nome) {
@@ -73,9 +73,9 @@ public abstract class Usuario {
 	}
 
 	/**
-	 * Método que retorna o email do Usuário.
+	 * Metodo que retorna o email do Usuario.
 	 * 
-	 * @return O email do usuário.
+	 * @return O email do usuario.
 	 * 
 	 */
 	public String getEmail() {
@@ -83,9 +83,9 @@ public abstract class Usuario {
 	}
 
 	/**
-	 * Método que altera o email do Usuário.
+	 * Metodo que altera o email do Usuario.
 	 * 
-	 * @param email O novo email do usuário.
+	 * @param email O novo email do usuario.
 	 * 
 	 */
 	public void setEmail(String email) {
@@ -93,9 +93,9 @@ public abstract class Usuario {
 	}
 
 	/**
-	 * Método que retorna o celular do Usuário.
+	 * Metodo que retorna o celular do Usuario.
 	 * 
-	 * @return O celular do Usuário.
+	 * @return O celular do Usuario.
 	 *
 	 */
 	public String getCelular() {
@@ -103,9 +103,9 @@ public abstract class Usuario {
 	}
 
 	/**
-	 * Método que altera o celular do Usuário.
+	 * Metodo que altera o celular do Usuario.
 	 * 
-	 * @param celular O novo celular do Usuário.
+	 * @param celular O novo celular do Usuario.
 	 * 
 	 */
 	public void setCelular(String celular) {
@@ -113,9 +113,9 @@ public abstract class Usuario {
 	}
 
 	/**
-	 * Método que retorna a classe do Usuário.
+	 * Metodo que retorna a classe do Usuario.
 	 * 
-	 * @return A classe do Usuário.
+	 * @return A classe do Usuario.
 	 * 
 	 */
 	public String getClasse() {
@@ -123,9 +123,9 @@ public abstract class Usuario {
 	}
 
 	/**
-	 * Método que retorna o número de identificação do Usuário.
+	 * Metodo que retorna o numero de identificacao do Usuario.
 	 * 
-	 * @return O número de identificação do Usuário.
+	 * @return O numero de identificacao do Usuario.
 	 * 
 	 */
 	public String getIdentificacao() {

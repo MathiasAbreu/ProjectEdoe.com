@@ -3,6 +3,7 @@ package br.com.lp2.edoe.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,7 +22,7 @@ import br.com.lp2.edoe.model.UsuarioReceptor;
  */
 public class ControllerUsuario {
 
-	private List<Usuario> usuarios;
+	private LinkedHashMap<String,Usuario> usuarios;
 	private ReceptoresDao arquivoReceptores;
 	
 	/**
@@ -31,13 +32,13 @@ public class ControllerUsuario {
 	 */
 	public ControllerUsuario() {
 		
-		usuarios = new ArrayList<>();
+		usuarios = new LinkedHashMap<>();
 		arquivoReceptores = new ReceptoresDao();
 	}
 	
 	private boolean contemUsuario(String id) {
 		
-		for (Usuario usuario : usuarios) {
+		for (Usuario usuario : usuarios.values()) {
 			
 			if(usuario.getIdentificacao().equals(id))
 				return true;
@@ -51,7 +52,7 @@ public class ControllerUsuario {
 	 * necessarios para a criacao dos mesmos. O processo comeca verificando a validade dos dados recebidos, seguido pela verificao 
 	 * da existencia de tal usuario no sistema e por fim armazena o mesmo na colecao.
 	 * 
-	 * @param id identificao do usuario. CPF para pessoa fisica, CNPJ para demais.
+	 * @param id identificacao do usuario. CPF para pessoa fisica, CNPJ para demais.
 	 * @param nome nome do usuario
 	 * @param email email do usuario
 	 * @param celular celular de contato do usuario
@@ -86,7 +87,7 @@ public class ControllerUsuario {
 			
 			if(classe.equals("PESSOA_FISICA") || classe.equals("IGREJA") || classe.equals("ORGAO_PUBLICO_ESTADUAL") || classe.equals("ORGAO_PUBLICO_FEDERAL") || classe.equals("ONG") || classe.equals("ASSOCIACAO") || classe.equals("SOCIEDADE")) {
 				
-				usuarios.add(new UsuarioDoador(nome, email, celular, classe, id));
+				usuarios.put(id, new UsuarioDoador(nome, email, celular, classe, id));
 				return id;
 			}
 			
@@ -99,7 +100,7 @@ public class ControllerUsuario {
 		for (String receptor : receptores) {
 			
 			String[] dados = receptor.split(",");
-			usuarios.add(new UsuarioReceptor(dados[1],dados[2],dados[3],dados[4],dados[0]));
+			usuarios.put(dados[0],new UsuarioReceptor(dados[1],dados[2],dados[3],dados[4],dados[0]));
 		}
 	}
 
@@ -107,7 +108,7 @@ public class ControllerUsuario {
 	 * Metodo que busca pela identificao se determinado Usuario esta cadastrado no sistema. O metodo verifica se o numero da 
 	 * identificao eh valido antes de realizar a busca em si.
 	 * 
-	 * @param id identificao do usuario
+	 * @param id identificacao do usuario
 	 * 
 	 * @return Retorna a representacao textual do {@link Usuario}.
 	 * 
@@ -122,7 +123,7 @@ public class ControllerUsuario {
 		
 		if(contemUsuario(id)) {
 			
-			for (Usuario usuario : usuarios) {
+			for (Usuario usuario : usuarios.values()) {
 				
 				if(usuario.getIdentificacao().equals(id))
 					return usuario.toString();
@@ -188,12 +189,12 @@ public class ControllerUsuario {
 			
 			String[] dados = receptor.split(",");
 			
-			for (int i = 0; i < usuarios.size(); i++) {
+			for (String key : usuarios.keySet()) {
 				
-				if(usuarios.get(i).getIdentificacao().equals(dados[0])) {
+				if(usuarios.get(key).getIdentificacao().equals(dados[0])) {
 					
-					usuarios.remove(i);
-					usuarios.add(i,new UsuarioReceptor(dados[1],dados[2],dados[3],dados[4],dados[0]));
+					usuarios.remove(key);
+					usuarios.put(key,new UsuarioReceptor(dados[1],dados[2],dados[3],dados[4],dados[0]));
 				}
 			}
 		}

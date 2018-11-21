@@ -11,14 +11,14 @@ package br.com.lp2.edoe.model;
 public class UsuarioReceptor extends Usuario implements Receptor,Doador {
 	
 	/**
-	 * Construtor reponsável por instanciar um novo Usuario do tipo {@link Receptor}, ele recebe todos os parâmetros necessários para preencher 
-	 * os atributos básicos de um Usuario.
+	 * Construtor reponsavel por instanciar um novo Usuario do tipo {@link Receptor}, ele recebe todos os parametros necessarios para preencher 
+	 * os atributos basicos de um Usuario.
 	 * 
-	 * @param nome nome do usuário
-	 * @param email email do usuário
-	 * @param celular celular do usuário
-	 * @param classe classe do usuário
-	 * @param identificacao número de identificação do usuário
+	 * @param nome nome do usuario
+	 * @param email email do usuario
+	 * @param celular celular do usuario
+	 * @param classe classe do usuario
+	 * @param identificacao numero de identificacao do usuario
 	 * 
 	 */
 	public UsuarioReceptor(String nome, String email, String celular, String classe, String identificacao) {
