@@ -23,7 +23,7 @@ public class UsuarioDoador extends Usuario implements Doador {
 	 */
 	public UsuarioDoador(String nome, String email, String celular, String classe, String identificacao) {
 		
-		super(nome, email, celular, classe, identificacao,"doador");
+		super(nome, email, celular, classe, identificacao);
 
 	}
 
@@ -32,6 +32,26 @@ public class UsuarioDoador extends Usuario implements Doador {
 	public void RealizaDoacao() {
 		// TODO Auto-generated method stub
 
+	}
+
+
+	/* (non-Javadoc)
+	 * @see br.com.lp2.edoe.model.Usuario#getStatus()
+	 */
+	@Override
+	public String getStatus() {
+		
+		return "doador";
+	}
+
+
+	/* (non-Javadoc)
+	 * @see br.com.lp2.edoe.model.Usuario#toString()
+	 */
+	@Override
+	public String toString() {
+		
+		return String.format("%s/%s, %s, %s, status: %s",getNome(),formatarId(),getEmail(),getCelular(),getStatus());
 	}
 
 }
