@@ -29,7 +29,7 @@ public abstract class Usuario {
 		this.email = email;
 		this.celular = celular;
 		this.classe = classe;
-		this.identificacao = formatarId(identificacao);
+		this.identificacao = identificacao;
 		this.status = status;
 		
 	}
@@ -137,7 +137,7 @@ public abstract class Usuario {
 	@Override
 	public String toString() {
 		
-		return String.format("%s/%s, %s, %s, status: %s",nome,identificacao,email,celular,status);
+		return String.format("%s/%s, %s, %s, status: %s",nome,formatarId(identificacao),email,celular,status);
 	}
 	
 }

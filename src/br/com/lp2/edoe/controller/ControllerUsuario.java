@@ -21,13 +21,24 @@ import br.com.lp2.edoe.model.UsuarioReceptor;
  */
 public class ControllerUsuario {
 
-	private Map<String,Usuario> usuarios;
+	private List<Usuario> usuarios;
 	private ReceptoresDao arquivoReceptores;
 	
 	public ControllerUsuario() {
 		
-		usuarios = new HashMap<>();
+		usuarios = new ArrayList<>();
 		arquivoReceptores = new ReceptoresDao();
+	}
+	
+	private boolean contemUsuario(String id) {
+		
+		for (Usuario usuario : usuarios) {
+			
+			if(usuario.getIdentificacao().equals(id))
+				return true;
+		}
+		
+		return false;
 	}
 	
 	/**
@@ -43,7 +54,7 @@ public class ControllerUsuario {
 		if(id == null || id.trim().isEmpty())
 			throw new RuntimeException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
 		
-		if(usuarios.containsKey(id)) {
+		if(contemUsuario(id)) {
 			
 			throw new NullPointerException("Usuario ja existente: " + id + ".");
 		}
@@ -60,7 +71,7 @@ public class ControllerUsuario {
 			
 			if(classe.equals("PESSOA_FISICA") || classe.equals("IGREJA") || classe.equals("ORGAO_PUBLICO_ESTADUAL") || classe.equals("ORGAO_PUBLICO_FEDERAL") || classe.equals("ONG") || classe.equals("ASSOCIACAO") || classe.equals("SOCIEDADE")) {
 				
-				usuarios.put(id, new UsuarioDoador(nome, email, celular, classe, id));
+				usuarios.add(new UsuarioDoador(nome, email, celular, classe, id));
 				return id;
 			}
 			
@@ -73,7 +84,7 @@ public class ControllerUsuario {
 		for (String receptor : receptores) {
 			
 			String[] dados = receptor.split(",");
-			usuarios.put(dados[0],new UsuarioReceptor(dados[1],dados[2],dados[3],dados[4],dados[0]));
+			usuarios.add(new UsuarioReceptor(dados[1],dados[2],dados[3],dados[4],dados[0]));
 		}
 	}
 
@@ -86,12 +97,16 @@ public class ControllerUsuario {
 		if(id == null || id.trim().isEmpty())
 			throw new RuntimeException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
 		
-		if(usuarios.containsKey(id)) {
+		if(contemUsuario(id)) {
 			
-			return usuarios.get(id).toString();
+			for (Usuario usuario : usuarios) {
+				
+				if(usuario.getIdentificacao().equals(id))
+					return usuario.toString();
+			}
 		}
-		else
-			throw new RuntimeException("Usuario nao encontrado: " + id + ".");
+		
+		throw new RuntimeException("Usuario nao encontrado: " + id + ".");
 	}
 
 	/**
@@ -110,7 +125,6 @@ public class ControllerUsuario {
 	public void lerReceptores(String caminho) {
 		
 		ArrayList<String> receptores = arquivoReceptores.lerReceptores(caminho);
-		
 		adicionarReceptores(receptores);
 		
 	}
