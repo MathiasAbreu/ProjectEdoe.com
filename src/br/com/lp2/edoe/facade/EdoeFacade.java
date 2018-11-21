@@ -4,10 +4,12 @@ import br.com.lp2.edoe.controller.ControllerUsuario;
 import easyaccept.EasyAccept;
 
 /**
+ * Classe de Fachada do sistema Edoe.com.
+ *
+ * @author Caio Fernandes Moreira - caio.moreira@ccc.ufcg.edu.br
+ * @author Klaywert Danillo Ferreira De Souza - klaywert.souza@ccc.ufcg.edu.br
  * @author Mathias Abreu Trajano - mathias.trajano@ccc.ufcg.edu.br
- * @author Klaywert
- * @author Caio
- * 
+ *
  */
 public class EdoeFacade {
 
@@ -38,6 +40,12 @@ public class EdoeFacade {
 	public void lerReceptores(String caminho) {
 		
 		controleUser.lerReceptores(caminho);
+		
+	}
+	
+	public void atualizaReceptores(String caminho) {
+		
+		controleUser.atualizarReceptores(caminho);
 		
 	}
 	
