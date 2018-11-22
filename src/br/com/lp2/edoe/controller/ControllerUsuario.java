@@ -126,8 +126,12 @@ public class ControllerUsuario {
 	/**
 	 * @param nome
 	 * @return
+	 * @throws InvalidArgumentException 
 	 */
-	public String buscarUsuarioPorNome(String nome) {
+	public String buscarUsuarioPorNome(String nome) throws InvalidArgumentException {
+		
+		if(nome == null || nome.trim().isEmpty())
+			throw new InvalidArgumentException("nome");
 		
 		ArrayList<Usuario> usuariosPorNome = new ArrayList<>();
 		String retorno = "";
@@ -139,7 +143,7 @@ public class ControllerUsuario {
 		}
 		
 		if(usuariosPorNome.size() == 0)
-			throw new NullPointerException("Erro: Não há usuários com esse nome!");
+			throw new NullPointerException("Usuario nao encontrado: " + nome + ".");
 		
 		retorno += usuariosPorNome.get(0).toString();
 		
@@ -172,10 +176,10 @@ public class ControllerUsuario {
 	 */
 	public String atualizaUsuario(String id, String nome, String email, String celular) throws InvalidArgumentException {
 		if (id == null || id.trim().isEmpty())
-			throw new InvalidArgumentException("id");
-		
+			throw new InvalidArgumentException("id","do usuario");
+
 		if (!usuarios.containsKey(id)) {
-			throw new NullPointerException("Usuario nao existente: " + id + ".");
+			throw new NullPointerException("Usuario nao encontrado: " + id + ".");
 		}
 		
 		if(nome != null && !(nome.trim().isEmpty()))
@@ -194,10 +198,10 @@ public class ControllerUsuario {
 	 */
 	public void removeUsuario(String id) throws InvalidArgumentException {
 		if (id == null || id.trim().isEmpty())
-			throw new InvalidArgumentException("id");
+			throw new InvalidArgumentException("id","do usuario");
 		
 		if (!usuarios.containsKey(id)) {
-			throw new NullPointerException("Usuario nao existente: " + id + ".");
+			throw new NullPointerException("Usuario nao encontrado: " + id + ".");
 		}
 		
 		usuarios.remove(id);
