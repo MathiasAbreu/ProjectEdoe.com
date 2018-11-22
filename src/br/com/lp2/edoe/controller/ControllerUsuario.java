@@ -37,17 +37,6 @@ public class ControllerUsuario {
 		arquivoReceptores = new ReceptoresDao();
 	}
 	
-	private boolean contemUsuario(String id) {
-		
-		for (Usuario usuario : usuarios.values()) {
-			
-			if(usuario.getIdentificacao().equals(id))
-				return true;
-		}
-		
-		return false;
-	}
-	
 	/**
 	 * Metodo responsavel pelo cadastro de Usuarios do tipo {@link UsuarioDoador} no sistema, ele recebe todos os parametros 
 	 * necessarios para a criacao dos mesmos. O processo comeca verificando a validade dos dados recebidos, seguido pela verificao 
@@ -69,22 +58,22 @@ public class ControllerUsuario {
 	public String adicionarDoador(String id, String nome, String email, String celular, String classe) throws InvalidArgumentException {
 		
 		if(id == null || id.trim().isEmpty())
-			throw new InvalidArgumentException("id");
+			throw new InvalidArgumentException("id","do usuario");
 		
-		if(contemUsuario(id)) {
+		if(usuarios.containsKey(id)) {
 			
-			throw new NullPointerException("Usuario ja existente: " + id + ".");
+			throw new RuntimeException("Usuario ja existente: " + id + ".");
 		}
 		else {
 			
 			if(nome == null || nome.trim().isEmpty())
-				throw new RuntimeException("Entrada invalida: nome nao pode ser vazio ou nulo.");
+				throw new InvalidArgumentException("nome");
 			if(email == null || email.trim().isEmpty())
-				throw new RuntimeException("Entrada invalida: email nao pode ser vazio ou nulo.");
+				throw new InvalidArgumentException("email");
 			if(celular == null || celular.trim().isEmpty())
-				throw new RuntimeException("Entrada invalida: celular nao pode ser vazio ou nulo.");
+				throw new InvalidArgumentException("celular");
 			if(classe == null || classe.trim().isEmpty())
-				throw new RuntimeException("Entrada invalida: classe nao pode ser vazia ou nula.");
+				throw new InvalidArgumentException("classe");
 			
 			if(classe.equals("PESSOA_FISICA") || classe.equals("IGREJA") || classe.equals("ORGAO_PUBLICO_ESTADUAL") || classe.equals("ORGAO_PUBLICO_FEDERAL") || classe.equals("ONG") || classe.equals("ASSOCIACAO") || classe.equals("SOCIEDADE")) {
 				
@@ -122,7 +111,7 @@ public class ControllerUsuario {
 		if(id == null || id.trim().isEmpty())
 			throw new RuntimeException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
 		
-		if(contemUsuario(id)) {
+		if(usuarios.containsKey(id)) {
 			
 			for (Usuario usuario : usuarios.values()) {
 				
@@ -139,8 +128,25 @@ public class ControllerUsuario {
 	 * @return
 	 */
 	public String buscarUsuarioPorNome(String nome) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		ArrayList<Usuario> usuariosPorNome = new ArrayList<>();
+		String retorno = "";
+		
+		for(Usuario usuario : usuarios.values()) {
+			
+			if(usuario.getNome().equals(nome))
+				usuariosPorNome.add(usuario);
+		}
+		
+		if(usuariosPorNome.size() == 0)
+			throw new NullPointerException("Erro: Não há usuários com esse nome!");
+		
+		retorno += usuariosPorNome.get(0).toString();
+		
+		for (int i = 1;i < usuariosPorNome.size(); i++) {
+			retorno += " | " + usuariosPorNome.get(i).toString();
+		}
+		return retorno;
 	}
 
 	/**
