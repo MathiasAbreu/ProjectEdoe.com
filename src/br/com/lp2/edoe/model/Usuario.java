@@ -2,6 +2,9 @@ package br.com.lp2.edoe.model;
 
 import java.util.HashMap;
 
+import br.com.lp2.edoe.exceptions.InvalidArgumentException;
+import br.com.lp2.edoe.exceptions.InvalidUserException;
+
 /**
  * Classe que representa uma abstracao de um Usuario no sistema, eh uma classe basica que fornece atributos e metodos 
  * basicos para as classes especializadas deste mesmo tipo de Usuario.
@@ -187,18 +190,26 @@ public abstract class Usuario {
 
 	public String adicionaItem(String descricaoItem, int quantidade, String[] tagsArray) {
 		
-		String idDoItem = Integer.toString(itens.size() + 1);
+		String idDoItem = Integer.toString(descricaoItem.hashCode());
 		
 		Item itemnovo = new Item(descricaoItem, tagsArray, idDoItem, quantidade);
 		
 		for(Item item : itens.values()) {
 			if (itemnovo.equals(item)) {
-				item.setQuantidade(item.getQuantidade() + quantidade);
+				item.setQuantidade(quantidade);
 			}
 		}
 		
 		itens.put(idDoItem, itemnovo);
 		return idDoItem;
+	}
+	
+	public String exibeItem(String id) {
+		if (!itens.containsKey(id)) {
+			throw new IllegalArgumentException("Item nao encontrado: " + id + ".");
+		}
+		
+		return itens.get(id).toString();
 	}
 	
 }

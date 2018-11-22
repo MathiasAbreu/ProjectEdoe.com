@@ -308,4 +308,18 @@ public class ControllerUsuario {
 		throw new InvalidUserException(idDoador);
 	}
 
+	public String exibeItem(String id, String idDoador) throws InvalidArgumentException, InvalidUserException {
+		if (id == null || id.trim().isEmpty())
+			throw new InvalidArgumentException("id","do item");
+		
+		if (idDoador == null || idDoador.trim().isEmpty())
+			throw new InvalidArgumentException("id","do usuario");
+
+		if (!usuarios.containsKey(idDoador)) {
+			throw new InvalidUserException(idDoador);
+		}
+		
+		return usuarios.get(idDoador).exibeItem(id);
+	}
+
 }

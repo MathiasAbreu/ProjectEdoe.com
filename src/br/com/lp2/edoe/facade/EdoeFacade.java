@@ -2,6 +2,7 @@ package br.com.lp2.edoe.facade;
 
 import br.com.lp2.edoe.controller.ControllerUsuario;
 import br.com.lp2.edoe.exceptions.InvalidArgumentException;
+import br.com.lp2.edoe.exceptions.InvalidUserException;
 import easyaccept.EasyAccept;
 
 /**
@@ -70,6 +71,11 @@ public class EdoeFacade {
 		
 		controleUser.removeUsuario(id);
 		
+	}
+	
+	public String exibeItem(String id, String idDoador) throws InvalidArgumentException, InvalidUserException {
+		
+		return controleUser.exibeItem(id, idDoador);
 	}
 	
 	public static void main(String[] args) {
