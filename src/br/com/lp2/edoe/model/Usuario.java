@@ -1,8 +1,8 @@
 package br.com.lp2.edoe.model;
 
 /**
- * Classe que representa uma abstração de um Usuário no sistema, é uma classe básica que fornece atributos e métodos 
- * básicos para as classes especializadas deste mesmo tipo de Usuario.
+ * Classe que representa uma abstracao de um Usuario no sistema, eh uma classe basica que fornece atributos e metodos 
+ * basicos para as classes especializadas deste mesmo tipo de Usuario.
  *
  * @author Caio Fernandes Moreira - caio.moreira@ccc.ufcg.edu.br
  * @author Klaywert Danillo Ferreira De Souza - klaywert.souza@ccc.ufcg.edu.br
