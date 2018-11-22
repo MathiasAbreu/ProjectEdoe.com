@@ -21,7 +21,7 @@ public class EdoeFacade {
 		controleUser = new ControllerUsuario();
 		
 	}
-	public String adicionaDoador(String id,String nome,String email,String celular,String classe) throws InvalidArgumentException {
+	public String adicionaDoador(String id,String nome,String email,String celular,String classe) throws Exception {
 		
 		return controleUser.adicionarDoador(id,nome,email,celular,classe);
 		
@@ -32,17 +32,17 @@ public class EdoeFacade {
 		controleUser.adicionaDescritor(descricao);
 	}
 	
-	public String adicionaItemParaDoacao(String idDoador,String descricaoItem,int quantidade,String tags) throws InvalidArgumentException {
+	public String adicionaItemParaDoacao(String idDoador,String descricaoItem,int quantidade,String tags) throws Exception {
 		
 		return controleUser.adicionaItemParaDoacao(idDoador,descricaoItem,quantidade,tags);
 		
 	}
-	public String pesquisaUsuarioPorId(String id) {
+	public String pesquisaUsuarioPorId(String id) throws Exception {
 		
 		return controleUser.buscarUsuarioPorId(id);
 	}
 	
-	public String pesquisaUsuarioPorNome(String nome) throws InvalidArgumentException {
+	public String pesquisaUsuarioPorNome(String nome) throws Exception {
 		
 		return controleUser.buscarUsuarioPorNome(nome);
 		
@@ -60,13 +60,13 @@ public class EdoeFacade {
 		
 	}
 	
-	public String atualizaUsuario(String id,String nome,String email,String celular) throws InvalidArgumentException {
+	public String atualizaUsuario(String id,String nome,String email,String celular) throws Exception {
 		
 		return controleUser.atualizaUsuario(id,nome,email,celular);
 		
 	}
 	
-	public void removeUsuario(String id) throws InvalidArgumentException {
+	public void removeUsuario(String id) throws Exception {
 		
 		controleUser.removeUsuario(id);
 		

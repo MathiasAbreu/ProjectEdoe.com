@@ -6,6 +6,7 @@ import java.util.LinkedHashMap;
 
 import br.com.lp2.edoe.dao.ReceptoresDao;
 import br.com.lp2.edoe.exceptions.InvalidArgumentException;
+import br.com.lp2.edoe.exceptions.InvalidUserException;
 import br.com.lp2.edoe.model.Usuario;
 import br.com.lp2.edoe.model.UsuarioDoador;
 import br.com.lp2.edoe.model.UsuarioReceptor;
@@ -56,14 +57,14 @@ public class ControllerUsuario {
 	 * @throws IllegalArgumentException Essa excecao eh gerada caso seja passada uma classe de usuario que nao conste no sistema.
 	 * 
 	 */
-	public String adicionarDoador(String id, String nome, String email, String celular, String classe) throws InvalidArgumentException {
+	public String adicionarDoador(String id, String nome, String email, String celular, String classe) throws Exception {
 		
 		if(id == null || id.trim().isEmpty())
 			throw new InvalidArgumentException("id","do usuario");
 		
 		if(usuarios.containsKey(id)) {
 			
-			throw new RuntimeException("Usuario ja existente: " + id + ".");
+			throw new InvalidUserException(id,"ja existente");
 		}
 		else {
 			
@@ -102,15 +103,17 @@ public class ControllerUsuario {
 	 * @param id identificacao do usuario
 	 * 
 	 * @return Retorna a representacao textual do {@link Usuario}.
+	 * @throws InvalidArgumentException 
+	 * @throws InvalidUserException 
 	 * 
 	 * @throws RuntimeException Excecao gerada caso o numero de identificacao recebido seja invalido.
 	 * @throws NullPointerException Essa excecao eh gerada caso o usuario nao seja encontrado no sistema.
 	 * 
 	 */
-	public String buscarUsuarioPorId(String id) {
+	public String buscarUsuarioPorId(String id) throws InvalidArgumentException, InvalidUserException {
 		
 		if(id == null || id.trim().isEmpty())
-			throw new RuntimeException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
+			throw new InvalidArgumentException("id","do usuario");
 		
 		if(usuarios.containsKey(id)) {
 			
@@ -121,15 +124,22 @@ public class ControllerUsuario {
 			}
 		}
 		
-		throw new NullPointerException("Usuario nao encontrado: " + id + ".");
+		throw new InvalidUserException(id);
 	}
 
 	/**
-	 * @param nome
-	 * @return
-	 * @throws InvalidArgumentException 
+	 * Metodo que busca pelo nome se existem determinados usuarios cadastrados no sistema. O metodo verifica se o nome do 
+	 * usuario eh valido antes de realizar a busca em si.
+	 * 
+	 * @param nome nome do(s) usuario(s)
+	 * 
+	 * @return Retorna uma representacao com todos os possiveis usuarios encontrados.
+	 * 
+	 * @throws InvalidArgumentException Essa excecao eh gerada caso o nome informado seja considerado invalido.
+	 * @throws NullPointerException Excecao gerada caso nao exista nenhum usuario com esse nome.
+	 * 
 	 */
-	public String buscarUsuarioPorNome(String nome) throws InvalidArgumentException {
+	public String buscarUsuarioPorNome(String nome) throws Exception {
 		
 		if(nome == null || nome.trim().isEmpty())
 			throw new InvalidArgumentException("nome");
@@ -144,7 +154,7 @@ public class ControllerUsuario {
 		}
 		
 		if(usuariosPorNome.size() == 0)
-			throw new NullPointerException("Usuario nao encontrado: " + nome + ".");
+			throw new InvalidUserException(nome);
 		
 		retorno += usuariosPorNome.get(0).toString();
 		
@@ -177,15 +187,19 @@ public class ControllerUsuario {
 	 * @param nome nome do usuario
 	 * @param email email do usuario
 	 * @param celular celular de contato do usuario
+	 * 
 	 * @return Retorna a nova representacao textual do {@link Usuario}.
-	 * @throws InvalidArgumentException 
+	 * 
+	 * @throws InvalidArgumentException Essa excecao eh gerada caso o id informado seja nulo ou invalido.
+	 * @throws NullPointerException Excecao gerada caso o usuario nao esteja cadastrado no sistema.
+	 * 
 	 */
-	public String atualizaUsuario(String id, String nome, String email, String celular) throws InvalidArgumentException {
+	public String atualizaUsuario(String id, String nome, String email, String celular) throws Exception {
 		if (id == null || id.trim().isEmpty())
 			throw new InvalidArgumentException("id","do usuario");
 
 		if (!usuarios.containsKey(id)) {
-			throw new NullPointerException("Usuario nao encontrado: " + id + ".");
+			throw new InvalidUserException(id);
 		}
 		
 		if(nome != null && !(nome.trim().isEmpty()))
@@ -203,14 +217,17 @@ public class ControllerUsuario {
 	 * identificacao eh valido antes de realizar a remocao.
 	 * 
 	 * @param id identificacao do usuario. CPF para pessoa fisica, CNPJ para demais.
-	 * @throws InvalidArgumentException 
+	 * 
+	 * @throws InvalidArgumentException Excecao gerada caso o id do usuario seja considerado invalido ou nulo.
+	 * @throws NullPointerException Essa excecao eh gerada caso o usuario nao seja encontrado no sistema.
+	 * 
 	 */
-	public void removeUsuario(String id) throws InvalidArgumentException {
+	public void removeUsuario(String id) throws Exception {
 		if (id == null || id.trim().isEmpty())
 			throw new InvalidArgumentException("id","do usuario");
 		
 		if (!usuarios.containsKey(id)) {
-			throw new NullPointerException("Usuario nao encontrado: " + id + ".");
+			throw new InvalidUserException(id);
 		}
 		
 		usuarios.remove(id);
@@ -259,7 +276,7 @@ public class ControllerUsuario {
 		descritores.add(descricao.toLowerCase().replaceAll("\\s"," "));
 	}
 
-	public String adicionaItemParaDoacao(String idDoador, String descricaoItem, int quantidade, String tags) throws InvalidArgumentException {
+	public String adicionaItemParaDoacao(String idDoador, String descricaoItem, int quantidade, String tags) throws Exception {
 		
 		if(idDoador == null || idDoador.trim().isEmpty())
 			throw new InvalidArgumentException("id","do usuario");
@@ -280,7 +297,7 @@ public class ControllerUsuario {
 			return usuarios.get(idDoador).adicionaItem(descricaoItem,quantidade,tagsArray);
 		}
 		
-		throw new NullPointerException("Usuario nao encontrado: " + idDoador + ".");
+		throw new InvalidUserException(idDoador);
 	}
 
 }
