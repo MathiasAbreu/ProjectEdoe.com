@@ -322,4 +322,30 @@ public class ControllerUsuario {
 		return usuarios.get(idDoador).exibeItem(id);
 	}
 
+	public String atualizaItemParaDoacao(String id, String idDoador, int quantidade, String tags) throws InvalidArgumentException, InvalidUserException {
+		
+		if(idDoador == null || idDoador.trim().isEmpty())
+			throw new InvalidArgumentException("id", "do usuario");
+		if (Integer.parseInt(id) < 0)
+			throw new InvalidArgumentException("Entrada invalida: id do item nao pode ser negativo.");
+		
+		if(!usuarios.containsKey(idDoador))
+			throw new InvalidUserException(idDoador);
+		
+		return usuarios.get(idDoador).atualizaItem(id, quantidade, tags);
+	}
+
+	public void removeItemParaDoacao(String id, String idDoador) throws InvalidArgumentException, InvalidUserException {
+		
+		if(Integer.parseInt(id) < 0)
+			throw new InvalidArgumentException("Entrada invalida: id do item nao pode ser negativo.");
+		if (idDoador == null || idDoador.trim().isEmpty())
+			throw new InvalidArgumentException("id", "do usuario");
+		
+		if (!usuarios.containsKey(idDoador))
+			throw new InvalidUserException(idDoador);
+		
+		usuarios.get(id).removeItemParaDoacao(id);
+	}
+
 }

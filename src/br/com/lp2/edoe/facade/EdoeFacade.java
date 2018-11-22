@@ -73,11 +73,6 @@ public class EdoeFacade {
 		
 	}
 	
-	public String exibeItem(String id, String idDoador) throws InvalidArgumentException, InvalidUserException {
-		
-		return controleUser.exibeItem(id, idDoador);
-	}
-	
 	public static void main(String[] args) {
 		
 		args = new String[] {"br.com.lp2.edoe.facade.EdoeFacade",
@@ -86,6 +81,18 @@ public class EdoeFacade {
 				 "src/br/com/lp2/edoe/easyAccept/use_case_3.txt"};
 		
 		EasyAccept.main(args);
+		
+	}
+	
+	public String atualizaItemParaDoacao(String id,String idDoador,int quantidade,String tags) throws Exception {
+		
+		return controleUser.atualizaItemParaDoacao(id, idDoador,quantidade,tags);
+		
+	}
+	
+	public void removeItemParaDoacao(String id, String idDoador) throws InvalidArgumentException, InvalidUserException {
+		
+		controleUser.removeItemParaDoacao(id, idDoador);
 		
 	}
 }

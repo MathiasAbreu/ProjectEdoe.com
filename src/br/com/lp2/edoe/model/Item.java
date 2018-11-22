@@ -132,6 +132,12 @@ public class Item {
 		
 		return String.format("%s - %s, tags: %s, quantidade: %d",this.id,this.descritor,getTags(),this.quantidade);
 	}
+
+	public void atualizaItem(String novasTags2) {
+		String[] novasTags = novasTags2.split(", ");
+				
+		
+	}
 	
 	
 }

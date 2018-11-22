@@ -211,5 +211,30 @@ public abstract class Usuario {
 		
 		return itens.get(id).toString();
 	}
+
+	public String atualizaItem(String id, int quantidade, String tags) {
+		if(!itens.containsKey(id))
+			throw new IllegalArgumentException("Item nao encontrado: " + id + ".");
+		
+		if(quantidade != 0)
+			itens.get(id).setQuantidade(quantidade);
+		
+		if(tags != null)
+			itens.get(id).atualizaItem(tags);
+		
+		return null;
+	}
+
+	public void removeItemParaDoacao(String id) {
+		if(itens.size() == 0) 
+			throw new IllegalArgumentException("O Usuário não possui itens cadastrados.");
+		
+		if(!itens.containsKey(id))
+			itens.remove(id);
+		
+		throw new IllegalArgumentException("Item nao encontrado " + id + "." );
+			
+		
+	}
 	
 }
