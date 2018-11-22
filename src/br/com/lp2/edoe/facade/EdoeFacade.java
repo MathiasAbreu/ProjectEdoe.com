@@ -32,7 +32,7 @@ public class EdoeFacade {
 		return controleUser.buscarUsuarioPorId(id);
 	}
 	
-	public String pesquisaUsuarioPorNome(String nome) {
+	public String pesquisaUsuarioPorNome(String nome) throws InvalidArgumentException {
 		
 		return controleUser.buscarUsuarioPorNome(nome);
 		
