@@ -50,9 +50,9 @@ public class ControllerUsuario {
 	 * 
 	 * @return Retorna a identificao do Usuario recem cadastrado.
 
-	 * @throws RuntimeException Exceção gerada caso algum dos parâmetros passados sejam nulos ou vazios.
-	 * @throws NullPointerException Exceção gerada caso o usuário já se encontre cadastrado no sistema.
-	 * @throws IllegalArgumentException Essa exceção é gerada caso seja passada uma classe de usuário que não conste no sistema.
+	 * @throws RuntimeException Excecao gerada caso algum dos parametros passados sejam nulos ou vazios.
+	 * @throws NullPointerException Excecao gerada caso o usuario ja se encontre cadastrado no sistema.
+	 * @throws IllegalArgumentException Essa excecao eh gerada caso seja passada uma classe de usuario que nao conste no sistema.
 	 * 
 	 */
 	public String adicionarDoador(String id, String nome, String email, String celular, String classe) throws InvalidArgumentException {
@@ -95,14 +95,14 @@ public class ControllerUsuario {
 	}
 
 	/**
-	 * Metodo que busca pela identificao se determinado Usuario esta cadastrado no sistema. O metodo verifica se o numero da 
+	 * Metodo que busca pela identificacao se determinado Usuario esta cadastrado no sistema. O metodo verifica se o numero da 
 	 * identificao eh valido antes de realizar a busca em si.
 	 * 
 	 * @param id identificacao do usuario
 	 * 
 	 * @return Retorna a representacao textual do {@link Usuario}.
 	 * 
-	 * @throws RuntimeException Excecao gerada caso o numero de identificao recebido seja invalido.
+	 * @throws RuntimeException Excecao gerada caso o numero de identificacao recebido seja invalido.
 	 * @throws NullPointerException Essa excecao eh gerada caso o usuario nao seja encontrado no sistema.
 	 * 
 	 */
@@ -166,12 +166,17 @@ public class ControllerUsuario {
 		
 	}
 
+	
 	/**
-	 * @param id
-	 * @param nome
-	 * @param email
-	 * @param celular
-	 * @return
+	 * Metodo que atualiza os dados de um usuario do sistema. Caso um dos parametros seja nulo
+	 * ou vazio, o dado correspondente nao eh editado. O metodo verifica se o numero da 
+	 * identificacao eh valido antes de realizar a remocao.
+	 * 
+	 * @param id identificacao do usuario. CPF para pessoa fisica, CNPJ para demais.
+	 * @param nome nome do usuario
+	 * @param email email do usuario
+	 * @param celular celular de contato do usuario
+	 * @return Retorna a nova representacao textual do {@link Usuario}.
 	 * @throws InvalidArgumentException 
 	 */
 	public String atualizaUsuario(String id, String nome, String email, String celular) throws InvalidArgumentException {
@@ -193,7 +198,10 @@ public class ControllerUsuario {
 	}
 
 	/**
-	 * @param id
+	 * Metodo que remove um usuario do sistema. O metodo verifica se o numero da 
+	 * identificacao eh valido antes de realizar a remocao.
+	 * 
+	 * @param id identificacao do usuario. CPF para pessoa fisica, CNPJ para demais.
 	 * @throws InvalidArgumentException 
 	 */
 	public void removeUsuario(String id) throws InvalidArgumentException {
