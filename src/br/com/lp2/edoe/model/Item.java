@@ -1,6 +1,7 @@
 package br.com.lp2.edoe.model;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 
 public class Item {
 	
@@ -23,8 +24,9 @@ public class Item {
 	/**
 	 * @return the tags
 	 */
-	public String[] getTags() {
-		return tags;
+	public String getTags() {
+		
+		return Arrays.toString(tags);
 	}
 
 	/**

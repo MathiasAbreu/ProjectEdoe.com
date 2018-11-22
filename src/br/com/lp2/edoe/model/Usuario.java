@@ -184,5 +184,13 @@ public abstract class Usuario {
 	 */
 	@Override
 	public abstract String toString();
+
+	public String adicionaItem(String descricaoItem, int quantidade, String[] tagsArray) {
+		 
+		String idDoItem = Integer.toString(descricaoItem.hashCode());
+		
+		itens.put(idDoItem, new Item(descricaoItem, tagsArray, idDoItem, quantidade));
+		return idDoItem;
+	}
 	
 }

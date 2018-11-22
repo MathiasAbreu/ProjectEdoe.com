@@ -32,6 +32,11 @@ public class EdoeFacade {
 		controleUser.adicionaDescritor(descricao);
 	}
 	
+	public String adicionaItemParaDoacao(String idDoador,String descricaoItem,int quantidade,String tags) throws InvalidArgumentException {
+		
+		return controleUser.adicionaItemParaDoacao(idDoador,descricaoItem,quantidade,tags);
+		
+	}
 	public String pesquisaUsuarioPorId(String id) {
 		
 		return controleUser.buscarUsuarioPorId(id);

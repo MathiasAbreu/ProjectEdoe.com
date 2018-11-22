@@ -263,4 +263,22 @@ public class ControllerUsuario {
 		descritores.add(descricao.toLowerCase());
 	}
 
+	public String adicionaItemParaDoacao(String idDoador, String descricaoItem, int quantidade, String tags) throws InvalidArgumentException {
+		
+		if(idDoador == null || idDoador.trim().isEmpty())
+			throw new InvalidArgumentException("id","do usuario");
+		if(descricaoItem == null || descricaoItem.trim().isEmpty())
+			throw new InvalidArgumentException("descricao");
+		if(quantidade <= 0)
+			throw new IllegalArgumentException("Entrada invalida: quantidade deve ser maior que zero.");
+		
+		if(usuarios.containsKey(idDoador)) {
+			
+			String[] tagsArray = tags.split(",");
+			return usuarios.get(idDoador).adicionaItem(descricaoItem,quantidade,tagsArray);
+		}
+		
+		throw new NullPointerException("Usuario nao encontrado: " + idDoador + ".");
+	}
+
 }
