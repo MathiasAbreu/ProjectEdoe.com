@@ -1,5 +1,7 @@
 package br.com.lp2.edoe.model;
 
+import java.util.HashMap;
+
 /**
  * Classe que representa uma abstracao de um Usuario no sistema, eh uma classe basica que fornece atributos e metodos 
  * basicos para as classes especializadas deste mesmo tipo de Usuario.
@@ -17,6 +19,7 @@ public abstract class Usuario {
 	private String classe;
 	private String identificacao;
 	
+	private HashMap<String, Item> itens;
 	
 			
 	/**
@@ -38,6 +41,7 @@ public abstract class Usuario {
 		this.classe = classe;
 		this.identificacao = identificacao;
 		
+		itens = new HashMap<>();
 	}
 
 	protected String formatarId() {

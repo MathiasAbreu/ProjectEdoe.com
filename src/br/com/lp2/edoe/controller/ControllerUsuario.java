@@ -2,6 +2,7 @@ package br.com.lp2.edoe.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -26,7 +27,7 @@ public class ControllerUsuario {
 	private LinkedHashMap<String,Usuario> usuarios;
 	private ReceptoresDao arquivoReceptores;
 	
-	private ArrayList<String> descritores;
+	private HashSet<String> descritores;
 	
 	/**
 	 * Construtor responsavel pela construcao da instancia da classe, assim como da colecao de armazenamento dos 
@@ -38,7 +39,7 @@ public class ControllerUsuario {
 		usuarios = new LinkedHashMap<>();
 		arquivoReceptores = new ReceptoresDao();
 		
-		descritores = new ArrayList<>();
+		descritores = new HashSet<>();
 	}
 	
 	/**
