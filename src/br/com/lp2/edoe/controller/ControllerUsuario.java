@@ -275,6 +275,15 @@ public class ControllerUsuario {
 		descritores.add(descricao.toLowerCase().replaceAll("\\s"," "));
 	}
 
+	/**
+	 * 
+	 * @param idDoador
+	 * @param descricaoItem
+	 * @param quantidade
+	 * @param tags
+	 * @return
+	 * @throws Exception
+	 */
 	public String adicionaItemParaDoacao(String idDoador, String descricaoItem, int quantidade, String tags) throws Exception {
 		
 		if(idDoador == null || idDoador.trim().isEmpty())

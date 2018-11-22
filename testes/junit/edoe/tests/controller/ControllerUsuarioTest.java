@@ -14,8 +14,11 @@ class ControllerUsuarioTest {
 	private ControllerUsuario controle;
 
 	@BeforeEach
-	void setUp() {
+	void setUp() throws Exception {
+		
 		controle = new ControllerUsuario();
+		
+		controle.adicionarDoador("12345678901","Mathias","mathias.trajano","18584257","PESSOA_FISICA");
 	}
 
 	@Test
@@ -319,5 +322,90 @@ class ControllerUsuarioTest {
 		
 		assertEquals(controle.atualizaUsuario("70981334918", "Mariana", "mariana.com", "(81) 9814-7729"),"Mariana/709.813.349-18, mariana.com, (81) 9814-7729, status: doador");
 
+	}
+	
+	@Test
+	@DisplayName("Testando metodo de adiciona descritor")
+	void testAdicionaDescritor01() throws InvalidArgumentException{
+		
+		controle.adicionaDescritor("camisa");
+		
+	}
+	
+	@Test
+	@DisplayName("Testando metodo de adiciona descritor com descricao invalido")
+	void testAdicionaDescritor02() {
+		InvalidArgumentException iae = assertThrows(InvalidArgumentException.class,() -> {
+			
+			controle.adicionaDescritor("");
+		});
+		
+		assertEquals("Entrada invalida: descricao nao pode ser vazia ou nula.",iae.getMessage());
+	}
+	
+	@Test
+	@DisplayName("Testando metodo de adiciona descritor com um descritor ja existente")
+	void testAdicionaDescritor03() {
+		RuntimeException rte = assertThrows(RuntimeException.class,() -> {
+			
+			controle.adicionaDescritor("cobertor");
+			controle.adicionaDescritor("cobertor");
+			
+		});
+		
+		assertEquals("Descritor de Item ja existente: cobertor.",rte.getMessage());
+	}
+	
+	@Test
+	@DisplayName("Testando metodo adicionando item para doacao")
+	void testAdicionaItem01() throws Exception {
+		
+		String idRetorno = controle.adicionaItemParaDoacao("12345678901","calca",2,"calca jeans,branca");
+		
+		assertEquals("94425260",idRetorno);
+	}
+	
+	@Test
+	@DisplayName("Testando metodo de adicionar item com id do doador invalido")
+	void testAdicionaItem02() {
+		InvalidArgumentException iae = assertThrows(InvalidArgumentException.class,() -> {
+			
+			controle.adicionaItemParaDoacao("","calca",2,"calca jeans,branca");
+		});
+		
+		assertEquals("Entrada invalida: id do usuario nao pode ser vazio ou nulo.",iae.getMessage());
+	}
+	
+	@Test
+	@DisplayName("Testando metodo de adicionar item com descricao invalida")
+	void testAdicionaItem03() {
+		InvalidArgumentException iae = assertThrows(InvalidArgumentException.class,() -> {
+			
+			controle.adicionaItemParaDoacao("12345678901",null,2,"calca jeans,branca");
+		});
+		
+		assertEquals("Entrada invalida: descricao nao pode ser vazia ou nula.",iae.getMessage());
+	}
+	
+	@Test
+	@DisplayName("Testando metodo de adicionar item com quantidade invalida")
+	void testAdicionaItem04() {
+		IllegalArgumentException iae = assertThrows(IllegalArgumentException.class,() -> {
+			
+			controle.adicionaItemParaDoacao("12345678901","calca",-5,"calca jeans,branca");
+		});
+		
+		assertEquals("Entrada invalida: quantidade deve ser maior que zero.",iae.getMessage());
+	}
+	
+	@Test
+	@DisplayName("Testando metodo de adicionar item com id de um doador inexistente")
+	void testAdicionaItem05() {
+		InvalidUserException iae = assertThrows(InvalidUserException.class,() -> {
+			
+			controle.adicionaItemParaDoacao("123","calca",8,"calca branca,pequena");
+		});
+		
+		assertEquals("Usuario nao encontrado: 123.",iae.getMessage());
 	}
 }
