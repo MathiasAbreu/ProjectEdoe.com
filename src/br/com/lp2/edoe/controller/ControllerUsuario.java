@@ -1,12 +1,8 @@
 package br.com.lp2.edoe.controller;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
 
 import br.com.lp2.edoe.dao.ReceptoresDao;
 import br.com.lp2.edoe.exceptions.InvalidArgumentException;
@@ -257,10 +253,10 @@ public class ControllerUsuario {
 		if(descricao == null || descricao.trim().isEmpty())
 			throw new InvalidArgumentException("descricao");
 		
-		if(descritores.contains(descricao.toLowerCase()))
-			throw new RuntimeException("Descritor de Item ja existente: " + descricao.toLowerCase() + ".");
+		if(descritores.contains(descricao.toLowerCase().replaceAll("\\s"," ")))
+			throw new RuntimeException("Descritor de Item ja existente: " + descricao.toLowerCase().replaceAll("\\s"," ") + ".");
 		
-		descritores.add(descricao.toLowerCase());
+		descritores.add(descricao.toLowerCase().replaceAll("\\s"," "));
 	}
 
 	public String adicionaItemParaDoacao(String idDoador, String descricaoItem, int quantidade, String tags) throws InvalidArgumentException {
@@ -271,6 +267,12 @@ public class ControllerUsuario {
 			throw new InvalidArgumentException("descricao");
 		if(quantidade <= 0)
 			throw new IllegalArgumentException("Entrada invalida: quantidade deve ser maior que zero.");
+		
+		if(descritores.contains(descricaoItem)) { 
+			
+		}
+		else
+			adicionaDescritor(descricaoItem);
 		
 		if(usuarios.containsKey(idDoador)) {
 			
