@@ -16,7 +16,7 @@ import br.com.lp2.edoe.model.UsuarioDoador;
  * @author Mathias Abreu Trajano - mathias.trajano@ccc.ufcg.edu.br
  * 
  */
-class UserDoadorTest {
+class UsuarioDoadorTest {
 
 	private UsuarioDoador usuarioDoador;
 	

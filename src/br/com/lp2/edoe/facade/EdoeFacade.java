@@ -50,13 +50,13 @@ public class EdoeFacade {
 		
 	}
 	
-	public void atualizaUsuario(String id,String nome,String email,String celular) {
+	public String atualizaUsuario(String id,String nome,String email,String celular) throws InvalidArgumentException {
 		
-		controleUser.atualizaUsuario(id,nome,email,celular);
+		return controleUser.atualizaUsuario(id,nome,email,celular);
 		
 	}
 	
-	public void removeUsuario(String id) {
+	public void removeUsuario(String id) throws InvalidArgumentException {
 		
 		controleUser.removeUsuario(id);
 		

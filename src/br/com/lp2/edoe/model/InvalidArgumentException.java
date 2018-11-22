@@ -14,6 +14,11 @@ public class InvalidArgumentException extends Exception {
 	
 	public InvalidArgumentException(String atributo) {
 		
-		super("Entrada invalida: " + atributo + " do usuario nao pode ser vazio ou nulo.");
+		super("Entrada invalida: " + atributo + " nao pode ser vazio ou nulo.");
+	}
+	
+	public InvalidArgumentException(String atributo,String adicional) {
+		
+		super("Entrada invalida: " + atributo + " " + adicional + " " + "nao pode ser vazio ou nulo.");
 	}
 }
