@@ -26,6 +26,8 @@ public class ControllerUsuario {
 	private LinkedHashMap<String,Usuario> usuarios;
 	private ReceptoresDao arquivoReceptores;
 	
+	private ArrayList<String> descritores;
+	
 	/**
 	 * Construtor responsavel pela construcao da instancia da classe, assim como da colecao de armazenamento dos 
 	 * usuarios e o acesso aos arquivos de armazenamento.
@@ -35,6 +37,8 @@ public class ControllerUsuario {
 		
 		usuarios = new LinkedHashMap<>();
 		arquivoReceptores = new ReceptoresDao();
+		
+		descritores = new ArrayList<>();
 	}
 	
 	/**
@@ -240,6 +244,22 @@ public class ControllerUsuario {
 			}
 		}
 		
+	}
+
+	/**
+	 * 
+	 * @param descricao
+	 * @throws InvalidArgumentException
+	 */
+	public void adicionaDescritor(String descricao) throws InvalidArgumentException {
+		
+		if(descricao == null || descricao.trim().isEmpty())
+			throw new InvalidArgumentException("descricao");
+		
+		if(descritores.contains(descricao.toLowerCase()))
+			throw new RuntimeException("Descritor de Item ja existente: " + descricao.toLowerCase() + ".");
+		
+		descritores.add(descricao.toLowerCase());
 	}
 
 }

@@ -27,6 +27,11 @@ public class EdoeFacade {
 		
 	}
 	
+	public void adicionaDescritor(String descricao) throws InvalidArgumentException {
+		
+		controleUser.adicionaDescritor(descricao);
+	}
+	
 	public String pesquisaUsuarioPorId(String id) {
 		
 		return controleUser.buscarUsuarioPorId(id);

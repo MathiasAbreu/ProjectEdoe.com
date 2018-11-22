@@ -16,6 +16,8 @@ public abstract class Usuario {
 	private String celular;
 	private String classe;
 	private String identificacao;
+	
+	
 			
 	/**
 	 * Construtor reponsavel por instanciar um novo Usuario, ele recebe todos os parametros necessarios para preencher 
