@@ -1,4 +1,4 @@
-package junit.tests;
+package junit.edoe.tests.controller;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -10,308 +10,306 @@ import br.com.lp2.edoe.exceptions.InvalidArgumentException;
 
 class ControllerUsuarioTest {
 	
-	private ControllerUsuario contus;
+	private ControllerUsuario controle;
 	
 	@BeforeEach
 	void setUp() {
-		contus = new ControllerUsuario();
+		controle = new ControllerUsuario();
 	}
 	
-	@DisplayName ("Teste que tenta adicionar um novo doador usando um id nulo") 
 	@Test
+	@DisplayName("Teste que tenta adicionar um novo doador usando um id nulo")
 	void adicionaDoadorIdNuloTest() {
 		InvalidArgumentException ex = assertThrows(InvalidArgumentException.class, () -> {
-			contus.adicionarDoador(null, "Paulo", "paulo.com", "(83) 3344-5566", "PESSOA_FISICA");
+			controle.adicionarDoador(null, "Paulo", "paulo.com", "(83) 3344-5566", "PESSOA_FISICA");
 		});
 				
 		assertEquals("Entrada invalida: id do usuario nao pode ser vazio ou nulo.", ex.getMessage());
 	}
 	
-	@DisplayName ("Teste que tenta adicionar um novo doador usando um id vazio")
 	@Test
+	@DisplayName("Teste que tenta adicionar um novo doador usando um id vazio")
 	void adicionaDoadorIdVazioTest() {
 		InvalidArgumentException ex = assertThrows(InvalidArgumentException.class, () -> {
-			contus.adicionarDoador("", "Paulo", "paulo.com", "(83) 3344-5566", "PESSOA_FISICA");
+			controle.adicionarDoador("", "Paulo", "paulo.com", "(83) 3344-5566", "PESSOA_FISICA");
 		});
 				
 		assertEquals("Entrada invalida: id do usuario nao pode ser vazio ou nulo.", ex.getMessage());
 	}
 	
-	@DisplayName ("Teste que tenta adicionar um novo doador com o parametro nome nulo")
 	@Test
+	@DisplayName("Teste que tenta adicionar um novo doador com o parametro nome nulo")
 	void adicionaDoadorNomeNuloTest() {
 		InvalidArgumentException ex = assertThrows(InvalidArgumentException.class, () -> {
-			contus.adicionarDoador("70513372911", null, "paulo.com", "(83) 3344-5566", "PESSOA_FISICA");
+			controle.adicionarDoador("70513372911", null, "paulo.com", "(83) 3344-5566", "PESSOA_FISICA");
 		});
 				
 		assertEquals("Entrada invalida: nome nao pode ser vazio ou nulo.", ex.getMessage());
 	}
 	
-	@DisplayName ("Teste que tenta adicionar um novo doador com o parametro nome vazio")
 	@Test
+	@DisplayName("Teste que tenta adicionar um novo doador com o parametro nome vazio")
 	void adicionaDoadorNomeVazioTest() {
 		InvalidArgumentException ex = assertThrows(InvalidArgumentException.class, () -> {
-			contus.adicionarDoador("70513372911", "", "paulo.com", "(83) 3344-5566", "PESSOA_FISICA");
+			controle.adicionarDoador("70513372911", "", "paulo.com", "(83) 3344-5566", "PESSOA_FISICA");
 		});
 				
 		assertEquals("Entrada invalida: nome nao pode ser vazio ou nulo.", ex.getMessage());
 	}
 	
-	@DisplayName ("Teste que tenta adicionar um novo doador com o parametro email nulo")
 	@Test
+	@DisplayName("Teste que tenta adicionar um novo doador com o parametro email nulo")
 	void adicionaDoadorEmailNuloTest() {
 		InvalidArgumentException ex = assertThrows(InvalidArgumentException.class, () -> {
-			contus.adicionarDoador("70513372911", "Paulo", null, "(83) 3344-5566", "PESSOA_FISICA");
+			controle.adicionarDoador("70513372911", "Paulo", null, "(83) 3344-5566", "PESSOA_FISICA");
 		});
 				
 		assertEquals("Entrada invalida: email nao pode ser vazio ou nulo.", ex.getMessage());
 	}
 	
-	@DisplayName ("Teste que tenta adicionar um novo doador com o parametro email vazio")
 	@Test
+	@DisplayName("Teste que tenta adicionar um novo doador com o parametro email vazio")
 	void adicionaDoadorEmailVazioTest() {
 		InvalidArgumentException ex = assertThrows(InvalidArgumentException.class, () -> {
-			contus.adicionarDoador("70513372911", "Paulo", "", "(83) 3344-5566", "PESSOA_FISICA");
+			controle.adicionarDoador("70513372911", "Paulo", "", "(83) 3344-5566", "PESSOA_FISICA");
 		});
 				
 		assertEquals("Entrada invalida: email nao pode ser vazio ou nulo.", ex.getMessage());
 	}
 	
-	@DisplayName ("Teste que tenta adicionar um novo doador com o parametro celular nulo")
 	@Test
+	@DisplayName("Teste que tenta adicionar um novo doador com o parametro celular nulo")
 	void adicionaDoadorCelularNuloTest() {
 		InvalidArgumentException ex = assertThrows(InvalidArgumentException.class, () -> {
-			contus.adicionarDoador("70513372911", "Paulo", "paulo.com", null, "PESSOA_FISICA");
+			controle.adicionarDoador("70513372911", "Paulo", "paulo.com", null, "PESSOA_FISICA");
 		});
 				
 		assertEquals("Entrada invalida: celular nao pode ser vazio ou nulo.", ex.getMessage());
 	}
 	
-	@DisplayName ("Teste que tenta adicionar um novo doador com o parametro celular vazio")
 	@Test
+	@DisplayName("Teste que tenta adicionar um novo doador com o parametro celular vazio")
 	void adicionaDoadorCelularVazioTest() {
 		InvalidArgumentException ex = assertThrows(InvalidArgumentException.class, () -> {
-			contus.adicionarDoador("70513372911", "Paulo", "paulo.com", "", "PESSOA_FISICA");
+			controle.adicionarDoador("70513372911", "Paulo", "paulo.com", "", "PESSOA_FISICA");
 		});
 				
 		assertEquals("Entrada invalida: celular nao pode ser vazio ou nulo.", ex.getMessage());
 	}
 	
-	@DisplayName ("Teste que tenta adicionar um novo doador com o parametro classe nulo")
 	@Test
+	@DisplayName("Teste que tenta adicionar um novo doador com o parametro classe nulo")
 	void adicionaDoadorClasseNulaTest() {
 		InvalidArgumentException ex = assertThrows(InvalidArgumentException.class, () -> {
-			contus.adicionarDoador("70513372911", "Paulo", "paulo.com", "(83) 3344-5566", null);
+			controle.adicionarDoador("70513372911", "Paulo", "paulo.com", "(83) 3344-5566", null);
 		});
 				
 		assertEquals("Entrada invalida: classe nao pode ser vazia ou nula.", ex.getMessage());
 	}
 	
-	@DisplayName ("Teste que tenta adicionar um novo doador com o parametro classe vazio")
 	@Test
+	@DisplayName("Teste que tenta adicionar um novo doador com o parametro classe vazio")
 	void adicionaDoadorClasseVaziaTest() {
 		InvalidArgumentException ex = assertThrows(InvalidArgumentException.class, () -> {
-			contus.adicionarDoador("70513372911", "Paulo", "paulo.com", "(83) 3344-5566", "");
+			controle.adicionarDoador("70513372911", "Paulo", "paulo.com", "(83) 3344-5566", "");
 		});
 				
 		assertEquals("Entrada invalida: classe nao pode ser vazia ou nula.", ex.getMessage());
 	}
 	
-	@DisplayName ("Teste que tenta adicionar um novo doador com o parametro classe nulo")
 	@Test
+	@DisplayName("Teste que tenta adicionar um novo doador com o parametro classe nulo")
 	void adicionaDoadorClasseInexistenteTest() {
 		IllegalArgumentException ex = assertThrows(IllegalArgumentException.class, () -> {
-			contus.adicionarDoador("70513372911", "Paulo", "paulo.com", "(83) 3344-5566", "pessoa juridica");
+			controle.adicionarDoador("70513372911", "Paulo", "paulo.com", "(83) 3344-5566", "pessoa juridica");
 		});
 				
 		assertEquals("Entrada invalida: opcao de classe invalida.", ex.getMessage());
 	}
 	
-	@DisplayName ("Teste que tenta adicionar um novo doador que já se encontra cadastrado no sistema")
 	@Test
+	@DisplayName("Teste que tenta adicionar um novo doador que já se encontra cadastrado no sistema")
 	void adicionaDoadorExistenteTest() throws InvalidArgumentException  {
-		contus.adicionarDoador("70513372911", "Paulo", "paulo.com", "(83) 3344-5566", "PESSOA_FISICA");
+		controle.adicionarDoador("70513372911", "Paulo", "paulo.com", "(83) 3344-5566", "PESSOA_FISICA");
 		RuntimeException ex = assertThrows(RuntimeException.class, () -> {
-			contus.adicionarDoador("70513372911", "Silas", "silas.com", "(83) 7788-9900", "PESSOA_FISICA");
+			controle.adicionarDoador("70513372911", "Silas", "silas.com", "(83) 7788-9900", "PESSOA_FISICA");
 		});
 				
 		assertEquals("Usuario ja existente: 70513372911.", ex.getMessage());
 		
 	}
 	
-	@DisplayName ("Teste que adiciona um novo doador no sistema.")
 	@Test
+	@DisplayName("Teste que adiciona um novo doador no sistema.")
 	void adicionaDoadorTest() throws InvalidArgumentException {
-		contus.adicionarDoador("70513372911", "Paulo", "paulo.com", "(83) 3344-5566", "PESSOA_FISICA");
-		contus.adicionarDoador("18513302981", "Zeca", "zeca.com", "(83) 2344-8566", "SOCIEDADE");
+		controle.adicionarDoador("70513372911", "Paulo", "paulo.com", "(83) 3344-5566", "PESSOA_FISICA");
+		controle.adicionarDoador("18513302981", "Zeca", "zeca.com", "(83) 2344-8566", "SOCIEDADE");
 		
 	}
 	
-	@DisplayName ("Teste que tenta buscar um usuario do sistema pelo id, passando um id nulo")
 	@Test
+	@DisplayName("Teste que tenta buscar um usuario do sistema pelo id, passando um id nulo")
 	void buscaPorIdNuloTest() {
 		RuntimeException ex = assertThrows(RuntimeException.class, () -> {
-			contus.buscarUsuarioPorId(null);
+			controle.buscarUsuarioPorId(null);
 		});
 				
 		assertEquals("Entrada invalida: id do usuario nao pode ser vazio ou nulo.", ex.getMessage());
 	}
 	
-	@DisplayName ("Teste que tenta buscar um usuario do sistema pelo id, passando um id vazio")
 	@Test
+	@DisplayName("Teste que tenta buscar um usuario do sistema pelo id, passando um id vazio")
 	void buscaPorIdVazioTest() {
 		RuntimeException ex = assertThrows(RuntimeException.class, () -> {
-			contus.buscarUsuarioPorId("");
+			controle.buscarUsuarioPorId("");
 		});
 				
 		assertEquals("Entrada invalida: id do usuario nao pode ser vazio ou nulo.", ex.getMessage());
 	}
 	
-	@DisplayName ("Teste que busca um usuario do sistema pelo id")
 	@Test
+	@DisplayName("Teste que busca um usuario do sistema pelo id")
 	void buscaPorId() throws InvalidArgumentException {
-		contus.adicionarDoador("70513372911", "Paulo", "paulo.com", "(83) 3344-5566", "PESSOA_FISICA");
-		contus.adicionarDoador("18513302981", "Zeca", "zeca.com", "(83) 2344-8566", "SOCIEDADE");
-		assertEquals(contus.buscarUsuarioPorId("70513372911"), "Paulo/705.133.729-11, paulo.com, (83) 3344-5566, status: doador");
-		assertEquals(contus.buscarUsuarioPorId("18513302981"), "Zeca/185.133.029-81, zeca.com, (83) 2344-8566, status: doador");
+		controle.adicionarDoador("70513372911", "Paulo", "paulo.com", "(83) 3344-5566", "PESSOA_FISICA");
+		controle.adicionarDoador("18513302981", "Zeca", "zeca.com", "(83) 2344-8566", "SOCIEDADE");
+		assertEquals(controle.buscarUsuarioPorId("70513372911"), "Paulo/705.133.729-11, paulo.com, (83) 3344-5566, status: doador");
+		assertEquals(controle.buscarUsuarioPorId("18513302981"), "Zeca/185.133.029-81, zeca.com, (83) 2344-8566, status: doador");
 			
 	}
 	
-	@DisplayName ("Teste que tenta buscar um usuario inexistente no sistema pelo id")
 	@Test
+	@DisplayName("Teste que tenta buscar um usuario inexistente no sistema pelo id")
 	void buscaPorIdInexistenteTest() throws InvalidArgumentException {
-		contus.adicionarDoador("70513372911", "Paulo", "paulo.com", "(83) 3344-5566", "PESSOA_FISICA");
+		controle.adicionarDoador("70513372911", "Paulo", "paulo.com", "(83) 3344-5566", "PESSOA_FISICA");
 		RuntimeException ex = assertThrows(RuntimeException.class, () -> {
-			contus.buscarUsuarioPorId("98765432109");
+			controle.buscarUsuarioPorId("98765432109");
 		});
 				
 		assertEquals("Usuario nao encontrado: 98765432109.", ex.getMessage());
 		
-		
 	}
 	
-	@DisplayName ("Teste que tenta buscar um usuario do sistema pelo nome, passando um nome nulo")
 	@Test
+	@DisplayName("Teste que tenta buscar um usuario do sistema pelo nome, passando um nome nulo")
 	void buscaPeloNomeNuloTest() {
 		InvalidArgumentException ex = assertThrows(InvalidArgumentException.class, () -> {
-			contus.buscarUsuarioPorNome(null);
+			controle.buscarUsuarioPorNome(null);
 		});
 				
 		assertEquals("Entrada invalida: nome nao pode ser vazio ou nulo.", ex.getMessage());
 	}
 	
-	@DisplayName ("Teste que tenta buscar um usuario do sistema pelo nome, passando um nome vazio")
 	@Test
+	@DisplayName("Teste que tenta buscar um usuario do sistema pelo nome, passando um nome vazio")
 	void buscaPeloNomeVazioest() {
 		InvalidArgumentException ex = assertThrows(InvalidArgumentException.class, () -> {
-			contus.buscarUsuarioPorNome("");
+			controle.buscarUsuarioPorNome("");
 		});
 				
 		assertEquals("Entrada invalida: nome nao pode ser vazio ou nulo.", ex.getMessage());
 	}
 	
-	@DisplayName ("Teste que busca um usuario do sistema pelo nome")
 	@Test
+	@DisplayName("Teste que busca um usuario do sistema pelo nome")
 	void buscaPeloNomeTest() throws InvalidArgumentException {
-		contus.adicionarDoador("70513372911", "Paulo", "paulo.com", "(83) 3344-5566", "PESSOA_FISICA");
-		contus.adicionarDoador("18513302981", "Zeca", "zeca.com", "(83) 2344-8566", "SOCIEDADE");
-		contus.adicionarDoador("18993309981", "Zeca", "zeca.com", "(83) 2344-8566", "SOCIEDADE");
+		controle.adicionarDoador("70513372911", "Paulo", "paulo.com", "(83) 3344-5566", "PESSOA_FISICA");
+		controle.adicionarDoador("18513302981", "Zeca", "zeca.com", "(83) 2344-8566", "SOCIEDADE");
+		controle.adicionarDoador("18993309981", "Zeca", "zeca.com", "(83) 2344-8566", "SOCIEDADE");
 
-		assertEquals(contus.buscarUsuarioPorNome("Paulo"), "Paulo/705.133.729-11, paulo.com, (83) 3344-5566, status: doador");
-		assertEquals(contus.buscarUsuarioPorNome("Zeca"), "Zeca/185.133.029-81, zeca.com, (83) 2344-8566, status: doador | Zeca/189.933.099-81, zeca.com, (83) 2344-8566, status: doador");
+		assertEquals(controle.buscarUsuarioPorNome("Paulo"), "Paulo/705.133.729-11, paulo.com, (83) 3344-5566, status: doador");
+		assertEquals(controle.buscarUsuarioPorNome("Zeca"), "Zeca/185.133.029-81, zeca.com, (83) 2344-8566, status: doador | Zeca/189.933.099-81, zeca.com, (83) 2344-8566, status: doador");
 	
 	}
 	
-	@DisplayName ("Teste que tenta buscar um usuario inexistente no sistema pelo nome")
 	@Test
+	@DisplayName("Teste que tenta buscar um usuario inexistente no sistema pelo nome")
 	void buscaPeloNomeInexistenteTest() throws InvalidArgumentException {
-		contus.adicionarDoador("70513372911", "Paulo", "paulo.com", "(83) 3344-5566", "PESSOA_FISICA");
+		controle.adicionarDoador("70513372911", "Paulo", "paulo.com", "(83) 3344-5566", "PESSOA_FISICA");
 		NullPointerException ex = assertThrows(NullPointerException.class, () -> {
-			contus.buscarUsuarioPorId("Juca");
+			controle.buscarUsuarioPorId("Juca");
 		});
 				
 		assertEquals("Usuario nao encontrado: Juca.", ex.getMessage());
 	
 	}
 	
-	@DisplayName ("Teste que tenta remover um usuario do sistema, passando um id nulo")
 	@Test
+	@DisplayName("Teste que tenta remover um usuario do sistema, passando um id nulo")
 	void removeUsuarioNuloTest() {
 		InvalidArgumentException ex = assertThrows(InvalidArgumentException.class, () -> {
-			contus.removeUsuario(null);
+			controle.removeUsuario(null);
 		});
 				
 		assertEquals("Entrada invalida: id do usuario nao pode ser vazio ou nulo.", ex.getMessage());
 		
 	}
 	
-	@DisplayName ("Teste que tenta remover um usuario do sistema, passando um id vazio")
 	@Test
+	@DisplayName("Teste que tenta remover um usuario do sistema, passando um id vazio")
 	void removeUsuarioVazioTest() {
 		InvalidArgumentException ex = assertThrows(InvalidArgumentException.class, () -> {
-			contus.removeUsuario("");
+			controle.removeUsuario("");
 		});
 				
 		assertEquals("Entrada invalida: id do usuario nao pode ser vazio ou nulo.", ex.getMessage());
 		
 	}
 	
-	@DisplayName ("Teste que remove um usuario do sistema")
 	@Test
+	@DisplayName("Teste que remove um usuario do sistema")
 	void removeUsuarioTest() throws InvalidArgumentException {
-		contus.adicionarDoador("70513372911", "Paulo", "paulo.com", "(83) 3344-5566", "PESSOA_FISICA");
-		contus.removeUsuario("70513372911");
+		controle.adicionarDoador("70513372911", "Paulo", "paulo.com", "(83) 3344-5566", "PESSOA_FISICA");
+		controle.removeUsuario("70513372911");
 	}
 	
-	@DisplayName ("Teste que tenta remover um usuario inexistente no sistema")
 	@Test
+	@DisplayName("Teste que tenta remover um usuario inexistente no sistema")
 	void removeUsuarioInexistenteTest() {
 		NullPointerException ex = assertThrows(NullPointerException.class, () -> {
-			contus.buscarUsuarioPorId("70513372911");
+			controle.buscarUsuarioPorId("70513372911");
 		});
 				
 		assertEquals("Usuario nao encontrado: 70513372911.", ex.getMessage());
 	}
 	
-	@DisplayName ("Teste que tenta atualizar um usuario passando um id nulo")
 	@Test
+	@DisplayName("Teste que tenta atualizar um usuario passando um id nulo")
 	void atualizaUsuarioIdNuloTest() {
 		InvalidArgumentException ex = assertThrows(InvalidArgumentException.class, () -> {
-			contus.atualizaUsuario(null, "Joao", "joao.com", "(83) 9870-4678");
+			controle.atualizaUsuario(null, "Joao", "joao.com", "(83) 9870-4678");
 		});
 				
 		assertEquals("Entrada invalida: id do usuario nao pode ser vazio ou nulo.", ex.getMessage());
 		
 	}
 	
-	@DisplayName ("Teste que tenta atualizar um usuario passando um id vazio")
 	@Test
+	@DisplayName("Teste que tenta atualizar um usuario passando um id vazio")
 	void atualizaUsuarioIdVazioTest() {
 		InvalidArgumentException ex = assertThrows(InvalidArgumentException.class, () -> {
-			contus.atualizaUsuario("", "Joao", "joao.com", "(83) 9870-4678");
+			controle.atualizaUsuario("", "Joao", "joao.com", "(83) 9870-4678");
 		});
 				
 		assertEquals("Entrada invalida: id do usuario nao pode ser vazio ou nulo.", ex.getMessage());
 		
 	}
 	
-	@DisplayName ("Teste que tenta atualizar um usuario passando um id inexistente")
 	@Test
+	@DisplayName("Teste que tenta atualizar um usuario passando um id inexistente")
 	void atualizaUsuarioInexistenteTest() {
 		NullPointerException ex = assertThrows(NullPointerException.class, () -> {
-			contus.atualizaUsuario("66677766677", "Joao", "joao.com", "(83) 9870-4678");
+			controle.atualizaUsuario("66677766677", "Joao", "joao.com", "(83) 9870-4678");
 		});
 				
 		assertEquals("Usuario nao encontrado: 66677766677.", ex.getMessage());
 		
 	}
 	
-	@DisplayName ("Teste que atualiza usuario")
 	@Test
+	@DisplayName("Teste que atualiza usuario")
 	void atualizaUsuarioTest() throws InvalidArgumentException {
-		contus.adicionarDoador("70981334918", "Ana", "ana.com", "(83) 7384-5906", "PESSOA_FISICA");
-		assertEquals(contus.atualizaUsuario("70981334918", "Mariana", "mariana.com", "(81) 9814-7729"), "Mariana/709.813.349-18, mariana.com, (81) 9814-7729, status: doador");
+		controle.adicionarDoador("70981334918", "Ana", "ana.com", "(83) 7384-5906", "PESSOA_FISICA");
+		assertEquals(controle.atualizaUsuario("70981334918", "Mariana", "mariana.com", "(81) 9814-7729"), "Mariana/709.813.349-18, mariana.com, (81) 9814-7729, status: doador");
 		
 	}
-	
 }
