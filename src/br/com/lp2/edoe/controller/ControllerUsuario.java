@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import br.com.lp2.edoe.dao.ReceptoresDao;
-import br.com.lp2.edoe.model.InvalidArgumentException;
+import br.com.lp2.edoe.exceptions.InvalidArgumentException;
 import br.com.lp2.edoe.model.Usuario;
 import br.com.lp2.edoe.model.UsuarioDoador;
 import br.com.lp2.edoe.model.UsuarioReceptor;

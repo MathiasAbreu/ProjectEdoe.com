@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import br.com.lp2.edoe.controller.ControllerUsuario;
-import br.com.lp2.edoe.model.InvalidArgumentException;
+import br.com.lp2.edoe.exceptions.InvalidArgumentException;
 
 class ControllerUsuarioTest {
 	

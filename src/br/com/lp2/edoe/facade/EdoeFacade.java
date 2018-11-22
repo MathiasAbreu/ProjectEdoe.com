@@ -1,7 +1,7 @@
 package br.com.lp2.edoe.facade;
 
 import br.com.lp2.edoe.controller.ControllerUsuario;
-import br.com.lp2.edoe.model.InvalidArgumentException;
+import br.com.lp2.edoe.exceptions.InvalidArgumentException;
 import easyaccept.EasyAccept;
 
 /**
