@@ -14,12 +14,12 @@ public class InvalidArgumentException extends Exception {
 	
 	public InvalidArgumentException(String atributo) {
 		
-		super(atributo.equals("classe") ? "Entrada invalida: " + atributo + " nao pode ser vazia ou nula." : "Entrada invalida: " + atributo + " nao pode ser vazio ou nulo.");
+		super(atributo.equals("classe") || atributo.equals("descricao") ? "Entrada invalida: " + atributo + " nao pode ser vazia ou nula." : "Entrada invalida: " + atributo + " nao pode ser vazio ou nulo.");
 	}
 	
 	public InvalidArgumentException(String atributo,String adicional) {
 		
-		super(atributo.equals("classe") ? "Entrada invalida: " + atributo + " " + adicional + " " + "nao pode ser vazio ou nulo." : "Entrada invalida: " + atributo + " " + adicional + " " + "nao pode ser vazio ou nulo.");
+		super(atributo.equals("classe")  || atributo.equals("descricao") ? "Entrada invalida: " + atributo + " " + adicional + " " + "nao pode ser vazio ou nulo." : "Entrada invalida: " + atributo + " " + adicional + " " + "nao pode ser vazio ou nulo.");
 	}
 	
 }
