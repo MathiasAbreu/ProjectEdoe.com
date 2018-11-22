@@ -25,6 +25,7 @@ public class ControllerUsuario {
 
 	private LinkedHashMap<String,Usuario> usuarios;
 	private ReceptoresDao arquivoReceptores;
+	private ArrayList<String> descritores;
 	
 	/**
 	 * Construtor responsavel pela construcao da instancia da classe, assim como da colecao de armazenamento dos 
