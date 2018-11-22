@@ -52,9 +52,8 @@ public class ControllerUsuario {
 	 * 
 	 * @return Retorna a identificao do Usuario recem cadastrado.
 
-	 * @throws RuntimeException Excecao gerada caso algum dos parametros passados sejam nulos ou vazios.
-	 * @throws NullPointerException Excecao gerada caso o usuario ja se encontre cadastrado no sistema.
-	 * @throws IllegalArgumentException Essa excecao eh gerada caso seja passada uma classe de usuario que nao conste no sistema.
+	 * @throws InvalidUserException Excecao gerada caso o usuario ja se encontre cadastrado no sistema.
+	 * @throws InvalidArgumentException Essa excecao eh gerada caso seja passada uma classe de usuario que nao conste no sistema.
 	 * 
 	 */
 	public String adicionarDoador(String id, String nome, String email, String celular, String classe) throws Exception {

@@ -3,7 +3,6 @@ package br.com.lp2.edoe.model;
 import java.time.LocalDate;
 import java.util.Arrays;
 /**
- * 
  *
  * @author Caio Fernandes Moreira - caio.moreira@ccc.ufcg.edu.br
  * @author Klaywert Danillo Ferreira De Souza - klaywert.souza@ccc.ufcg.edu.br
@@ -22,7 +21,7 @@ public class Item {
 	
 	public Item(String descritor, String[] tags, String id, int quantidade) {
 		
-		this.dataInsercao = String.format("%d/%d/%d",LocalDate.now().getDayOfMonth(),LocalDate.now().getMonthValue() + 1,LocalDate.now().getYear());
+		this.dataInsercao = String.format("%d/%d/%d",LocalDate.now().getDayOfMonth(),LocalDate.now().getMonthValue(),LocalDate.now().getYear());
 		
 		this.descritor = descritor;
 		this.tags = tags;
@@ -104,9 +103,12 @@ public class Item {
 			
 			if(this.descritor.equals(other.getDescritor())) {
 				
+				if(this.tags.length != other.tags.length)
+					return false;
+				
 				for(int i = 0; i < tags.length; i++) {
 					
-					if(other.tags.length > i && tags[i].equals(other.tags[i])) {
+					if(tags[i].equals(other.tags[i])) {
 						
 					}
 					else
