@@ -170,24 +170,22 @@ public class ControllerUsuario {
 	 * @return
 	 * @throws InvalidArgumentException 
 	 */
-	public void atualizaUsuario(String id, String nome, String email, String celular) throws InvalidArgumentException {
+	public String atualizaUsuario(String id, String nome, String email, String celular) throws InvalidArgumentException {
 		if (id == null || id.trim().isEmpty())
 			throw new InvalidArgumentException("id");
-		
-		if(nome == null || nome.trim().isEmpty())
-			throw new RuntimeException("Entrada invalida: nome nao pode ser vazio ou nulo.");
-		if(email == null || email.trim().isEmpty())
-			throw new RuntimeException("Entrada invalida: email nao pode ser vazio ou nulo.");
-		if(celular == null || celular.trim().isEmpty())
-			throw new RuntimeException("Entrada invalida: celular nao pode ser vazio ou nulo.");
 		
 		if (!usuarios.containsKey(id)) {
 			throw new NullPointerException("Usuario nao existente: " + id + ".");
 		}
-
-		usuarios.get(id).setNome(nome);
-		usuarios.get(id).setEmail(email);
-		usuarios.get(id).setCelular(celular);
+		
+		if(nome != null && !(nome.trim().isEmpty()))
+			usuarios.get(id).setNome(nome);
+		if(email != null && !(email.trim().isEmpty()))
+			usuarios.get(id).setEmail(email);
+		if(celular != null && !(celular.trim().isEmpty()))
+			usuarios.get(id).setCelular(celular);
+		
+		return usuarios.get(id).toString();
 	}
 
 	/**
