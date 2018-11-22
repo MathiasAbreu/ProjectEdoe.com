@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import br.com.lp2.edoe.model.UsuarioDoador;
 
 /**
@@ -22,7 +21,7 @@ class UserDoadorTest {
 	private UsuarioDoador usuarioDoador;
 	
 	@BeforeEach
-	void setUp() throws Exception {
+	void setUp() {
 		
 		usuarioDoador = new UsuarioDoador("Liu Kang", "liu@hotmail.com", "1234-5678", "pessoa fisica", "01234567899");
 	}
