@@ -242,4 +242,9 @@ public class ControllerUsuario {
 		
 	}
 
+	public String adicionaDescritor(String descricao) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

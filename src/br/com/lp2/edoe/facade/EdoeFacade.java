@@ -27,6 +27,11 @@ public class EdoeFacade {
 		
 	}
 	
+	public String adicionaDescritor(String descricao) {
+		
+		return controleUser.adicionaDescritor(descricao);
+	}
+	
 	public String pesquisaUsuarioPorId(String id) {
 		
 		return controleUser.buscarUsuarioPorId(id);
