@@ -186,10 +186,18 @@ public abstract class Usuario {
 	public abstract String toString();
 
 	public String adicionaItem(String descricaoItem, int quantidade, String[] tagsArray) {
-		 
-		String idDoItem = Integer.toString(descricaoItem.hashCode());
 		
-		itens.put(idDoItem, new Item(descricaoItem, tagsArray, idDoItem, quantidade));
+		String idDoItem = Integer.toString(itens.size() + 1);
+		
+		Item itemnovo = new Item(descricaoItem, tagsArray, idDoItem, quantidade);
+		
+		for(Item item : itens.values()) {
+			if (itemnovo.equals(item)) {
+				item.setQuantidade(item.getQuantidade() + quantidade);
+			}
+		}
+		
+		itens.put(idDoItem, itemnovo);
 		return idDoItem;
 	}
 	
