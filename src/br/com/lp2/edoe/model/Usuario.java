@@ -47,7 +47,7 @@ public abstract class Usuario {
 		itens = new HashMap<>();
 	}
 
-	protected String formatarId() {
+	/*protected String formatarId() {
 		
 		String[] separaId = identificacao.split("");
 		
@@ -59,7 +59,7 @@ public abstract class Usuario {
 			
 			return String.format("%s%s.%s%s%s.%s%s%s/%s%s%s%s-%s%s",separaId[0],separaId[1],separaId[2],separaId[3],separaId[4],separaId[5],separaId[6],separaId[7],separaId[8],separaId[9],separaId[10],separaId[11],separaId[12],separaId[13]);
 		}
-	}
+	}*/
 
 	/**
 	 * Metodo que retorna o nome do Usuario.

@@ -40,7 +40,7 @@ public class UsuarioDoador extends Usuario implements Doador {
 	@Override
 	public String toString() {
 		
-		return String.format("%s/%s, %s, %s, status: doador",getNome(),formatarId(),getEmail(),getCelular());
+		return String.format("%s/%s, %s, %s, status: doador",getNome(),getIdentificacao(),getEmail(),getCelular());
 	}
 
 }

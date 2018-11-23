@@ -39,7 +39,7 @@ public class UsuarioReceptor extends Usuario implements Receptor {
 	@Override
 	public String toString() {
 		
-		return String.format("%s/%s, %s, %s, status: receptor",getNome(),formatarId(),getEmail(),getCelular());
+		return String.format("%s/%s, %s, %s, status: receptor",getNome(),getIdentificacao(),getEmail(),getCelular());
 
 	}
 
