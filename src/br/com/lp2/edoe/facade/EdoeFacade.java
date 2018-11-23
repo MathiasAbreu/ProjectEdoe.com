@@ -28,7 +28,7 @@ public class EdoeFacade {
 		
 	}
 	
-	public void adicionaDescritor(String descricao) throws InvalidArgumentException {
+	public void adicionaDescritor(String descricao) throws InvalidArgumentException { 
 		
 		controleUser.adicionaDescritor(descricao);
 	}
@@ -73,17 +73,6 @@ public class EdoeFacade {
 		
 	}
 	
-	public static void main(String[] args) {
-		
-		args = new String[] {"br.com.lp2.edoe.facade.EdoeFacade",
-				 "src/br/com/lp2/edoe/easyAccept/use_case_1.txt",
-				 "src/br/com/lp2/edoe/easyAccept/use_case_2.txt",
-				 "src/br/com/lp2/edoe/easyAccept/use_case_3.txt"};
-		
-		EasyAccept.main(args);
-		
-	}
-	
 	public String atualizaItemParaDoacao(String id,String idDoador,int quantidade,String tags) throws Exception {
 		
 		return controleUser.atualizaItemParaDoacao(id, idDoador,quantidade,tags);
@@ -95,4 +84,20 @@ public class EdoeFacade {
 		controleUser.removeItemParaDoacao(id, idDoador);
 		
 	}
+	
+	public String exibeItem(String id,String idDoador) throws Exception {
+		
+		return controleUser.exibeItem(id, idDoador);
+	}
+	public static void main(String[] args) {
+		
+		args = new String[] {"br.com.lp2.edoe.facade.EdoeFacade",
+				 "src/br/com/lp2/edoe/easyAccept/use_case_1.txt",
+				 "src/br/com/lp2/edoe/easyAccept/use_case_2.txt",
+				 "src/br/com/lp2/edoe/easyAccept/use_case_3.txt"};
+		
+		EasyAccept.main(args);
+		
+	}
+	
 }

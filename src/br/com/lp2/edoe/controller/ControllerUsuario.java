@@ -308,7 +308,7 @@ public class ControllerUsuario {
 		throw new InvalidUserException(idDoador);
 	}
 
-	public String exibeItem(String id, String idDoador) throws InvalidArgumentException, InvalidUserException {
+	public String exibeItem(String id, String idDoador) throws Exception {
 		if (id == null || id.trim().isEmpty())
 			throw new InvalidArgumentException("id","do item");
 		
@@ -335,15 +335,17 @@ public class ControllerUsuario {
 		return usuarios.get(idDoador).atualizaItem(id, quantidade, tags);
 	}
 
-	public void removeItemParaDoacao(String id, String idDoador) throws InvalidArgumentException, InvalidUserException {
+	public void removeItemParaDoacao(String id, String idDoador) throws Exception {
 		
 		
 		if (idDoador == null || idDoador.trim().isEmpty()) {
 			throw new InvalidArgumentException("id", "do usuario");
-		} else if (!usuarios.containsKey(idDoador)) {
+		} 
+		if (!usuarios.containsKey(idDoador)) {
 			throw new InvalidUserException(idDoador);
 		}
-		usuarios.get(id).removeItemParaDoacao(id);
+		
+		usuarios.get(idDoador).removeItemParaDoacao(id);
 	}
 
 }

@@ -232,13 +232,20 @@ public abstract class Usuario {
 	}
 
 	public void removeItemParaDoacao(String id) {
+		
+		if(Integer.parseInt(id) < 0)
+			throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");
+		
 		if(itens.size() == 0) {
 			throw new IllegalArgumentException("O Usuario nao possui itens cadastrados.");
 		}
-		if(!itens.containsKey(id)) {
+		
+		if(itens.containsKey(id)) {
+
 			itens.remove(id);
 		}
-		throw new IllegalArgumentException("Item nao encontrado " + id + "." );
+		else
+			throw new IllegalArgumentException("Item nao encontrado: " + id + "." );
 			
 		
 	}
