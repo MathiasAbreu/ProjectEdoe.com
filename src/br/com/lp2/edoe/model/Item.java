@@ -32,9 +32,9 @@ public class Item {
 	/**
 	 * @return the tags
 	 */
-	public String getTags() {
+	public String[] getTags() {
 		
-		return Arrays.toString(tags);
+		return tags;
 	}
 
 	/**
@@ -130,14 +130,7 @@ public class Item {
 	@Override
 	public String toString() {
 		
-		return String.format("%s - %s, tags: %s, quantidade: %d",this.id,this.descritor,getTags(),this.quantidade);
+		return String.format("%s - %s, tags: %s, quantidade: %d",this.id,this.descritor,Arrays.toString(tags),this.quantidade);
 	}
 
-	public void atualizaItem(String novasTags2) {
-		String[] novasTags = novasTags2.split(", ");
-				
-		
-	}
-	
-	
 }

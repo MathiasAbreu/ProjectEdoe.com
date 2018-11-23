@@ -190,7 +190,8 @@ public abstract class Usuario {
 
 	public String adicionaItem(String descricaoItem, int quantidade, String[] tagsArray) {
 		
-		String idDoItem = Integer.toString(descricaoItem.hashCode());
+		int id = descricaoItem.hashCode();
+		String idDoItem = Integer.toString(id > 0 ? id : id * -1);
 		
 		Item itemnovo = new Item(descricaoItem, tagsArray, idDoItem, quantidade);
 		
@@ -213,21 +214,26 @@ public abstract class Usuario {
 	}
 
 	public String atualizaItem(String id, int quantidade, String tags) {
+		
+		if(Integer.parseInt(id) < 0)
+			throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");
 		if(!itens.containsKey(id)) {
 			throw new IllegalArgumentException("Item nao encontrado: " + id + ".");
 		}
 		if(quantidade != 0) {
 			itens.get(id).setQuantidade(quantidade);
 		}
-		if(tags != null) {
-			itens.get(id).atualizaItem(tags);
+		
+		if(tags != null && !tags.trim().isEmpty()) {
+			itens.get(id).setTags(tags.split(","));
 		}
-		return null;
+		
+		return itens.get(id).toString();
 	}
 
 	public void removeItemParaDoacao(String id) {
 		if(itens.size() == 0) {
-			throw new IllegalArgumentException("O Usuário não possui itens cadastrados.");
+			throw new IllegalArgumentException("O Usuario nao possui itens cadastrados.");
 		}
 		if(!itens.containsKey(id)) {
 			itens.remove(id);

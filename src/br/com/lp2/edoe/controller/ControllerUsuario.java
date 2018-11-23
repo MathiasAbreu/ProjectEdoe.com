@@ -331,6 +331,7 @@ public class ControllerUsuario {
 		if(!usuarios.containsKey(idDoador)) {
 			throw new InvalidUserException(idDoador);
 		}
+		
 		return usuarios.get(idDoador).atualizaItem(id, quantidade, tags);
 	}
 

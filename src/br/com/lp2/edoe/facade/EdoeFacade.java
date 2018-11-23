@@ -24,7 +24,7 @@ public class EdoeFacade {
 	}
 	public String adicionaDoador(String id,String nome,String email,String celular,String classe) throws Exception {
 		
-		return controleUser.adicionarDoador(id,nome,email,celular,classe);
+		return controleUser.adicionarDoador(id,nome,email,celular,classe); 
 		
 	}
 	
@@ -90,7 +90,7 @@ public class EdoeFacade {
 		
 	}
 	
-	public void removeItemParaDoacao(String id, String idDoador) throws InvalidArgumentException, InvalidUserException {
+	public void removeItemParaDoacao(String id, String idDoador) throws Exception {
 		
 		controleUser.removeItemParaDoacao(id, idDoador);
 		
