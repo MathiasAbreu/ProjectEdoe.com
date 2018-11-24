@@ -15,80 +15,86 @@ import easyaccept.EasyAccept;
  */
 public class EdoeFacade {
 
-	private ControllerEdoe controleUser;
+	private ControllerEdoe controle;
 	
 	public EdoeFacade() {
 		
-		controleUser = new ControllerEdoe();
+		controle = new ControllerEdoe();
 		
 	}
 	public String adicionaDoador(String id,String nome,String email,String celular,String classe) throws Exception {
 		
-		return controleUser.adicionarDoador(id,nome,email,celular,classe); 
+		return controle.adicionarDoador(id,nome,email,celular,classe); 
 		
 	}
 	
 	public void adicionaDescritor(String descricao) throws InvalidArgumentException { 
 		
-		controleUser.adicionaDescritor(descricao);
+		controle.adicionaDescritor(descricao);
 	}
 	
 	public String adicionaItemParaDoacao(String idDoador,String descricaoItem,int quantidade,String tags) throws Exception {
 		
-		return controleUser.adicionaItemParaDoacao(idDoador,descricaoItem,quantidade,tags);
+		return controle.adicionaItemParaDoacao(idDoador,descricaoItem,quantidade,tags);
 		
 	}
 	public String pesquisaUsuarioPorId(String id) throws Exception {
 		
-		return controleUser.buscarUsuarioPorId(id);
+		return controle.buscarUsuarioPorId(id);
 	}
 	
 	public String pesquisaUsuarioPorNome(String nome) throws Exception {
 		
-		return controleUser.buscarUsuarioPorNome(nome);
+		return controle.buscarUsuarioPorNome(nome);
 		
 	}
 	
 	public void lerReceptores(String caminho) {
 		
-		controleUser.lerReceptores(caminho);
+		controle.lerReceptores(caminho);
 		
 	}
 	
 	public void atualizaReceptores(String caminho) {
 		
-		controleUser.atualizarReceptores(caminho);
+		controle.atualizarReceptores(caminho);
 		
 	}
 	
 	public String atualizaUsuario(String id,String nome,String email,String celular) throws Exception {
 		
-		return controleUser.atualizaUsuario(id,nome,email,celular);
+		return controle.atualizaUsuario(id,nome,email,celular);
 		
 	}
 	
 	public void removeUsuario(String id) throws Exception {
 		
-		controleUser.removeUsuario(id);
+		controle.removeUsuario(id);
 		
 	}
 	
 	public String atualizaItemParaDoacao(String id,String idDoador,int quantidade,String tags) throws Exception {
 		
-		return controleUser.atualizaItemParaDoacao(id, idDoador,quantidade,tags);
+		return controle.atualizaItemParaDoacao(id, idDoador,quantidade,tags);
 		
 	}
 	
 	public void removeItemParaDoacao(String id, String idDoador) throws Exception {
 		
-		controleUser.removeItemParaDoacao(id, idDoador);
+		controle.removeItemParaDoacao(id, idDoador);
 		
 	}
 	
 	public String exibeItem(String id,String idDoador) throws Exception {
 		
-		return controleUser.exibeItem(id, idDoador);
+		return controle.exibeItem(id, idDoador);
 	}
+	
+	public String listaDescritorDeItensParaDoacao() {
+		
+		return controle.listaDescritorDeItensParaDoacao();
+	}
+	
 	public static void main(String[] args) {
 		
 		args = new String[] {"br.com.lp2.edoe.facade.EdoeFacade",

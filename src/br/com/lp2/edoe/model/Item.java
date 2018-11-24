@@ -129,7 +129,7 @@ public class Item {
 	 */
 	@Override
 	public String toString() {
-		
+		System.out.println("entrou");
 		return String.format("%s - %s, tags: %s, quantidade: %d",this.id,this.descritor,Arrays.toString(tags),this.quantidade);
 	}
 
