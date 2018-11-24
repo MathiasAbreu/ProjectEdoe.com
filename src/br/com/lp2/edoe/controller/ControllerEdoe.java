@@ -1,12 +1,16 @@
 package br.com.lp2.edoe.controller;
 
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.Map;
 
 import br.com.lp2.edoe.dao.ReceptoresDao;
 import br.com.lp2.edoe.exceptions.InvalidArgumentException;
 import br.com.lp2.edoe.exceptions.InvalidUserException;
+import br.com.lp2.edoe.model.Item;
 import br.com.lp2.edoe.model.Usuario;
 import br.com.lp2.edoe.model.UsuarioDoador;
 import br.com.lp2.edoe.model.UsuarioReceptor;
@@ -19,24 +23,30 @@ import br.com.lp2.edoe.model.UsuarioReceptor;
  * @author Mathias Abreu Trajano - mathias.trajano@ccc.ufcg.edu.br
  *
  */
-public class ControllerUsuario {
+public class ControllerEdoe {
 
 	private LinkedHashMap<String,Usuario> usuarios;
 	private ReceptoresDao arquivoReceptores;
 	
+	private Comparator<Item> comparador;
+	
 	private HashSet<String> descritores;
+	
+	private Map<String, ArrayList<Item>> itensParaDoar;
 	
 	/**
 	 * Construtor responsavel pela construcao da instancia da classe, assim como da colecao de armazenamento dos 
 	 * usuarios e o acesso aos arquivos de armazenamento.
 	 * 
 	 */
-	public ControllerUsuario() {
+	public ControllerEdoe() {
 		
 		usuarios = new LinkedHashMap<>();
 		arquivoReceptores = new ReceptoresDao();
 		
 		descritores = new HashSet<>();
+		
+		itensParaDoar = new HashMap<>();
 	}
 	
 	/**

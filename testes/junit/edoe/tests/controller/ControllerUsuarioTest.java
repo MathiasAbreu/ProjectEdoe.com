@@ -5,18 +5,18 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import br.com.lp2.edoe.controller.ControllerUsuario;
+import br.com.lp2.edoe.controller.ControllerEdoe;
 import br.com.lp2.edoe.exceptions.InvalidArgumentException;
 import br.com.lp2.edoe.exceptions.InvalidUserException;
 
 class ControllerUsuarioTest {
 
-	private ControllerUsuario controle;
+	private ControllerEdoe controle;
 
 	@BeforeEach
 	void setUp() throws Exception {
 		
-		controle = new ControllerUsuario();
+		controle = new ControllerEdoe();
 		
 		controle.adicionarDoador("12345678901","Mathias","mathias.trajano","18584257","PESSOA_FISICA");
 	}
