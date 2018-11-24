@@ -36,7 +36,7 @@ class UsuarioReceptorTest {
 	@DisplayName("Testando toString() de usuario receptor")
 	void toStringReceptorTest() {
 		
-		assertEquals(usuarioReceptor01.toString(), "Casa da mae joana/01.234.567/0001-89, joaninha@hotmail.com, (83) 3396-1173, status: receptor" );
+		assertEquals(usuarioReceptor01.toString(), "Casa da mae joana/01234567000189, joaninha@hotmail.com, (83) 3396-1173, status: receptor" );
 		
 	}
 	

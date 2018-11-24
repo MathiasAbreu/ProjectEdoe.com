@@ -38,7 +38,7 @@ class UsuarioDoadorTest {
 	@Test
 	@DisplayName("Testando toString() de usuario")
 	void toStringDoadorTest() {
-		assertEquals(usuarioDoador.toString(), "Liu Kang/012.345.678-99, liu@hotmail.com, 1234-5678, status: doador");	
+		assertEquals(usuarioDoador.toString(), "Liu Kang/01234567899, liu@hotmail.com, 1234-5678, status: doador");	
 		
 	}
 	

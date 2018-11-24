@@ -212,7 +212,16 @@ public abstract class Usuario {
 		
 		return itens.get(id).toString();
 	}
-
+	
+	/**
+	 *  Atualiza um item passado como parametro
+	 *  Pode ser alterado quantidade e tags do item
+	 *  
+	 * @param id identificador do item
+	 * @param quantidade nova quantidade de itens oferecidos
+	 * @param tags novas tags de identificacao do item
+	 * @return representacao textual do item atualizado
+	 */
 	public String atualizaItem(String id, int quantidade, String tags) {
 		
 		if(Integer.parseInt(id) < 0)
@@ -230,7 +239,13 @@ public abstract class Usuario {
 		
 		return itens.get(id).toString();
 	}
-
+	
+	/**
+	 * Remove um item, usando seu idenficador unico
+	 * Caso o usuario nao possua itens, uma excecao e gerada
+	 * Caso o id nao exista, uma excecao e gerada
+	 * @param id identificador do item a ser removido
+	 */
 	public void removeItemParaDoacao(String id) {
 		
 		if(Integer.parseInt(id) < 0)

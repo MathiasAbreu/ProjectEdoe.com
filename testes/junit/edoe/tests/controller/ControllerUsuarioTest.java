@@ -222,8 +222,8 @@ class ControllerUsuarioTest {
 		controle.adicionarDoador("18513302981", "Zeca", "zeca.com", "(83) 2344-8566", "SOCIEDADE");
 		controle.adicionarDoador("18993309981", "Zeca", "zeca.com", "(83) 2344-8566", "SOCIEDADE");
 
-		assertEquals(controle.buscarUsuarioPorNome("Paulo"),"Paulo/705.133.729-11, paulo.com, (83) 3344-5566, status: doador");
-		assertEquals(controle.buscarUsuarioPorNome("Zeca"),"Zeca/185.133.029-81, zeca.com, (83) 2344-8566, status: doador | Zeca/189.933.099-81, zeca.com, (83) 2344-8566, status: doador");
+		assertEquals(controle.buscarUsuarioPorNome("Paulo"),"Paulo/70513372911, paulo.com, (83) 3344-5566, status: doador");
+		assertEquals(controle.buscarUsuarioPorNome("Zeca"),"Zeca/18513302981, zeca.com, (83) 2344-8566, status: doador | Zeca/18993309981, zeca.com, (83) 2344-8566, status: doador");
 
 	}
 
@@ -320,7 +320,7 @@ class ControllerUsuarioTest {
 		
 		controle.adicionarDoador("70981334918", "Ana", "ana.com", "(83) 7384-5906", "PESSOA_FISICA");
 		
-		assertEquals(controle.atualizaUsuario("70981334918", "Mariana", "mariana.com", "(81) 9814-7729"),"Mariana/709.813.349-18, mariana.com, (81) 9814-7729, status: doador");
+		assertEquals(controle.atualizaUsuario("70981334918", "Mariana", "mariana.com", "(81) 9814-7729"),"Mariana/70981334918, mariana.com, (81) 9814-7729, status: doador");
 
 	}
 	

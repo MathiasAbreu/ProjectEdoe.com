@@ -331,7 +331,22 @@ public class ControllerEdoe {
 		
 		return usuarios.get(idDoador).exibeItem(id);
 	}
-
+	
+	/**
+	 * Metodo que atualiza um determinado item cadastrado no sistema. Podem ser alterados: quantidade do item ou as tags relacionadas ao item.
+	 * Caso o parametro quantidade ou tags for null, e considerado que o parametro nao necessita de alteracao, prosseguindo a execucao normal do programa.
+	 * Retorna o toString do item ja atualizado, como confirmacao da alteracao.
+	 * 
+	 * @param id identificador do item
+	 * @param idDoador identificador do doador que possui o item a ser atualizado
+	 * @param quantidade quantidade atualizada do item em questao
+	 * @param tags novas tags que serao relacionadas ao item
+	 * 
+	 * @return representacao textual do item atualizado
+	 * 
+	 * @throws InvalidArgumentException excecao em caso do id (usuario ou item) ser nulo ou vazio
+	 * @throws InvalidUserException excecao em caso do id (usuario ou item) nao for cadastrado no sistema
+	 */
 	public String atualizaItemParaDoacao(String id, String idDoador, int quantidade, String tags) throws InvalidArgumentException, InvalidUserException {
 		
 		if(idDoador == null || idDoador.trim().isEmpty()) {
@@ -344,7 +359,15 @@ public class ControllerEdoe {
 		
 		return usuarios.get(idDoador).atualizaItem(id, quantidade, tags);
 	}
-
+	
+	/**
+	 * Metodo que remove um item de um determinado usuario, passado como parametro.
+	 * O usuario e buscado pelo id, e caso exista, tanto o usuario como o item, o mesmo e removido.
+	 * 
+	 * @param id identificador do item a ser removido.
+	 * @param idDoador identificador do usuario que possui o item a ser removido.
+	 * @throws Exception excecao em caso de entrada invalida ou usuario ou item inexistente.
+	 */
 	public void removeItemParaDoacao(String id, String idDoador) throws Exception {
 		
 		
