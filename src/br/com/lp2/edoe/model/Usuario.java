@@ -188,7 +188,6 @@ public abstract class Usuario {
 	@Override
 	public abstract String toString();
 
-	/*
 	public String adicionaItem(String descricaoItem, int quantidade, String[] tagsArray) {
 		
 		int id = descricaoItem.hashCode();
@@ -213,7 +212,7 @@ public abstract class Usuario {
 		
 		return itens.get(id).toString();
 	}
-	*/
+	
 	/**
 	 *  Atualiza um item passado como parametro
 	 *  Pode ser alterado quantidade e tags do item

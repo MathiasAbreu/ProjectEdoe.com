@@ -28,12 +28,8 @@ import br.com.lp2.edoe.model.UsuarioReceptor;
  *
  */
 public class ControllerEdoe {
-
-	private static int idParaItens;
 	
 	private LinkedHashMap<String,Usuario> usuarios;
-	private Map<String, HashMap<String,Item>> itensParaDoar;
-
 	private ReceptoresDao arquivoReceptores;
 	
 	private Comparator<Item> comparador;
@@ -46,12 +42,8 @@ public class ControllerEdoe {
 	 * 
 	 */
 	public ControllerEdoe() {
-		
-		idParaItens = 0;
-		
+				
 		usuarios = new LinkedHashMap<>();
-		itensParaDoar = new HashMap<>();
-
 		arquivoReceptores = new ReceptoresDao();
 		
 		descritores = new HashSet<>();
@@ -321,27 +313,11 @@ public class ControllerEdoe {
 		if(usuarios.containsKey(idDoador)) {
 			
 			String[] tagsArray = tags.split(",");
-			String id = String.format("%d%d%d%d",LocalDate.now().getYear(),LocalDate.now().getMonthValue(),LocalDate.now().getDayOfMonth(),idParaItens);
-			
-			if(itensParaDoar.containsKey(idDoador)) {
-				
-				if(itensParaDoar.get(idDoador).containsKey(id))
-					itensParaDoar.get(idDoador).get(id).setQuantidade(quantidade);
-				else
-					itensParaDoar.get(idDoador).put(id, new Item(descricaoItem, tagsArray, id, quantidade));
-			}
-			else {
-				
-				itensParaDoar.put(idDoador, new HashMap<String,Item>());
-				itensParaDoar.get(idDoador).put(id, new Item(descricaoItem, tagsArray,id, quantidade));
-			}
-			
-			idParaItens += 1;
-			return id;
+			return usuarios.get(idDoador).adicionaItem(descricaoItem,quantidade,tagsArray);
 		}
 		
 		throw new InvalidUserException(idDoador);
-	}
+			}
 
 	public String exibeItem(String idItem, String idDoador) throws Exception {
 		if (idItem == null || idItem.trim().isEmpty())
@@ -354,15 +330,7 @@ public class ControllerEdoe {
 			throw new InvalidUserException(idDoador);
 		}
 		
-		System.out.println(idItem + " | " + idDoador);
-		
-		HashMap<String, Item> itensDoUsuario = itensParaDoar.get(idDoador);
-		
-		if(itensDoUsuario.containsKey(idItem))
-			return itensDoUsuario.get(idItem).toString();
-		
-		throw new IllegalArgumentException("Item nao encontrado: " + idItem + ".");
-
+		return usuarios.get(idDoador).exibeItem(idItem);
 	}
 	
 	/**
@@ -419,46 +387,7 @@ public class ControllerEdoe {
 	 */
 	public String listaDescritorDeItensParaDoacao() {
 		
-		Set<String> usuarios = itensParaDoar.keySet();
-		
-		ArrayList<Item> itens = new ArrayList<>();
-		
-		for(String chave : usuarios) {
-			
-			itens.addAll(listarItensDeUmUsuario(chave));
-		}
-		
-		if(itens.size() == 0)
-			throw new NullPointerException();
-		
-		comparador = new ComparadorItemPorDescricao();
-		Collections.sort(itens,comparador);
-		
-		String retorno = String.format("%d - %s",itens.get(0).getQuantidade(),itens.get(0).getDescritor());
-		
-		for(int i = 1; i < itens.size(); i++)
-			retorno += String.format(" | %d - %s",itens.get(i).getQuantidade(),itens.get(i).getDescritor());
-		
-		return retorno;
-	}
-
-	/**
-	 * @param usuario
-	 * @return
-	 */
-	private ArrayList<Item> listarItensDeUmUsuario(String usuario) {
-		
-		Set<String> idsItens = itensParaDoar.get(usuario).keySet();
-		
-		ArrayList<Item> itensParaRetornar = new ArrayList<>();
-		
-		for(String id : idsItens) {
-			
-			itensParaRetornar.add(itensParaDoar.get(usuario).get(id));
-			
-		}
-		
-		return itensParaRetornar;
+		return "";
 	}
 
 }
