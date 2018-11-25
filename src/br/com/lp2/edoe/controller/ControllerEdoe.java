@@ -7,6 +7,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -387,7 +388,69 @@ public class ControllerEdoe {
 	 */
 	public String listaDescritorDeItensParaDoacao() {
 		
-		return "";
+		List<String> descritoresOrdenados = new ArrayList<>();
+		
+		for (String descritor : descritores) {
+			
+			descritoresOrdenados.add(descritor);
+		}
+		
+		Collections.sort(descritoresOrdenados);
+		
+		ArrayList<Item> itensDoSistema = obterTodosOsItens();
+		
+		return listarTodosOsDescritores(descritoresOrdenados,itensDoSistema);
+		
+	}
+
+	/**
+	 * @param descritoresOrdenados
+	 * @param itensDoSistema
+	 * @return
+	 */
+	private String listarTodosOsDescritores(List<String> descritoresOrdenados, ArrayList<Item> itensDoSistema) {
+		
+		String retorno = "";
+		
+		LOOP_EXTERNO : for(int i = 0; i < descritoresOrdenados.size(); i++) {
+			
+			for(Item item : itensDoSistema) {
+				
+				if(item.getDescritor().equals(descritoresOrdenados.get(i))) {
+					
+					if(i == 0) {
+						retorno += String.format("%d - %s",item.getQuantidade(),item.getDescritor());
+						continue LOOP_EXTERNO;
+					}
+					
+					retorno += String.format(" | %d - %s",item.getQuantidade(),item.getDescritor());
+					continue LOOP_EXTERNO;
+				}
+			}
+			
+			if(i == 0) {
+				retorno += String.format(" 0 - %s",descritoresOrdenados.get(i));
+			}
+			
+			retorno += String.format(" | 0 - %s",descritoresOrdenados.get(i));
+		}
+		
+		return retorno;
+	}
+
+	/**
+	 * @return
+	 */
+	private ArrayList<Item> obterTodosOsItens() {
+		
+		ArrayList<Item> retorno = new ArrayList<>();
+		
+		for(Usuario usuario : usuarios.values()) {
+			
+			retorno.addAll(usuario.obterItens());
+		}
+		
+		return retorno;
 	}
 
 }

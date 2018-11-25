@@ -11,7 +11,6 @@ import java.util.Arrays;
  */
 public class Item {
 	
-	private String dataInsercao;
 	private String descritor;
 	private String id;
 	
@@ -20,9 +19,7 @@ public class Item {
 	private int quantidade;
 	
 	public Item(String descritor, String[] tags, String id, int quantidade) {
-		
-		this.dataInsercao = String.format("%d/%d/%d",LocalDate.now().getDayOfMonth(),LocalDate.now().getMonthValue(),LocalDate.now().getYear());
-		
+				
 		this.descritor = descritor;
 		this.tags = tags;
 		this.id = id;
@@ -56,13 +53,6 @@ public class Item {
 	 */
 	public void setQuantidade(int quantidade) {
 		this.quantidade = quantidade;
-	}
-
-	/**
-	 * @return the dataInsercao
-	 */
-	public String getDataInsercao() {
-		return dataInsercao;
 	}
 
 	/**
@@ -129,7 +119,7 @@ public class Item {
 	 */
 	@Override
 	public String toString() {
-		System.out.println("entrou");
+
 		return String.format("%s - %s, tags: %s, quantidade: %d",this.id,this.descritor,Arrays.toString(tags),this.quantidade);
 	}
 

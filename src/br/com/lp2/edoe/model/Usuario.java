@@ -1,5 +1,7 @@
 package br.com.lp2.edoe.model;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 
 import br.com.lp2.edoe.exceptions.InvalidArgumentException;
@@ -263,6 +265,19 @@ public abstract class Usuario {
 			throw new IllegalArgumentException("Item nao encontrado: " + id + "." );
 			
 		
+	}
+
+	/**
+	 * @return
+	 */
+	public ArrayList<Item> obterItens() {
+		
+		ArrayList<Item> itensParaRetornar = new ArrayList<>();
+		
+		for(Item item : itens.values())
+			itensParaRetornar.add(item);
+		
+		return itensParaRetornar;
 	}
 	
 }

@@ -37,7 +37,6 @@ class ItemTest {
 		
 		item01 = new Item("cobertor","cama box,grande".split(","),"1234567890",8);
 		
-		assertEquals("22/11/2018",item01.getDataInsercao());
 		assertEquals("cobertor",item01.getDescritor());
 		assertEquals("[cama box, grande]",item01.getTags());
 		assertEquals("1234567890",item01.getId());
