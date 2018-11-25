@@ -1,5 +1,6 @@
 package br.com.lp2.edoe.controller;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -114,14 +115,12 @@ public class ControllerEdoe {
 	 * @param id identificacao do usuario
 	 * 
 	 * @return Retorna a representacao textual do {@link Usuario}.
-	 * @throws InvalidArgumentException 
-	 * @throws InvalidUserException 
-	 * 
-	 * @throws RuntimeException Excecao gerada caso o numero de identificacao recebido seja invalido.
-	 * @throws NullPointerException Essa excecao eh gerada caso o usuario nao seja encontrado no sistema.
+	 *  
+	 * @throws InvalidArgumentException Excecao gerada caso o numero de identificacao recebido seja invalido.
+	 * @throws InvalidUserException Essa excecao eh gerada caso o usuario nao seja encontrado no sistema.
 	 * 
 	 */
-	public String buscarUsuarioPorId(String id) throws InvalidArgumentException, InvalidUserException {
+	public String buscarUsuarioPorId(String id) throws Exception {
 		
 		if(id == null || id.trim().isEmpty())
 			throw new InvalidArgumentException("id","do usuario");
@@ -147,7 +146,7 @@ public class ControllerEdoe {
 	 * @return Retorna uma representacao com todos os possiveis usuarios encontrados.
 	 * 
 	 * @throws InvalidArgumentException Essa excecao eh gerada caso o nome informado seja considerado invalido.
-	 * @throws NullPointerException Excecao gerada caso nao exista nenhum usuario com esse nome.
+	 * @throws InvalidUserException Excecao gerada caso nao exista nenhum usuario com esse nome.
 	 * 
 	 */
 	public String buscarUsuarioPorNome(String nome) throws Exception {
@@ -180,8 +179,10 @@ public class ControllerEdoe {
 	 * 
 	 * @param caminho caminho do arquivo a ser lido.
 	 * 
+	 * @throws IOException Excecao gerada caso haja algum problema na leitura do arquivo.
+	 * 
 	 */
-	public void lerReceptores(String caminho) {
+	public void lerReceptores(String caminho) throws IOException {
 		
 		ArrayList<String> receptores = arquivoReceptores.lerReceptores(caminho);
 		adicionarReceptores(receptores);
@@ -202,7 +203,7 @@ public class ControllerEdoe {
 	 * @return Retorna a nova representacao textual do {@link Usuario}.
 	 * 
 	 * @throws InvalidArgumentException Essa excecao eh gerada caso o id informado seja nulo ou invalido.
-	 * @throws NullPointerException Excecao gerada caso o usuario nao esteja cadastrado no sistema.
+	 * @throws InvalidUserException Excecao gerada caso o usuario nao esteja cadastrado no sistema.
 	 * 
 	 */
 	public String atualizaUsuario(String id, String nome, String email, String celular) throws Exception {
@@ -230,7 +231,7 @@ public class ControllerEdoe {
 	 * @param id identificacao do usuario. CPF para pessoa fisica, CNPJ para demais.
 	 * 
 	 * @throws InvalidArgumentException Excecao gerada caso o id do usuario seja considerado invalido ou nulo.
-	 * @throws NullPointerException Essa excecao eh gerada caso o usuario nao seja encontrado no sistema.
+	 * @throws InvalidUserException Essa excecao eh gerada caso o usuario nao seja encontrado no sistema.
 	 * 
 	 */
 	public void removeUsuario(String id) throws Exception {
@@ -250,8 +251,10 @@ public class ControllerEdoe {
 	 * 
 	 * @param caminho caminho do arquivo que contem os dados atualizados.
 	 * 
+	 * @throws IOException Excecao gerada caso haja algum problema na leitura do arquivo.
+	 * 
 	 */
-	public void atualizarReceptores(String caminho) {
+	public void atualizarReceptores(String caminho) throws IOException {
 		
 		ArrayList<String> receptoresParaAtualizar = arquivoReceptores.lerReceptores(caminho);
 		
@@ -272,9 +275,15 @@ public class ControllerEdoe {
 	}
 
 	/**
+	 * Metodo que adiciona descritores de itens no sistema, ele recebe como parametro os proprios descritores, 
+	 * verifica se os mesmos sao validos e nao estao cadastrados no sistema ainda, e por fim adiciona-os na colecao 
+	 * que os armazena.
 	 * 
-	 * @param descricao
-	 * @throws InvalidArgumentException
+	 * @param descricao descritor do item
+	 * 
+	 * @throws InvalidArgumentException Excecao gerada caso a descricao informada seja considerada invalida.
+	 * @throws RuntimeException Essa excecao eh gerada caso o descritor ja se encontre cadastrado.
+	 * 
 	 */
 	public void adicionaDescritor(String descricao) throws InvalidArgumentException {
 		
@@ -288,13 +297,19 @@ public class ControllerEdoe {
 	}
 
 	/**
+	 * Metodo responsavel pelo cadastro de novos itens disponiveis para doacao no sistema, ele recebe como parametro os dados do novo item, assim como 
+	 * o usuario que esta disponibilizando o mesmo, verifica se todos os dados sao validos e por fim adiciona o novo item disponivel.
 	 * 
-	 * @param idDoador
-	 * @param descricaoItem
-	 * @param quantidade
-	 * @param tags
-	 * @return
-	 * @throws Exception
+	 * @param idDoador id do doador do item
+	 * @param descricaoItem descricao do item
+	 * @param quantidade quantidade disponivel do item
+	 * @param tags tags que servem para incluir mais informacoes acerca dos itens
+	 * 
+	 * @return Retorna o id unico do item recem criado
+	 * 
+	 * @throws InvalidArgumentException Excecao gerada caso algum dos dados informados sejam nulos ou invalidos.
+	 * @throws InvalidUserException Essa excecao eh gerada caso o usuario que disponibilizou o item nao seja encontrado.
+	 * 
 	 */
 	public String adicionaItemParaDoacao(String idDoador, String descricaoItem, int quantidade, String tags) throws Exception {
 		
@@ -320,6 +335,18 @@ public class ControllerEdoe {
 		throw new InvalidUserException(idDoador);
 			}
 
+	/**
+	 * Metodo que faz a busca de um item no sistema e retorna a representacao textual do mesmo.
+	 * 
+	 * @param idItem id do item
+	 * @param idDoador id do doador do item
+	 * 
+	 * @return Retorna a representacao textual do item, se o mesmo existir.
+	 * 
+	 * @throws InvalidArgumentException Excecao gerada caso algum dos dados informados sejam nulos ou invalidos.
+	 * @throws InvalidUserException Essa excecao eh gerada caso o usuario que disponibilizou o item nao seja encontrado.
+	 * 
+	 */
 	public String exibeItem(String idItem, String idDoador) throws Exception {
 		if (idItem == null || idItem.trim().isEmpty())
 			throw new InvalidArgumentException("id","do item");
@@ -368,7 +395,10 @@ public class ControllerEdoe {
 	 * 
 	 * @param id identificador do item a ser removido.
 	 * @param idDoador identificador do usuario que possui o item a ser removido.
-	 * @throws Exception excecao em caso de entrada invalida ou usuario ou item inexistente.
+	 * 
+	 * @throws InvalidArgumentException Excecao gerada caso algum dos dados informados sejam nulos ou invalidos.
+	 * @throws InvalidUserException Essa excecao eh gerada caso o usuario que disponibilizou o item nao seja encontrado.
+	 * 
 	 */
 	public void removeItemParaDoacao(String id, String idDoador) throws Exception {
 		
@@ -384,7 +414,11 @@ public class ControllerEdoe {
 	}
 
 	/**
-	 * @return
+	 * Metodo que lista todos os descritores cadastrados no sistema, independente se os mesmos possuem itens 
+	 * associados ou nao.
+	 * 
+	 * @return Retorna uma representacao com todos os descritores do sistema, ordenados alfabeticamente.
+	 * 
 	 */
 	public String listaDescritorDeItensParaDoacao() {
 		
@@ -403,11 +437,6 @@ public class ControllerEdoe {
 		
 	}
 
-	/**
-	 * @param descritoresOrdenados
-	 * @param itensDoSistema
-	 * @return
-	 */
 	private String listarTodosOsDescritores(List<String> descritoresOrdenados, ArrayList<Item> itensDoSistema) {
 		
 		String retorno = "";
@@ -438,9 +467,6 @@ public class ControllerEdoe {
 		return retorno;
 	}
 
-	/**
-	 * @return
-	 */
 	private ArrayList<Item> obterTodosOsItens() {
 		
 		ArrayList<Item> retorno = new ArrayList<>();

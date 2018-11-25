@@ -49,20 +49,6 @@ public abstract class Usuario {
 		itens = new HashMap<>();
 	}
 
-	/*protected String formatarId() {
-		
-		String[] separaId = identificacao.split("");
-		
-		if(separaId.length == 11) {
-			
-			return String.format("%s%s%s.%s%s%s.%s%s%s-%s%s",separaId[0],separaId[1],separaId[2],separaId[3],separaId[4],separaId[5],separaId[6],separaId[7],separaId[8],separaId[9],separaId[10]);
-		}
-		else {
-			
-			return String.format("%s%s.%s%s%s.%s%s%s/%s%s%s%s-%s%s",separaId[0],separaId[1],separaId[2],separaId[3],separaId[4],separaId[5],separaId[6],separaId[7],separaId[8],separaId[9],separaId[10],separaId[11],separaId[12],separaId[13]);
-		}
-	}*/
-
 	/**
 	 * Metodo que retorna o nome do Usuario.
 	 * 
@@ -190,6 +176,15 @@ public abstract class Usuario {
 	@Override
 	public abstract String toString();
 
+	/**
+	 * Metodo que adiciona um novo item ao usuario.
+	 * 
+	 * @param descricaoItem descricao do item.
+	 * @param quantidade quantidade deisponivel do item
+	 * @param tagsArray tags do novo item
+	 * 
+	 * @return Retorna o id unico gerado para o novo item.
+	 */
 	public String adicionaItem(String descricaoItem, int quantidade, String[] tagsArray) {
 		
 		int id = descricaoItem.hashCode();
@@ -207,6 +202,16 @@ public abstract class Usuario {
 		return idDoItem;
 	}
 	
+	/**
+	 * Metodo que busca e exibe um item de tal usuario.
+	 * 
+	 * @param id id unico do item a ser buscado.
+	 * 
+	 * @return Retorna, se encontrado, a representacao textual de tal item.
+	 * 
+	 * @throws IllegalArgumentException Excecao gerada caso o item desejado nao seja encontrado.
+	 * 
+	 */
 	public String exibeItem(String id) {
 		if (!itens.containsKey(id)) {
 			throw new IllegalArgumentException("Item nao encontrado: " + id + ".");
@@ -216,13 +221,16 @@ public abstract class Usuario {
 	}
 	
 	/**
-	 *  Atualiza um item passado como parametro
-	 *  Pode ser alterado quantidade e tags do item
+	 * Atualiza um item passado como parametro. Pode ser alterado quantidade e tags do item.
 	 *  
 	 * @param id identificador do item
 	 * @param quantidade nova quantidade de itens oferecidos
 	 * @param tags novas tags de identificacao do item
-	 * @return representacao textual do item atualizado
+	 * 
+	 * @return Representacao textual do item atualizado
+	 * 
+	 * @throws IllegalArgumentException Essa excecao eh gerada caso o id inserido seja negativo ou o item nao seja encontrado.
+	 * 
 	 */
 	public String atualizaItem(String id, int quantidade, String tags) {
 		
@@ -243,10 +251,12 @@ public abstract class Usuario {
 	}
 	
 	/**
-	 * Remove um item, usando seu idenficador unico
-	 * Caso o usuario nao possua itens, uma excecao e gerada
-	 * Caso o id nao exista, uma excecao e gerada
+	 * Remove um item, usando seu idenficador unico. 
+	 * 
 	 * @param id identificador do item a ser removido
+	 * 
+	 * @throws IllegalArgumentException Caso o usuario nao possua itens ou o id nao exista, essa excecao eh gerada.
+	 * 
 	 */
 	public void removeItemParaDoacao(String id) {
 		
@@ -268,7 +278,10 @@ public abstract class Usuario {
 	}
 
 	/**
-	 * @return
+	 * Metodo que retorna uma colecao com todos os itens do usuario.
+	 * 
+	 * @return Retorna uma colecao com todos os itens do usuario.
+	 * 
 	 */
 	public ArrayList<Item> obterItens() {
 		

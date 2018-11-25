@@ -1,5 +1,7 @@
 package br.com.lp2.edoe.facade;
 
+import java.io.IOException;
+
 import br.com.lp2.edoe.controller.ControllerEdoe;
 import br.com.lp2.edoe.exceptions.InvalidArgumentException;
 import br.com.lp2.edoe.exceptions.InvalidUserException;
@@ -49,13 +51,13 @@ public class EdoeFacade {
 		
 	}
 	
-	public void lerReceptores(String caminho) {
+	public void lerReceptores(String caminho) throws IOException {
 		
 		controle.lerReceptores(caminho);
 		
 	}
 	
-	public void atualizaReceptores(String caminho) {
+	public void atualizaReceptores(String caminho) throws IOException {
 		
 		controle.atualizarReceptores(caminho);
 		

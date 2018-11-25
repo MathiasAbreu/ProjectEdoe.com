@@ -25,8 +25,10 @@ public class ReceptoresDao {
 	 * 
 	 * @return Retorna um colecao com todos os Usuarios lidos.
 	 * 
+	 * @throws IOException Excecao gerada caso haja algum problema na leitura do arquivo.
+	 * 
 	 */
-	public ArrayList<String> lerReceptores(String caminho) {
+	public ArrayList<String> lerReceptores(String caminho) throws IOException {
 		
 		ArrayList<String> receptores = new ArrayList<>();
 		
@@ -47,7 +49,7 @@ public class ReceptoresDao {
 	      
 		} catch (IOException e) {
 	    	
-			System.out.println("Erro na abertura do arquivo: " + e.getMessage());
+			throw new IOException("Erro na abertura do arquivo: " + e.getMessage());
 	    }
 		
 		receptores.remove(0);

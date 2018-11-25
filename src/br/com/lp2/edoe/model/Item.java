@@ -1,9 +1,10 @@
 package br.com.lp2.edoe.model;
 
-import java.time.LocalDate;
 import java.util.Arrays;
 /**
- *
+ * Classe que representa um Item no sistema, contem todos os dados que compoem um item, assim como metodos que administram e 
+ * manipulam tais dados.
+ * 
  * @author Caio Fernandes Moreira - caio.moreira@ccc.ufcg.edu.br
  * @author Klaywert Danillo Ferreira De Souza - klaywert.souza@ccc.ufcg.edu.br
  * @author Mathias Abreu Trajano - mathias.trajano@ccc.ufcg.edu.br
@@ -18,6 +19,15 @@ public class Item {
 
 	private int quantidade;
 	
+	/**
+	 * Construtor responsavel por instanciar um novo Item, ele recebe todos os dados de um Item como parametro.
+	 * 
+	 * @param descritor descricao do item
+	 * @param tags tags de descricao do item
+	 * @param id id unico do item
+	 * @param quantidade quantidade disponivel do item
+	 * 
+	 */
 	public Item(String descritor, String[] tags, String id, int quantidade) {
 				
 		this.descritor = descritor;
@@ -27,7 +37,9 @@ public class Item {
 	}
 
 	/**
-	 * @return the tags
+	 * Metodo que retorna o Array de tags.
+	 * 
+	 * @return Retorna o Array de tags do item.
 	 */
 	public String[] getTags() {
 		
@@ -35,42 +47,55 @@ public class Item {
 	}
 
 	/**
-	 * @param tags the tags to set
+	 * Metodo que altera o Array de tags.
+	 * 
+	 * @param tags Novo Array de tags.
 	 */
 	public void setTags(String[] tags) {
 		this.tags = tags;
 	}
 
 	/**
-	 * @return the quantidade
+	 * Metodo que retorna a quantidade de itens.
+	 * 
+	 * @return A quantidade disponivel de tal item.
 	 */
 	public int getQuantidade() {
 		return quantidade;
 	}
 
 	/**
-	 * @param quantidade the quantidade to set
+	 * Metodo que altera a quantidade do tal item.
+	 * 
+	 * @param quantidade A nova quantidade de itens.
 	 */
 	public void setQuantidade(int quantidade) {
 		this.quantidade = quantidade;
 	}
 
 	/**
-	 * @return the descritor
+	 * Metodo que retorna a descricao do item.
+	 * 
+	 * @return A descricao do item.
 	 */
 	public String getDescritor() {
 		return descritor;
 	}
 
 	/**
-	 * @return the id
+	 * Metodo que retorna o Id unico do item.
+	 * 
+	 * @return Retorna o id do item.
 	 */
 	public String getId() {
 		return id;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
+	/**
+	 * Metodo responsavel por gerar um numero de identificao que pode ser usado internamente para armazenar o item em 
+	 * alguma colecao de armazenamento especifica.
+	 * 
+	 * @return Retorna o numero usado para armazenar em determinado indice.
 	 */
 	@Override
 	public int hashCode() {
@@ -81,8 +106,12 @@ public class Item {
 		return result;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
+	/**
+	 * Metodo que serve para verificar se dois itens sao iguais.
+	 * 
+	 * @param obj Qualquer tipo de objeto.
+	 * 
+	 * @return Retorna uma confirmacao ao nao da igualdade entre dois itens.
 	 */
 	@Override
 	public boolean equals(Object obj) {
@@ -115,7 +144,9 @@ public class Item {
 
 
 	/**
+	 * Metodo que retorna uma representacao textual do item.
 	 * 
+	 * @return Retorna uma representacao do item.
 	 */
 	@Override
 	public String toString() {

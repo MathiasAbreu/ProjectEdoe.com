@@ -27,15 +27,20 @@ public class UsuarioDoador extends Usuario implements Doador {
 
 	}
 
-	
+	/**
+	 * Metodo responsavel por realizar uma doacao de item.
+	 * 
+	 */
 	@Override
 	public void RealizaDoacao() {
 		// TODO Auto-generated method stub
 
 	}
 
-	/* (non-Javadoc)
-	 * @see br.com.lp2.edoe.model.Usuario#toString()
+	/**
+	 * Metodo que retorna uma representacao textual do {@link UsuarioDoador}.
+	 * 
+	 * @return Retorna uma representacao textual do usuario.
 	 */
 	@Override
 	public String toString() {

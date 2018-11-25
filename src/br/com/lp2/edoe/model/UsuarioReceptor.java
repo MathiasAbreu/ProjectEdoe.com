@@ -27,14 +27,21 @@ public class UsuarioReceptor extends Usuario implements Receptor {
 
 	}
 
+	/**
+	 * Metodo responsavel por receber uma nova doacao de item.
+	 * 
+	 */
 	@Override
 	public void receberDoacao() {
 		// TODO Auto-generated method stub
 		
 	}
 
-	/* (non-Javadoc)
-	 * @see br.com.lp2.edoe.model.Usuario#toString()
+	/**
+	 * Metodo que retorna uma representacao textual de um {@link UsuarioReceptor}.
+	 * 
+	 * @return Retorna uma representacao textual do usuario.
+	 * 
 	 */
 	@Override
 	public String toString() {
