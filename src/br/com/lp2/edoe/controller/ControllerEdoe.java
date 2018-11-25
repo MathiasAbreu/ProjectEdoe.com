@@ -458,10 +458,10 @@ public class ControllerEdoe {
 			}
 			
 			if(i == 0) {
-				retorno += String.format(" 0 - %s",descritoresOrdenados.get(i));
+				retorno += String.format("0 - %s",descritoresOrdenados.get(i));
 			}
-			
-			retorno += String.format(" | 0 - %s",descritoresOrdenados.get(i));
+			else
+				retorno += String.format(" | 0 - %s",descritoresOrdenados.get(i));
 		}
 		
 		return retorno;

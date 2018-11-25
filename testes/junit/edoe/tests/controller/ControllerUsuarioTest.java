@@ -176,9 +176,8 @@ class ControllerUsuarioTest {
 	void buscaPorId() throws Exception {
 		controle.adicionarDoador("70513372911", "Paulo", "paulo.com", "(83) 3344-5566", "PESSOA_FISICA");
 		controle.adicionarDoador("18513302981", "Zeca", "zeca.com", "(83) 2344-8566", "SOCIEDADE");
-		
-		assertEquals(controle.buscarUsuarioPorId("70513372911"),"Paulo/705.133.729-11, paulo.com, (83) 3344-5566, status: doador");
-		assertEquals(controle.buscarUsuarioPorId("18513302981"),"Zeca/185.133.029-81, zeca.com, (83) 2344-8566, status: doador");
+		assertEquals(controle.buscarUsuarioPorId("70513372911"),"Paulo/70513372911, paulo.com, (83) 3344-5566, status: doador");
+		assertEquals(controle.buscarUsuarioPorId("18513302981"),"Zeca/18513302981, zeca.com, (83) 2344-8566, status: doador");
 
 	}
 
@@ -408,4 +407,38 @@ class ControllerUsuarioTest {
 		
 		assertEquals("Usuario nao encontrado: 123.",iae.getMessage());
 	}
+	
+	@Test
+	@DisplayName("Testando exibir descritores que foram adicionados em ordem nao alfabetica")
+	void testListaDescritorDeItensParaDoacao01() throws Exception {
+		controle.adicionaDescritor("calca");
+		controle.adicionaDescritor("sapato");
+		controle.adicionaDescritor("blusa");
+		assertEquals("0 - blusa | 0 - calca | 0 - sapato",controle.listaDescritorDeItensParaDoacao());
+	}
+	
+	@Test
+	@DisplayName("Testando exibir descritores apos mudar quantidade")
+	void testListaDescritorDeItensParaDoacao02() throws Exception {
+		controle.adicionaDescritor("casaco");
+		controle.adicionaDescritor("cachecol");
+		controle.adicionaDescritor("luva");
+		controle.adicionaItemParaDoacao("12345678901", "luva", 6, "velha");
+		assertEquals("0 - cachecol | 0 - casaco | 6 - luva",controle.listaDescritorDeItensParaDoacao());
+		controle.adicionaItemParaDoacao("12345678901", "casaco", 2, "azul");
+		assertEquals("0 - cachecol | 2 - casaco | 6 - luva",controle.listaDescritorDeItensParaDoacao());
+	}
+	
+	@Test
+	@DisplayName("Testando exbir descritores apos mudar a quantidade do mesmo item mais de uma vez")
+	void testListaDescritorDeItensParaDoacao03() throws Exception {
+		controle.adicionaDescritor("cadeira");
+		controle.adicionaDescritor("sofa");
+		controle.adicionaItemParaDoacao("12345678901", "cadeira", 3, "plastico");
+		assertEquals("3 - cadeira | 0 - sofa",controle.listaDescritorDeItensParaDoacao());
+		controle.adicionaItemParaDoacao("12345678901", "cadeira", 1, "madeira");
+		assertEquals("1 - cadeira | 0 - sofa",controle.listaDescritorDeItensParaDoacao());
+	}
+	
+	
 }
