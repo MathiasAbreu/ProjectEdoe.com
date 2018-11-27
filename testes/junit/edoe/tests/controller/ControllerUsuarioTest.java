@@ -603,5 +603,53 @@ class ControllerUsuarioTest {
 		assertEquals("1 - cadeira | 0 - sofa",controle.listaDescritorDeItensParaDoacao());
 	}
 	
+	@Test
+	@DisplayName("Testando se excecao eh lancada ao tentar listar descritores sem haver nenhum registrado")
+	void testListaDescritorDeItensParaDoacao04() {
+		NullPointerException ex = assertThrows(NullPointerException.class, () -> {
+			controle.listaDescritorDeItensParaDoacao();
+		});
+		assertEquals("Erro: Nao ha Itens nem Descritores cadastrados no sistema.", ex.getMessage());
+	}
+	
+	@Test
+	@DisplayName("Testando se excecao eh lancada ao tentar listar itens sem haver nenhum registrado")
+	void testListaItensParaDoacao01() {
+		NullPointerException ex = assertThrows(NullPointerException.class, () -> {
+			controle.listaItensParaDoacao();
+		});
+		assertEquals("Erro: Nao ha itens cadastrados", ex.getMessage());
+	}
+	
+	@Test
+	@DisplayName("Testando se iten sao listados em ordem decrescente de quantidade")
+	void testListaItensParaDoacao02() throws Exception {
+		controle.adicionaItemParaDoacao("12345678901", "arroz", 64, "integral");
+		controle.adicionaItemParaDoacao("12345678901", "feijao", 108, "verde");
+		assertEquals("1278285234 - feijao, tags: [verde], quantidade: 108, doador: Mathias/12345678901 | "
+				+ "93090828 - arroz, tags: [integral], quantidade: 64, doador: Mathias/12345678901"
+				, controle.listaItensParaDoacao());
+		controle.adicionaItemParaDoacao("12345678901", "sabao", 80, "antibacteriano");
+		assertEquals("1278285234 - feijao, tags: [verde], quantidade: 108, doador: Mathias/12345678901 | "
+				+ "109191938 - sabao, tags: [antibacteriano], quantidade: 80, doador: Mathias/12345678901 | "
+				+ "93090828 - arroz, tags: [integral], quantidade: 64, doador: Mathias/12345678901"
+				, controle.listaItensParaDoacao());
+	}
+	
+	@Test
+	@DisplayName("Testando se iten sao reorganizado apos mudar quantidade do item")
+	void testListaItensParaDoacao03() throws Exception {
+		controle.adicionaItemParaDoacao("12345678901", "arroz", 64, "integral");
+		controle.adicionaItemParaDoacao("12345678901", "feijao", 108, "verde");
+		controle.adicionaItemParaDoacao("12345678901", "sabao", 80, "antibacteriano");
+		controle.adicionaItemParaDoacao("12345678901", "feijao", 1, "verde");
+		assertEquals("109191938 - sabao, tags: [antibacteriano], quantidade: 80, doador: Mathias/12345678901 | "
+				+ "93090828 - arroz, tags: [integral], quantidade: 64, doador: Mathias/12345678901 | "
+				+ "1278285234 - feijao, tags: [verde], quantidade: 1, doador: Mathias/12345678901"
+				, controle.listaItensParaDoacao());
+		System.out.println(controle.listaItensParaDoacao());
+	}
+	
+	
 	
 }
