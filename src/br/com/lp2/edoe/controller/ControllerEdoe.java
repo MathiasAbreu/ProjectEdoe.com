@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Set;
 
 import br.com.lp2.edoe.comparators.ComparadorItemPorDescricao;
+import br.com.lp2.edoe.comparators.ComparadorItemPorId;
 import br.com.lp2.edoe.comparators.ComparadorItemPorQuantidade;
 import br.com.lp2.edoe.dao.ReceptoresDao;
 import br.com.lp2.edoe.exceptions.InvalidArgumentException;
@@ -493,28 +494,33 @@ public class ControllerEdoe {
 		
 		for (Usuario usuario : usuarios.values()) {
 			
-			ArrayList<Item> itensDoUsuario = usuario.obterItens();
-			
-			for(Item item : itensDoUsuario) {
+			if(usuario.getStatus().equals(classe)) {
 				
-				usuariosEitens.put(item.getId(),usuario.getIdentificacao());
+				ArrayList<Item> itensDoUsuario = usuario.obterItens();
+				
+				for(Item item : itensDoUsuario) {
+					
+					usuariosEitens.put(item.getId(),usuario.getIdentificacao());
+				}
+				itens.addAll(itensDoUsuario);
 			}
-			itens.addAll(itensDoUsuario);
-			
 		}
 		
 		if(itens.size() == 0)
 			throw new NullPointerException("Erro: Nao ha itens cadastrados");
 		
-		Collections.sort(itens,new ComparadorItemPorQuantidade());
+		if(classe.equals("doador"))
+			Collections.sort(itens,new ComparadorItemPorQuantidade());
+		else
+			Collections.sort(itens,new ComparadorItemPorId());
 		
 		Usuario user0 = usuarios.get(usuariosEitens.get(itens.get(0).getId()));
-		String retorno = itens.get(0).toString() + String.format(", doador: %s/%s",user0.getNome(),user0.getIdentificacao());
+		String retorno = itens.get(0).toString() + String.format(", %s: %s/%s",user0.getStatus(),user0.getNome(),user0.getIdentificacao());
 		
 		for(int i = 1; i < itens.size(); i++) {
 			
 			Usuario userI = usuarios.get(usuariosEitens.get(itens.get(i).getId()));
-			retorno += " | " + itens.get(i).toString() + String.format(", doador: %s/%s",userI.getNome(),userI.getIdentificacao());
+			retorno += " | " + itens.get(i).toString() + String.format(", %s: %s/%s",userI.getStatus(),userI.getNome(),userI.getIdentificacao());
 		
 		}
 		return retorno;
