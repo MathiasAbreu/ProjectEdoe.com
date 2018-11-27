@@ -3,6 +3,7 @@ package br.com.lp2.edoe.model;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Set;
 
 import br.com.lp2.edoe.exceptions.InvalidArgumentException;
 import br.com.lp2.edoe.exceptions.InvalidUserException;
@@ -291,6 +292,24 @@ public abstract class Usuario {
 			itensParaRetornar.add(item);
 		
 		return itensParaRetornar;
+	}
+	
+	/**
+	 * Pesquisa um item atraves de um descritor passado como parametro
+	 * Checa os itens disponibilizados pelo usuario e adiciona a lista caso ache
+	 * @param desc descritor a ser procurado
+	 * @return uma lista contendo os itens que possuem o descritor passado como parametro
+	 */
+	public ArrayList<Item> pesquisaItemParaDoacaoPorDescricao(String desc) {
+		Set<String> itensTodos = itens.keySet();
+		ArrayList<Item> itensAchados = new ArrayList<>();
+		for (String item : itensTodos) {
+			if (itens.get(item).getDescritor().toLowerCase().contains(desc.toLowerCase())) {
+				itensAchados.add(itens.get(item));
+			}
+		}
+		
+		return itensAchados;
 	}
 	
 }

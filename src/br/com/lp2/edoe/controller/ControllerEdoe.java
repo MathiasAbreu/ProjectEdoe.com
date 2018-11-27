@@ -513,5 +513,40 @@ public class ControllerEdoe {
 		}
 		return retorno;
 	}
+	
+	/**
+	 * Metodo que procura itens com descritores que contenham um trecho passado como parametro
+	 * Pesquisa em todos os usuarios e retorna todos os itens encontrados
+	 * @param desc trecho do descritor do item a ser procurado
+	 * @return representacao textual dos itens achados
+	 * @throws InvalidArgumentException excecao caso o parametro seja nulo ou vazio
+	 */
+	public String pesquisaItemParaDoacaoPorDescricao(String desc) throws InvalidArgumentException {
+		if(desc == null || desc.trim().isEmpty())
+			throw new InvalidArgumentException("texto da pesquisa");
+		
+		ArrayList<Item> itensListados = new ArrayList<>();
+		Set<String> usuariosChaves =usuarios.keySet();
+		
+		for (String chave : usuariosChaves) {
+			itensListados.addAll(usuarios.get(chave).pesquisaItemParaDoacaoPorDescricao(desc));
+			
+		}
+		
+		String pesquisa = "";
+		ComparadorItemPorDescricao comparator = new ComparadorItemPorDescricao();
+		Collections.sort(itensListados, comparator);
+		for (int i = 0; i < itensListados.size(); i++) {
+			if (i == itensListados.size() -1) {
+				pesquisa += itensListados.get(i);
+			} else {
+				pesquisa += itensListados.get(i) + " | ";
+			}
+		}	
+		
+		
+		return pesquisa;
+		
+	}
 
 }

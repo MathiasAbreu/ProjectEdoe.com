@@ -103,6 +103,14 @@ public class EdoeFacade {
 		
 	}
 	
+	public String pesquisaItemParaDoacaoPorDescricao(String desc) throws InvalidArgumentException {
+		
+		return controle.pesquisaItemParaDoacaoPorDescricao(desc);
+		
+	}
+	
+	
+	
 	public static void main(String[] args) {
 		
 		args = new String[] {"br.com.lp2.edoe.facade.EdoeFacade",
