@@ -109,7 +109,25 @@ public class EdoeFacade {
 		
 	}
 	
+	public String adicionaItemNecessario(String idReceptor,String descricaoItem,int quantidade,String tags) throws Exception {
+		
+		return controle.adicionaItemParaDoacao(idReceptor, descricaoItem, quantidade, tags);
+	}
 	
+	public String listaItensNecessarios() {
+		
+		return controle.listaItensParaDoacao();
+	}
+	
+	public String atualizaItemNecessario(String idReceptor,String idItem,int novaQuantidade,String novasTags) throws Exception {
+		
+		return controle.atualizaItemParaDoacao(idItem, idReceptor, novaQuantidade, novasTags);
+	}
+	
+	public void removeItemNecessario(String idReceptor, String idItem) throws Exception {
+		
+		controle.removeItemParaDoacao(idItem, idReceptor);
+	}
 	
 	public static void main(String[] args) {
 		

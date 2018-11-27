@@ -321,16 +321,16 @@ public class ControllerEdoe {
 		if(quantidade <= 0)
 			throw new IllegalArgumentException("Entrada invalida: quantidade deve ser maior que zero.");
 		
-		if(descritores.contains(descricaoItem)) { 
+		if(descritores.contains(descricaoItem.toLowerCase().replaceAll("\\s"," "))) { 
 			
 		}
 		else
-			adicionaDescritor(descricaoItem);
+			adicionaDescritor(descricaoItem.toLowerCase().replaceAll("\\s"," "));
 		
 		if(usuarios.containsKey(idDoador)) {
 			
 			String[] tagsArray = tags.split(",");
-			return usuarios.get(idDoador).adicionaItem(descricaoItem,quantidade,tagsArray);
+			return usuarios.get(idDoador).adicionaItem(descricaoItem.toLowerCase().replaceAll("\\s"," "),quantidade,tagsArray);
 		}
 		
 		throw new InvalidUserException(idDoador);
