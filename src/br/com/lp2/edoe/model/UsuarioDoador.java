@@ -38,6 +38,11 @@ public class UsuarioDoador extends Usuario {
 		return String.format("%s/%s, %s, %s, status: doador",getNome(),getIdentificacao(),getEmail(),getCelular());
 	}
 
+	/**
+	 * Metodo que retorna uma representacao afirmando que o usuario eh do tipo doador.
+	 * 
+	 * @return Retorna a String 'doador'.
+	 */
 	@Override
 	public String getStatus() {
 		return "doador";

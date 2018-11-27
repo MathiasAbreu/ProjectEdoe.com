@@ -335,7 +335,7 @@ public class ControllerEdoe {
 		}
 		
 		throw new InvalidUserException(idDoador);
-			}
+	}
 
 	/**
 	 * Metodo que faz a busca de um item no sistema e retorna a representacao textual do mesmo.
@@ -428,27 +428,22 @@ public class ControllerEdoe {
 			throw new NullPointerException("Erro: Nao ha Itens nem Descritores cadastrados no sistema.");
 		
 		List<String> descritoresOrdenados = new ArrayList<>();
-		
 		for (String descritor : descritores) {
 			
 			descritoresOrdenados.add(descritor);
 		}
 		
 		Collections.sort(descritoresOrdenados);
-		
-		ArrayList<Item> itensDoSistema = obterTodosOsItens();
-		
-		return listarTodosOsDescritores(descritoresOrdenados,itensDoSistema);
-		
+				
+		return listarTodosOsDescritores(descritoresOrdenados);
 	}
 
-	private String listarTodosOsDescritores(List<String> descritoresOrdenados, ArrayList<Item> itensDoSistema) {
+	private String listarTodosOsDescritores(List<String> descritoresOrdenados) {
 		
 		String retorno = "";
 		
 		LOOP_EXTERNO : for(int i = 0; i < descritoresOrdenados.size(); i++) {
-			
-			for(Item item : itensDoSistema) {
+			for(Item item : obterTodosOsItens()) {
 				
 				if(item.getDescritor().equals(descritoresOrdenados.get(i))) {
 					
@@ -456,15 +451,13 @@ public class ControllerEdoe {
 						retorno += String.format("%d - %s",item.getQuantidade(),item.getDescritor());
 						continue LOOP_EXTERNO;
 					}
-					
 					retorno += String.format(" | %d - %s",item.getQuantidade(),item.getDescritor());
 					continue LOOP_EXTERNO;
 				}
 			}
 			
-			if(i == 0) {
+			if(i == 0)
 				retorno += String.format("0 - %s",descritoresOrdenados.get(i));
-			}
 			else
 				retorno += String.format(" | 0 - %s",descritoresOrdenados.get(i));
 		}
@@ -485,11 +478,19 @@ public class ControllerEdoe {
 	}
 
 	/**
-	 * @return
+	 * Metodo que lista todos os itens de determinado tipo de usuario, este metodo busca todos os itens do sistema de determinados 
+	 * usuarios, depois ordena-os de acordo com o criterio de ordenacao desejado, por ultimo gera uma representacao textual de todos os itens.
+	 * 
+	 * @param classe tipo de usuario
+	 * 
+	 * @return Retorna uma representacao de todos os itens de determinados usuarios.
+	 * 
+	 * @throws NullPointerException Essa excecao eh gerada caso nao haja itens para serem listados.
+	 * 
 	 */
-	public String listaItensParaDoacao(String classe) {
+	public String listaItens(String classe) {
 		
-		HashMap<String,String> usuariosEitens = new HashMap<>();
+		HashMap<String,String> itensUsuarios = new HashMap<>();
 		List<Item> itens = new ArrayList<>();
 		
 		for (Usuario usuario : usuarios.values()) {
@@ -497,10 +498,9 @@ public class ControllerEdoe {
 			if(usuario.getStatus().equals(classe)) {
 				
 				ArrayList<Item> itensDoUsuario = usuario.obterItens();
-				
 				for(Item item : itensDoUsuario) {
 					
-					usuariosEitens.put(item.getId(),usuario.getIdentificacao());
+					itensUsuarios.put(item.getId(),usuario.getIdentificacao());
 				}
 				itens.addAll(itensDoUsuario);
 			}
@@ -509,17 +509,19 @@ public class ControllerEdoe {
 		if(itens.size() == 0)
 			throw new NullPointerException("Erro: Nao ha itens cadastrados");
 		
-		if(classe.equals("doador"))
-			Collections.sort(itens,new ComparadorItemPorQuantidade());
-		else
-			Collections.sort(itens,new ComparadorItemPorId());
+		Collections.sort(itens,classe.equals("doador") ? new ComparadorItemPorQuantidade() : new ComparadorItemPorId());
 		
-		Usuario user0 = usuarios.get(usuariosEitens.get(itens.get(0).getId()));
+		return gerarListagem(itens, itensUsuarios);
+	}
+	
+	private String gerarListagem(List<Item> itens,HashMap<String,String> itensUsuarios) {
+		
+		Usuario user0 = usuarios.get(itensUsuarios.get(itens.get(0).getId()));
 		String retorno = itens.get(0).toString() + String.format(", %s: %s/%s",user0.getStatus(),user0.getNome(),user0.getIdentificacao());
 		
 		for(int i = 1; i < itens.size(); i++) {
 			
-			Usuario userI = usuarios.get(usuariosEitens.get(itens.get(i).getId()));
+			Usuario userI = usuarios.get(itensUsuarios.get(itens.get(i).getId()));
 			retorno += " | " + itens.get(i).toString() + String.format(", %s: %s/%s",userI.getStatus(),userI.getNome(),userI.getIdentificacao());
 		
 		}
@@ -529,11 +531,16 @@ public class ControllerEdoe {
 	/**
 	 * Metodo que procura itens com descritores que contenham um trecho passado como parametro
 	 * Pesquisa em todos os usuarios e retorna todos os itens encontrados
+	 * 
 	 * @param desc trecho do descritor do item a ser procurado
+	 * 
 	 * @return representacao textual dos itens achados
+	 * 
 	 * @throws InvalidArgumentException excecao caso o parametro seja nulo ou vazio
+	 * 
 	 */
-	public String pesquisaItemParaDoacaoPorDescricao(String desc) throws InvalidArgumentException {
+	public String pesquisaItemPorDescricao(String desc) throws InvalidArgumentException {
+		
 		if(desc == null || desc.trim().isEmpty())
 			throw new InvalidArgumentException("texto da pesquisa");
 		
@@ -541,24 +548,22 @@ public class ControllerEdoe {
 		Set<String> usuariosChaves =usuarios.keySet();
 		
 		for (String chave : usuariosChaves) {
-			itensListados.addAll(usuarios.get(chave).pesquisaItemParaDoacaoPorDescricao(desc));
+			itensListados.addAll(usuarios.get(chave).pesquisaItemPorDescricao(desc));
 			
 		}
 		
+		Collections.sort(itensListados, new ComparadorItemPorDescricao());
+		
 		String pesquisa = "";
-		ComparadorItemPorDescricao comparator = new ComparadorItemPorDescricao();
-		Collections.sort(itensListados, comparator);
 		for (int i = 0; i < itensListados.size(); i++) {
-			if (i == itensListados.size() -1) {
+			
+			if (i == itensListados.size() -1)
 				pesquisa += itensListados.get(i);
-			} else {
+			else
 				pesquisa += itensListados.get(i) + " | ";
-			}
+			
 		}	
 		
-		
-		return pesquisa;
-		
+		return pesquisa;	
 	}
-
 }

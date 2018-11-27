@@ -1,12 +1,8 @@
 package br.com.lp2.edoe.model;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Set;
-
-import br.com.lp2.edoe.exceptions.InvalidArgumentException;
-import br.com.lp2.edoe.exceptions.InvalidUserException;
 
 /**
  * Classe que representa uma abstracao de um Usuario no sistema, eh uma classe basica que fornece atributos e metodos 
@@ -299,14 +295,20 @@ public abstract class Usuario {
 	
 	/**
 	 * Pesquisa um item atraves de um descritor passado como parametro
-	 * Checa os itens disponibilizados pelo usuario e adiciona a lista caso ache
+	 * Checa os itens disponibilizados pelo usuario e adiciona a lista caso ache.
+	 * 
 	 * @param desc descritor a ser procurado
+	 * 
 	 * @return uma lista contendo os itens que possuem o descritor passado como parametro
+	 * 
 	 */
-	public ArrayList<Item> pesquisaItemParaDoacaoPorDescricao(String desc) {
+	public ArrayList<Item> pesquisaItemPorDescricao(String desc) {
+		
 		Set<String> itensTodos = itens.keySet();
 		ArrayList<Item> itensAchados = new ArrayList<>();
+		
 		for (String item : itensTodos) {
+			
 			if (itens.get(item).getDescritor().toLowerCase().contains(desc.toLowerCase())) {
 				itensAchados.add(itens.get(item));
 			}
@@ -315,7 +317,12 @@ public abstract class Usuario {
 		return itensAchados;
 	}
 	
+	/**
+	 * Metodo que retorna o status de um usuario.
+	 * 
+	 * @return Retorna 'doador' se for um usuario do tipo doador, e 'Receptor' se for um usuario do tipo receptor.
+	 * 
+	 */
 	public abstract String getStatus();
-	
 	
 }

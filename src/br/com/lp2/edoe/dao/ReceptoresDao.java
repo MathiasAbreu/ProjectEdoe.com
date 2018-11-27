@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Classe responsavel por acessar e realizar a leitura dos arquivos que contem os dados dos Usuarios Receptores a serem 

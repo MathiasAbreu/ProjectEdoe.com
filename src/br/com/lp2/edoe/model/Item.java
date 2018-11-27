@@ -149,7 +149,6 @@ public class Item {
 		
 	}
 
-
 	/**
 	 * Metodo que retorna uma representacao textual do item.
 	 * 
@@ -160,5 +159,4 @@ public class Item {
 
 		return String.format("%s - %s, tags: %s, quantidade: %d",this.id,this.descritor,Arrays.toString(tags),this.quantidade);
 	}
-
 }

@@ -613,7 +613,7 @@ class ControllerUsuarioTest {
 	@DisplayName("Testando se excecao eh lancada ao tentar listar itens sem haver nenhum registrado")
 	void testListaItensParaDoacao01() {
 		NullPointerException ex = assertThrows(NullPointerException.class, () -> {
-			controle.listaItensParaDoacao("doador");
+			controle.listaItens("doador");
 		});
 		assertEquals("Erro: Nao ha itens cadastrados", ex.getMessage());
 	}
@@ -625,12 +625,12 @@ class ControllerUsuarioTest {
 		controle.adicionaItemParaDoacao("12345678901", "feijao", 108, "verde");
 		assertEquals("2 - feijao, tags: [verde], quantidade: 108, doador: Mathias/12345678901 | "
 				+ "1 - arroz, tags: [integral], quantidade: 64, doador: Mathias/12345678901"
-				, controle.listaItensParaDoacao("doador"));
+				, controle.listaItens("doador"));
 		controle.adicionaItemParaDoacao("12345678901", "sabao", 80, "antibacteriano");
 		assertEquals("2 - feijao, tags: [verde], quantidade: 108, doador: Mathias/12345678901 | "
 				+ "3 - sabao, tags: [antibacteriano], quantidade: 80, doador: Mathias/12345678901 | "
 				+ "1 - arroz, tags: [integral], quantidade: 64, doador: Mathias/12345678901"
-				, controle.listaItensParaDoacao("doador"));
+				, controle.listaItens("doador"));
 	}
 	
 	@Test
@@ -643,14 +643,14 @@ class ControllerUsuarioTest {
 		assertEquals("3 - sabao, tags: [antibacteriano], quantidade: 80, doador: Mathias/12345678901 | "
 				+ "1 - arroz, tags: [integral], quantidade: 64, doador: Mathias/12345678901 | "
 				+ "2 - feijao, tags: [verde], quantidade: 1, doador: Mathias/12345678901"
-				, controle.listaItensParaDoacao("doador"));
+				, controle.listaItens("doador"));
 	}
 	
 	@Test
 	@DisplayName("Testando pesquisar por uma descricao nula")
 	void testPesquisaItemParaDoacaoPorDescricao01() throws Exception {
 		InvalidArgumentException ex = assertThrows(InvalidArgumentException.class, () -> {
-			controle.pesquisaItemParaDoacaoPorDescricao(null);
+			controle.pesquisaItemPorDescricao(null);
 		});
 		assertEquals("Entrada invalida: texto da pesquisa nao pode ser vazio ou nulo.", ex.getMessage());
 	}
@@ -659,12 +659,12 @@ class ControllerUsuarioTest {
 	@DisplayName("Testando pesquisar por descricoes vazias")
 	void testPesquisaItemParaDoacaoPorDescricao02() throws Exception {
 		InvalidArgumentException ex = assertThrows(InvalidArgumentException.class, () -> {
-			controle.pesquisaItemParaDoacaoPorDescricao("   ");
+			controle.pesquisaItemPorDescricao("   ");
 		});
 		assertEquals("Entrada invalida: texto da pesquisa nao pode ser vazio ou nulo.", ex.getMessage());
 		
 		InvalidArgumentException ex2 = assertThrows(InvalidArgumentException.class, () -> {
-			controle.pesquisaItemParaDoacaoPorDescricao("");
+			controle.pesquisaItemPorDescricao("");
 		});
 		assertEquals("Entrada invalida: texto da pesquisa nao pode ser vazio ou nulo.", ex.getMessage());
 	}
@@ -673,16 +673,16 @@ class ControllerUsuarioTest {
 	@DisplayName("Testando pesquisar um item cadastrado")
 	void testPesquisaItemParaDoacaoPorDescricao03() throws Exception {
 		controle.adicionaItemParaDoacao("12345678901", "ps5", 1, "legitimo, nao eh pirata");
-		assertEquals("1 - ps5, tags: [legitimo,  nao eh pirata], quantidade: 1", controle.pesquisaItemParaDoacaoPorDescricao("ps5"));
+		assertEquals("1 - ps5, tags: [legitimo,  nao eh pirata], quantidade: 1", controle.pesquisaItemPorDescricao("ps5"));
 	}
 	
 	@Test
 	@DisplayName("Testando pesquisar um item cadastrado apos alterar sua quantidade e tags")
 	void testPesquisaItemParaDoacaoPorDescricao04() throws Exception {
 		controle.adicionaItemParaDoacao("12345678901", "biscoito", 6, "napolitano,300g");
-		assertEquals("1 - biscoito, tags: [napolitano, 300g], quantidade: 6", controle.pesquisaItemParaDoacaoPorDescricao("biscoito"));
+		assertEquals("1 - biscoito, tags: [napolitano, 300g], quantidade: 6", controle.pesquisaItemPorDescricao("biscoito"));
 		controle.adicionaItemParaDoacao("12345678901", "biscoito", 2, "napolitano,300g");
-		assertEquals("1 - biscoito, tags: [napolitano, 300g], quantidade: 2", controle.pesquisaItemParaDoacaoPorDescricao("biscoito"));
+		assertEquals("1 - biscoito, tags: [napolitano, 300g], quantidade: 2", controle.pesquisaItemPorDescricao("biscoito"));
 	}
 	
 	

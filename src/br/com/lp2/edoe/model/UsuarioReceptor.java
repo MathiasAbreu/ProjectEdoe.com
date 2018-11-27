@@ -31,7 +31,6 @@ public class UsuarioReceptor extends Usuario {
 	 * Metodo que retorna uma representacao textual de um {@link UsuarioReceptor}.
 	 * 
 	 * @return Retorna uma representacao textual do usuario.
-	 * 
 	 */
 	@Override
 	public String toString() {
@@ -40,6 +39,11 @@ public class UsuarioReceptor extends Usuario {
 
 	}
 
+	/**
+	 * Metodo que retorna uma representacao afirmando que o usuario eh do tipo receptor.
+	 * 
+	 * @return Retorna a String 'Receptor'.
+	 */
 	@Override
 	public String getStatus() {
 		return "Receptor";

@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import br.com.lp2.edoe.controller.ControllerEdoe;
 import br.com.lp2.edoe.exceptions.InvalidArgumentException;
-import br.com.lp2.edoe.exceptions.InvalidUserException;
 import easyaccept.EasyAccept;
 
 /**
@@ -99,13 +98,13 @@ public class EdoeFacade {
 	
 	public String listaItensParaDoacao() {
 		
-		return controle.listaItensParaDoacao("doador");
+		return controle.listaItens("doador");
 		
 	}
 	
 	public String pesquisaItemParaDoacaoPorDescricao(String desc) throws InvalidArgumentException {
 		
-		return controle.pesquisaItemParaDoacaoPorDescricao(desc);
+		return controle.pesquisaItemPorDescricao(desc);
 		
 	}
 	
@@ -116,7 +115,7 @@ public class EdoeFacade {
 	
 	public String listaItensNecessarios() {
 		
-		return controle.listaItensParaDoacao("Receptor");
+		return controle.listaItens("Receptor");
 	}
 	
 	public String atualizaItemNecessario(String idReceptor,String idItem,int novaQuantidade,String novasTags) throws Exception {
