@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.Set;
 
 import br.com.lp2.edoe.comparators.ComparadorItemPorDescricao;
+import br.com.lp2.edoe.comparators.ComparadorItemPorQuantidade;
 import br.com.lp2.edoe.dao.ReceptoresDao;
 import br.com.lp2.edoe.exceptions.InvalidArgumentException;
 import br.com.lp2.edoe.exceptions.InvalidUserException;
@@ -476,6 +477,40 @@ public class ControllerEdoe {
 			retorno.addAll(usuario.obterItens());
 		}
 		
+		return retorno;
+	}
+
+	/**
+	 * @return
+	 */
+	public String listaItensParaDoacao() {
+		
+		HashMap<String,String> usuariosEitens = new HashMap<>();
+		List<Item> itens = new ArrayList<>();
+		
+		for (Usuario usuario : usuarios.values()) {
+			
+			ArrayList<Item> itensDoUsuario = usuario.obterItens();
+			
+			for(Item item : itensDoUsuario) {
+				
+				usuariosEitens.put(item.getId(),usuario.getIdentificacao());
+			}
+			itens.addAll(itensDoUsuario);
+			
+		}
+		
+		Collections.sort(itens,new ComparadorItemPorQuantidade());
+		
+		Usuario user0 = usuarios.get(usuariosEitens.get(itens.get(0).getId()));
+		String retorno = itens.get(0).toString() + String.format(", doador: %s/%s",user0.getNome(),user0.getIdentificacao());
+		
+		for(int i = 1; i < itens.size(); i++) {
+			
+			Usuario userI = usuarios.get(usuariosEitens.get(itens.get(i).getId()));
+			retorno += " | " + itens.get(i).toString() + String.format(", doador: %s/%s",userI.getNome(),userI.getIdentificacao());
+		
+		}
 		return retorno;
 	}
 

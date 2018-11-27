@@ -97,12 +97,19 @@ public class EdoeFacade {
 		return controle.listaDescritorDeItensParaDoacao();
 	}
 	
+	public String listaItensParaDoacao() {
+		
+		return controle.listaItensParaDoacao();
+		
+	}
+	
 	public static void main(String[] args) {
 		
 		args = new String[] {"br.com.lp2.edoe.facade.EdoeFacade",
 				 "src/br/com/lp2/edoe/easyAccept/use_case_1.txt",
 				 "src/br/com/lp2/edoe/easyAccept/use_case_2.txt",
-				 "src/br/com/lp2/edoe/easyAccept/use_case_3.txt"};
+				 "src/br/com/lp2/edoe/easyAccept/use_case_3.txt",
+				 "src/br/com/lp2/edoe/easyAccept/use_case_4.txt"};
 		
 		EasyAccept.main(args);
 		

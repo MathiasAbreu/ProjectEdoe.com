@@ -29,11 +29,11 @@ public class ComparadorItemPorQuantidade implements Comparator<Item> {
 	public int compare(Item item01, Item item02) {
 		
 		if(item01.getQuantidade() < item02.getQuantidade())
-			return -1;
-		
-		if(item01.getQuantidade() > item02.getQuantidade())
 			return 1;
 		
-		return 0;
+		if(item01.getQuantidade() > item02.getQuantidade())
+			return -1;
+		
+		return item01.getDescritor().compareTo(item02.getDescritor());
 	}
 }
