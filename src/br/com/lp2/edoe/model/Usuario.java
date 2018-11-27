@@ -258,7 +258,7 @@ public abstract class Usuario {
 	 * @throws IllegalArgumentException Caso o usuario nao possua itens ou o id nao exista, essa excecao eh gerada.
 	 * 
 	 */
-	public void removeItemParaDoacao(String id) {
+	public void removeItem(String id) {
 		
 		if(Integer.parseInt(id) < 0)
 			throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");

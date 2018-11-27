@@ -36,7 +36,7 @@ public class EdoeFacade {
 	
 	public String adicionaItemParaDoacao(String idDoador,String descricaoItem,int quantidade,String tags) throws Exception {
 		
-		return controle.adicionaItemParaDoacao(idDoador,descricaoItem,quantidade,tags);
+		return controle.adicionaItem(idDoador,descricaoItem,quantidade,tags);
 		
 	}
 	public String pesquisaUsuarioPorId(String id) throws Exception {
@@ -76,13 +76,13 @@ public class EdoeFacade {
 	
 	public String atualizaItemParaDoacao(String id,String idDoador,int quantidade,String tags) throws Exception {
 		
-		return controle.atualizaItemParaDoacao(id, idDoador,quantidade,tags);
+		return controle.atualizaItem(id, idDoador,quantidade,tags);
 		
 	}
 	
 	public void removeItemParaDoacao(String id, String idDoador) throws Exception {
 		
-		controle.removeItemParaDoacao(id, idDoador);
+		controle.removeItem(id, idDoador);
 		
 	}
 	
@@ -93,7 +93,7 @@ public class EdoeFacade {
 	
 	public String listaDescritorDeItensParaDoacao() {
 		
-		return controle.listaDescritorDeItensParaDoacao();
+		return controle.listaDescritorDeItens();
 	}
 	
 	public String listaItensParaDoacao() {
@@ -110,7 +110,7 @@ public class EdoeFacade {
 	
 	public String adicionaItemNecessario(String idReceptor,String descricaoItem,int quantidade,String tags) throws Exception {
 		
-		return controle.adicionaItemParaDoacao(idReceptor, descricaoItem, quantidade, tags);
+		return controle.adicionaItem(idReceptor, descricaoItem, quantidade, tags);
 	}
 	
 	public String listaItensNecessarios() {
@@ -120,12 +120,12 @@ public class EdoeFacade {
 	
 	public String atualizaItemNecessario(String idReceptor,String idItem,int novaQuantidade,String novasTags) throws Exception {
 		
-		return controle.atualizaItemParaDoacao(idItem, idReceptor, novaQuantidade, novasTags);
+		return controle.atualizaItem(idItem, idReceptor, novaQuantidade, novasTags);
 	}
 	
 	public void removeItemNecessario(String idReceptor, String idItem) throws Exception {
 		
-		controle.removeItemParaDoacao(idItem, idReceptor);
+		controle.removeItem(idItem, idReceptor);
 	}
 	
 	public static void main(String[] args) {

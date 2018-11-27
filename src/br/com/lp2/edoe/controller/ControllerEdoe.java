@@ -312,7 +312,7 @@ public class ControllerEdoe {
 	 * @throws InvalidUserException Essa excecao eh gerada caso o usuario que disponibilizou o item nao seja encontrado.
 	 * 
 	 */
-	public String adicionaItemParaDoacao(String idDoador, String descricaoItem, int quantidade, String tags) throws Exception {
+	public String adicionaItem(String idDoador, String descricaoItem, int quantidade, String tags) throws Exception {
 		
 		if(idDoador == null || idDoador.trim().isEmpty())
 			throw new InvalidArgumentException("id","do usuario");
@@ -378,7 +378,7 @@ public class ControllerEdoe {
 	 * @throws InvalidArgumentException excecao em caso do id (usuario ou item) ser nulo ou vazio
 	 * @throws InvalidUserException excecao em caso do id (usuario ou item) nao for cadastrado no sistema
 	 */
-	public String atualizaItemParaDoacao(String id, String idDoador, int quantidade, String tags) throws InvalidArgumentException, InvalidUserException {
+	public String atualizaItem(String id, String idDoador, int quantidade, String tags) throws Exception {
 		
 		if(idDoador == null || idDoador.trim().isEmpty()) {
 			throw new InvalidArgumentException("id", "do usuario");
@@ -402,7 +402,7 @@ public class ControllerEdoe {
 	 * @throws InvalidUserException Essa excecao eh gerada caso o usuario que disponibilizou o item nao seja encontrado.
 	 * 
 	 */
-	public void removeItemParaDoacao(String id, String idDoador) throws Exception {
+	public void removeItem(String id, String idDoador) throws Exception {
 		
 		
 		if (idDoador == null || idDoador.trim().isEmpty()) {
@@ -412,7 +412,7 @@ public class ControllerEdoe {
 			throw new InvalidUserException(idDoador);
 		}
 		
-		usuarios.get(idDoador).removeItemParaDoacao(id);
+		usuarios.get(idDoador).removeItem(id);
 	}
 
 	/**
@@ -422,7 +422,7 @@ public class ControllerEdoe {
 	 * @return Retorna uma representacao com todos os descritores do sistema, ordenados alfabeticamente.
 	 * 
 	 */
-	public String listaDescritorDeItensParaDoacao() {
+	public String listaDescritorDeItens() {
 		
 		if(descritores.isEmpty())
 			throw new NullPointerException("Erro: Nao ha Itens nem Descritores cadastrados no sistema.");

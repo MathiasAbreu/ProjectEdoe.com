@@ -359,7 +359,7 @@ class ControllerUsuarioTest {
 	@DisplayName("Testando metodo adicionando item para doacao")
 	void testAdicionaItem01() throws Exception {
 		
-		String idRetorno = controle.adicionaItemParaDoacao("12345678901","calca",2,"calca jeans,branca");
+		String idRetorno = controle.adicionaItem("12345678901","calca",2,"calca jeans,branca");
 		
 		assertEquals("1",idRetorno);
 	}
@@ -369,7 +369,7 @@ class ControllerUsuarioTest {
 	void testAdicionaItem02() {
 		InvalidArgumentException iae = assertThrows(InvalidArgumentException.class,() -> {
 			
-			controle.adicionaItemParaDoacao("","calca",2,"calca jeans,branca");
+			controle.adicionaItem("","calca",2,"calca jeans,branca");
 		});
 		
 		assertEquals("Entrada invalida: id do usuario nao pode ser vazio ou nulo.",iae.getMessage());
@@ -380,7 +380,7 @@ class ControllerUsuarioTest {
 	void testAdicionaItem03() {
 		InvalidArgumentException iae = assertThrows(InvalidArgumentException.class,() -> {
 			
-			controle.adicionaItemParaDoacao("12345678901",null,2,"calca jeans,branca");
+			controle.adicionaItem("12345678901",null,2,"calca jeans,branca");
 		});
 		
 		assertEquals("Entrada invalida: descricao nao pode ser vazia ou nula.",iae.getMessage());
@@ -391,7 +391,7 @@ class ControllerUsuarioTest {
 	void testAdicionaItem04() {
 		IllegalArgumentException iae = assertThrows(IllegalArgumentException.class,() -> {
 			
-			controle.adicionaItemParaDoacao("12345678901","calca",-5,"calca jeans,branca");
+			controle.adicionaItem("12345678901","calca",-5,"calca jeans,branca");
 		});
 		
 		assertEquals("Entrada invalida: quantidade deve ser maior que zero.",iae.getMessage());
@@ -402,7 +402,7 @@ class ControllerUsuarioTest {
 	void testAdicionaItem05() {
 		InvalidUserException iae = assertThrows(InvalidUserException.class,() -> {
 			
-			controle.adicionaItemParaDoacao("123","calca",8,"calca branca,pequena");
+			controle.adicionaItem("123","calca",8,"calca branca,pequena");
 		});
 		
 		assertEquals("Usuario nao encontrado: 123.",iae.getMessage());
@@ -412,7 +412,7 @@ class ControllerUsuarioTest {
 	@DisplayName("Testando metodo de exibir item com parametros validos")
 	void testExibeItem01() throws Exception {
 		
-		controle.adicionaItemParaDoacao("12345678901","camisa",4,"camisa,branca");
+		controle.adicionaItem("12345678901","camisa",4,"camisa,branca");
 		
 		assertEquals("1 - camisa, tags: [camisa, branca], quantidade: 4",controle.exibeItem("1", "12345678901"));
 	}
@@ -466,7 +466,7 @@ class ControllerUsuarioTest {
 	void testAtualizarItem01() {
 		IllegalArgumentException iae = assertThrows(IllegalArgumentException.class,() -> {
 			
-			controle.atualizaItemParaDoacao("-5","12345678901",4,"camisa,branca");
+			controle.atualizaItem("-5","12345678901",4,"camisa,branca");
 		});
 		
 		assertEquals("Entrada invalida: id do item nao pode ser negativo.",iae.getMessage());
@@ -477,7 +477,7 @@ class ControllerUsuarioTest {
 	void testAtualizarItem02() {
 		InvalidArgumentException iue = assertThrows(InvalidArgumentException.class,() -> {
 			
-			controle.atualizaItemParaDoacao("12345678",null,4,"camisa,branca");
+			controle.atualizaItem("12345678",null,4,"camisa,branca");
 		});
 		
 		assertEquals("Entrada invalida: id do usuario nao pode ser vazio ou nulo.",iue.getMessage());
@@ -487,8 +487,8 @@ class ControllerUsuarioTest {
 	@DisplayName("Testando metodo de atualizar item com quantidade invalida")
 	void testAtualizarItem03() throws Exception {			
 		
-		controle.adicionaItemParaDoacao("12345678901","blusa",2,"camisa,amarela");
-		controle.atualizaItemParaDoacao("1","12345678901",-5,"camisa,branca");
+		controle.adicionaItem("12345678901","blusa",2,"camisa,amarela");
+		controle.atualizaItem("1","12345678901",-5,"camisa,branca");
 		
 		assertEquals("1 - blusa, tags: [camisa, branca], quantidade: 2",controle.exibeItem("1","12345678901"));
 	}
@@ -498,7 +498,7 @@ class ControllerUsuarioTest {
 	void testAtualizarItem04() {
 		NullPointerException npe = assertThrows(NullPointerException.class,() -> {
 			
-			controle.atualizaItemParaDoacao("1234567","12345678901",4,"camisa,branca");
+			controle.atualizaItem("1234567","12345678901",4,"camisa,branca");
 		});
 		
 		assertEquals("Item nao encontrado: 1234567.",npe.getMessage());
@@ -508,18 +508,18 @@ class ControllerUsuarioTest {
 	@DisplayName("Testando metodo de atualizar item alterando a quantidade")
 	void testAtualizarItem05() throws Exception {
 		
-		controle.adicionaItemParaDoacao("12345678901","blusa",2,"camisa,amarela");
+		controle.adicionaItem("12345678901","blusa",2,"camisa,amarela");
 		
-		assertEquals("1 - blusa, tags: [camisa, amarela], quantidade: 5",controle.atualizaItemParaDoacao("1", "12345678901",5,""));
+		assertEquals("1 - blusa, tags: [camisa, amarela], quantidade: 5",controle.atualizaItem("1", "12345678901",5,""));
 	}
 	
 	@Test
 	@DisplayName("Testando metodo de atualizar item alterando as tags")
 	void testAtualizarItem06() throws Exception {
 		
-		controle.adicionaItemParaDoacao("12345678901","blusa",2,"camisa,amarela");
+		controle.adicionaItem("12345678901","blusa",2,"camisa,amarela");
 		
-		assertEquals("1 - blusa, tags: [blusa, pequena, amarela], quantidade: 2",controle.atualizaItemParaDoacao("1", "12345678901",2,"blusa,pequena,amarela"));
+		assertEquals("1 - blusa, tags: [blusa, pequena, amarela], quantidade: 2",controle.atualizaItem("1", "12345678901",2,"blusa,pequena,amarela"));
 	}
 	
 	@Test
@@ -527,7 +527,7 @@ class ControllerUsuarioTest {
 	void testRemoverItem01() {
 		IllegalArgumentException iae = assertThrows(IllegalArgumentException.class,() -> {
 			
-			controle.removeItemParaDoacao("-8653777","12345678901");
+			controle.removeItem("-8653777","12345678901");
 		});
 		
 		assertEquals("Entrada invalida: id do item nao pode ser negativo.",iae.getMessage());
@@ -538,7 +538,7 @@ class ControllerUsuarioTest {
 	void testRemoverItem02() {
 		InvalidArgumentException iae = assertThrows(InvalidArgumentException.class,() -> {
 			
-			controle.removeItemParaDoacao("12345678",null);
+			controle.removeItem("12345678",null);
 		});
 		
 		assertEquals("Entrada invalida: id do usuario nao pode ser vazio ou nulo.",iae.getMessage());
@@ -549,7 +549,7 @@ class ControllerUsuarioTest {
 	void testRemoverItem03() {
 		InvalidUserException iue = assertThrows(InvalidUserException.class,() -> {
 			
-			controle.removeItemParaDoacao("12345678","12345678");
+			controle.removeItem("12345678","12345678");
 		});
 		
 		assertEquals("Usuario nao encontrado: 12345678.",iue.getMessage());
@@ -560,8 +560,8 @@ class ControllerUsuarioTest {
 	void testRemoverItem04() throws Exception {
 		NullPointerException npe = assertThrows(NullPointerException.class,() -> {
 			
-			String id = controle.adicionaItemParaDoacao("12345678901","blusa",2,"camisa,amarela");
-			controle.removeItemParaDoacao(id, "12345678901");
+			String id = controle.adicionaItem("12345678901","blusa",2,"camisa,amarela");
+			controle.removeItem(id, "12345678901");
 			controle.exibeItem(id, "12345678901");
 		});
 		
@@ -574,7 +574,7 @@ class ControllerUsuarioTest {
 		controle.adicionaDescritor("calca");
 		controle.adicionaDescritor("sapato");
 		controle.adicionaDescritor("blusa");
-		assertEquals("0 - blusa | 0 - calca | 0 - sapato",controle.listaDescritorDeItensParaDoacao());
+		assertEquals("0 - blusa | 0 - calca | 0 - sapato",controle.listaDescritorDeItens());
 	}
 	
 	@Test
@@ -583,10 +583,10 @@ class ControllerUsuarioTest {
 		controle.adicionaDescritor("casaco");
 		controle.adicionaDescritor("cachecol");
 		controle.adicionaDescritor("luva");
-		controle.adicionaItemParaDoacao("12345678901", "luva", 6, "velha");
-		assertEquals("0 - cachecol | 0 - casaco | 6 - luva",controle.listaDescritorDeItensParaDoacao());
-		controle.adicionaItemParaDoacao("12345678901", "casaco", 2, "azul");
-		assertEquals("0 - cachecol | 2 - casaco | 6 - luva",controle.listaDescritorDeItensParaDoacao());
+		controle.adicionaItem("12345678901", "luva", 6, "velha");
+		assertEquals("0 - cachecol | 0 - casaco | 6 - luva",controle.listaDescritorDeItens());
+		controle.adicionaItem("12345678901", "casaco", 2, "azul");
+		assertEquals("0 - cachecol | 2 - casaco | 6 - luva",controle.listaDescritorDeItens());
 	}
 	
 	@Test
@@ -594,17 +594,17 @@ class ControllerUsuarioTest {
 	void testListaDescritorDeItensParaDoacao03() throws Exception {
 		controle.adicionaDescritor("cadeira");
 		controle.adicionaDescritor("sofa");
-		controle.adicionaItemParaDoacao("12345678901", "cadeira", 3, "plastico");
-		assertEquals("3 - cadeira | 0 - sofa",controle.listaDescritorDeItensParaDoacao());
-		controle.adicionaItemParaDoacao("12345678901", "cadeira", 1, "plastico");
-		assertEquals("1 - cadeira | 0 - sofa",controle.listaDescritorDeItensParaDoacao());
+		controle.adicionaItem("12345678901", "cadeira", 3, "plastico");
+		assertEquals("3 - cadeira | 0 - sofa",controle.listaDescritorDeItens());
+		controle.adicionaItem("12345678901", "cadeira", 1, "plastico");
+		assertEquals("1 - cadeira | 0 - sofa",controle.listaDescritorDeItens());
 	}
 	
 	@Test
 	@DisplayName("Testando se excecao eh lancada ao tentar listar descritores sem haver nenhum registrado")
 	void testListaDescritorDeItensParaDoacao04() {
 		NullPointerException ex = assertThrows(NullPointerException.class, () -> {
-			controle.listaDescritorDeItensParaDoacao();
+			controle.listaDescritorDeItens();
 		});
 		assertEquals("Erro: Nao ha Itens nem Descritores cadastrados no sistema.", ex.getMessage());
 	}
@@ -621,12 +621,12 @@ class ControllerUsuarioTest {
 	@Test
 	@DisplayName("Testando se itens sao listados em ordem decrescente de quantidade")
 	void testListaItensParaDoacao02() throws Exception {
-		controle.adicionaItemParaDoacao("12345678901", "arroz", 64, "integral");
-		controle.adicionaItemParaDoacao("12345678901", "feijao", 108, "verde");
+		controle.adicionaItem("12345678901", "arroz", 64, "integral");
+		controle.adicionaItem("12345678901", "feijao", 108, "verde");
 		assertEquals("2 - feijao, tags: [verde], quantidade: 108, doador: Mathias/12345678901 | "
 				+ "1 - arroz, tags: [integral], quantidade: 64, doador: Mathias/12345678901"
 				, controle.listaItens("doador"));
-		controle.adicionaItemParaDoacao("12345678901", "sabao", 80, "antibacteriano");
+		controle.adicionaItem("12345678901", "sabao", 80, "antibacteriano");
 		assertEquals("2 - feijao, tags: [verde], quantidade: 108, doador: Mathias/12345678901 | "
 				+ "3 - sabao, tags: [antibacteriano], quantidade: 80, doador: Mathias/12345678901 | "
 				+ "1 - arroz, tags: [integral], quantidade: 64, doador: Mathias/12345678901"
@@ -636,10 +636,10 @@ class ControllerUsuarioTest {
 	@Test
 	@DisplayName("Testando se itens sao reorganizado apos mudar quantidade do item")
 	void testListaItensParaDoacao03() throws Exception {
-		controle.adicionaItemParaDoacao("12345678901", "arroz", 64, "integral");
-		controle.adicionaItemParaDoacao("12345678901", "feijao", 108, "verde");
-		controle.adicionaItemParaDoacao("12345678901", "sabao", 80, "antibacteriano");
-		controle.adicionaItemParaDoacao("12345678901", "feijao", 1, "verde");
+		controle.adicionaItem("12345678901", "arroz", 64, "integral");
+		controle.adicionaItem("12345678901", "feijao", 108, "verde");
+		controle.adicionaItem("12345678901", "sabao", 80, "antibacteriano");
+		controle.adicionaItem("12345678901", "feijao", 1, "verde");
 		assertEquals("3 - sabao, tags: [antibacteriano], quantidade: 80, doador: Mathias/12345678901 | "
 				+ "1 - arroz, tags: [integral], quantidade: 64, doador: Mathias/12345678901 | "
 				+ "2 - feijao, tags: [verde], quantidade: 1, doador: Mathias/12345678901"
@@ -672,16 +672,16 @@ class ControllerUsuarioTest {
 	@Test
 	@DisplayName("Testando pesquisar um item cadastrado")
 	void testPesquisaItemParaDoacaoPorDescricao03() throws Exception {
-		controle.adicionaItemParaDoacao("12345678901", "ps5", 1, "legitimo, nao eh pirata");
+		controle.adicionaItem("12345678901", "ps5", 1, "legitimo, nao eh pirata");
 		assertEquals("1 - ps5, tags: [legitimo,  nao eh pirata], quantidade: 1", controle.pesquisaItemPorDescricao("ps5"));
 	}
 	
 	@Test
 	@DisplayName("Testando pesquisar um item cadastrado apos alterar sua quantidade e tags")
 	void testPesquisaItemParaDoacaoPorDescricao04() throws Exception {
-		controle.adicionaItemParaDoacao("12345678901", "biscoito", 6, "napolitano,300g");
+		controle.adicionaItem("12345678901", "biscoito", 6, "napolitano,300g");
 		assertEquals("1 - biscoito, tags: [napolitano, 300g], quantidade: 6", controle.pesquisaItemPorDescricao("biscoito"));
-		controle.adicionaItemParaDoacao("12345678901", "biscoito", 2, "napolitano,300g");
+		controle.adicionaItem("12345678901", "biscoito", 2, "napolitano,300g");
 		assertEquals("1 - biscoito, tags: [napolitano, 300g], quantidade: 2", controle.pesquisaItemPorDescricao("biscoito"));
 	}
 	
