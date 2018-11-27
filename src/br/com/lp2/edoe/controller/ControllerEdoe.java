@@ -486,7 +486,7 @@ public class ControllerEdoe {
 	/**
 	 * @return
 	 */
-	public String listaItensParaDoacao() {
+	public String listaItensParaDoacao(String classe) {
 		
 		HashMap<String,String> usuariosEitens = new HashMap<>();
 		List<Item> itens = new ArrayList<>();

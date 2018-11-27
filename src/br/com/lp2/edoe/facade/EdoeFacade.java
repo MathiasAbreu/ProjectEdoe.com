@@ -99,7 +99,7 @@ public class EdoeFacade {
 	
 	public String listaItensParaDoacao() {
 		
-		return controle.listaItensParaDoacao();
+		return controle.listaItensParaDoacao("doador");
 		
 	}
 	
@@ -116,7 +116,7 @@ public class EdoeFacade {
 	
 	public String listaItensNecessarios() {
 		
-		return controle.listaItensParaDoacao();
+		return controle.listaItensParaDoacao("receptor");
 	}
 	
 	public String atualizaItemNecessario(String idReceptor,String idItem,int novaQuantidade,String novasTags) throws Exception {
