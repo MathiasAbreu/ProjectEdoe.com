@@ -237,8 +237,11 @@ public abstract class Usuario {
 		if(Integer.parseInt(id) < 0)
 			throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");
 		if(!itens.containsKey(id)) {
-			throw new IllegalArgumentException("Item nao encontrado: " + id + ".");
+			throw new NullPointerException("Item nao encontrado: " + id + ".");
 		}
+		
+		if(quantidade < 0)
+			throw new IllegalArgumentException("Entrada invalida: quantidade do item nao pode ser negativo.");
 		if(quantidade != 0) {
 			itens.get(id).setQuantidade(quantidade);
 		}
