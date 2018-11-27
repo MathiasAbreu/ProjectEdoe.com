@@ -2,6 +2,8 @@ package junit.edoe.tests.model;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Arrays;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -38,7 +40,7 @@ class ItemTest {
 		item01 = new Item("cobertor","cama box,grande".split(","),"1234567890",8);
 		
 		assertEquals("cobertor",item01.getDescritor());
-		assertEquals("[cama box, grande]",item01.getTags());
+		assertEquals("[cama box, grande]",Arrays.toString(item01.getTags()));
 		assertEquals("1234567890",item01.getId());
 		assertEquals(8,item01.getQuantidade());
 		
@@ -60,12 +62,5 @@ class ItemTest {
 		assertEquals(false,item01.equals(item02));
 		assertEquals(false,item03.equals(item04));
 		
-	}
-	
-	@Test
-	@DisplayName("Testando metodo getTags()")
-	void testGetTags() {
-		
-		assertEquals("[cama box, grande]",item03.getTags());
 	}
 }

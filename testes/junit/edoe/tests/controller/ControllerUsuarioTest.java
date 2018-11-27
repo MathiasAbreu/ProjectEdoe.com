@@ -485,15 +485,12 @@ class ControllerUsuarioTest {
 	
 	@Test
 	@DisplayName("Testando metodo de atualizar item com quantidade invalida")
-	void testAtualizarItem03() {
-		IllegalArgumentException iae = assertThrows(IllegalArgumentException.class,() -> {
-			
-			controle.adicionaItemParaDoacao("12345678901","blusa",2,"camisa,amarela");
-
-			controle.atualizaItemParaDoacao("1","12345678901",-5,"camisa,branca");
-		});
+	void testAtualizarItem03() throws Exception {			
 		
-		assertEquals("Entrada invalida: quantidade do item nao pode ser negativo.",iae.getMessage());
+		controle.adicionaItemParaDoacao("12345678901","blusa",2,"camisa,amarela");
+		controle.atualizaItemParaDoacao("1","12345678901",-5,"camisa,branca");
+		
+		assertEquals("1 - blusa, tags: [camisa, branca], quantidade: 2",controle.exibeItem("1","12345678901"));
 	}
 	
 	@Test
@@ -520,9 +517,9 @@ class ControllerUsuarioTest {
 	@DisplayName("Testando metodo de atualizar item alterando as tags")
 	void testAtualizarItem06() throws Exception {
 		
-		String id = controle.adicionaItemParaDoacao("12345678901","blusa",2,"camisa,amarela");
+		controle.adicionaItemParaDoacao("12345678901","blusa",2,"camisa,amarela");
 		
-		assertEquals("93838585 - blusa, tags: [blusa, pequena, amarela], quantidade: 2",controle.atualizaItemParaDoacao(id, "12345678901",2,"blusa,pequena,amarela"));
+		assertEquals("1 - blusa, tags: [blusa, pequena, amarela], quantidade: 2",controle.atualizaItemParaDoacao("1", "12345678901",2,"blusa,pequena,amarela"));
 	}
 	
 	@Test
@@ -599,7 +596,7 @@ class ControllerUsuarioTest {
 		controle.adicionaDescritor("sofa");
 		controle.adicionaItemParaDoacao("12345678901", "cadeira", 3, "plastico");
 		assertEquals("3 - cadeira | 0 - sofa",controle.listaDescritorDeItensParaDoacao());
-		controle.adicionaItemParaDoacao("12345678901", "cadeira", 1, "madeira");
+		controle.adicionaItemParaDoacao("12345678901", "cadeira", 1, "plastico");
 		assertEquals("1 - cadeira | 0 - sofa",controle.listaDescritorDeItensParaDoacao());
 	}
 	
@@ -626,13 +623,13 @@ class ControllerUsuarioTest {
 	void testListaItensParaDoacao02() throws Exception {
 		controle.adicionaItemParaDoacao("12345678901", "arroz", 64, "integral");
 		controle.adicionaItemParaDoacao("12345678901", "feijao", 108, "verde");
-		assertEquals("1278285234 - feijao, tags: [verde], quantidade: 108, doador: Mathias/12345678901 | "
-				+ "93090828 - arroz, tags: [integral], quantidade: 64, doador: Mathias/12345678901"
+		assertEquals("2 - feijao, tags: [verde], quantidade: 108, doador: Mathias/12345678901 | "
+				+ "1 - arroz, tags: [integral], quantidade: 64, doador: Mathias/12345678901"
 				, controle.listaItensParaDoacao("doador"));
 		controle.adicionaItemParaDoacao("12345678901", "sabao", 80, "antibacteriano");
-		assertEquals("1278285234 - feijao, tags: [verde], quantidade: 108, doador: Mathias/12345678901 | "
-				+ "109191938 - sabao, tags: [antibacteriano], quantidade: 80, doador: Mathias/12345678901 | "
-				+ "93090828 - arroz, tags: [integral], quantidade: 64, doador: Mathias/12345678901"
+		assertEquals("2 - feijao, tags: [verde], quantidade: 108, doador: Mathias/12345678901 | "
+				+ "3 - sabao, tags: [antibacteriano], quantidade: 80, doador: Mathias/12345678901 | "
+				+ "1 - arroz, tags: [integral], quantidade: 64, doador: Mathias/12345678901"
 				, controle.listaItensParaDoacao("doador"));
 	}
 	
@@ -643,9 +640,9 @@ class ControllerUsuarioTest {
 		controle.adicionaItemParaDoacao("12345678901", "feijao", 108, "verde");
 		controle.adicionaItemParaDoacao("12345678901", "sabao", 80, "antibacteriano");
 		controle.adicionaItemParaDoacao("12345678901", "feijao", 1, "verde");
-		assertEquals("109191938 - sabao, tags: [antibacteriano], quantidade: 80, doador: Mathias/12345678901 | "
-				+ "93090828 - arroz, tags: [integral], quantidade: 64, doador: Mathias/12345678901 | "
-				+ "1278285234 - feijao, tags: [verde], quantidade: 1, doador: Mathias/12345678901"
+		assertEquals("3 - sabao, tags: [antibacteriano], quantidade: 80, doador: Mathias/12345678901 | "
+				+ "1 - arroz, tags: [integral], quantidade: 64, doador: Mathias/12345678901 | "
+				+ "2 - feijao, tags: [verde], quantidade: 1, doador: Mathias/12345678901"
 				, controle.listaItensParaDoacao("doador"));
 	}
 	
@@ -682,10 +679,10 @@ class ControllerUsuarioTest {
 	@Test
 	@DisplayName("Testando pesquisar um item cadastrado apos alterar sua quantidade e tags")
 	void testPesquisaItemParaDoacaoPorDescricao04() throws Exception {
-		controle.adicionaItemParaDoacao("12345678901", "biscoito", 6, "napolitano, 300g");
-		assertEquals("1 - biscoito, tags: [napolitano,  300g], quantidade: 6", controle.pesquisaItemParaDoacaoPorDescricao("biscoito"));
-		controle.adicionaItemParaDoacao("12345678901", "biscoito", 2, "chocolate, 200g");
-		assertEquals("1 - biscoito, tags: [chocolate,  200g], quantidade: 2", controle.pesquisaItemParaDoacaoPorDescricao("biscoito"));
+		controle.adicionaItemParaDoacao("12345678901", "biscoito", 6, "napolitano,300g");
+		assertEquals("1 - biscoito, tags: [napolitano, 300g], quantidade: 6", controle.pesquisaItemParaDoacaoPorDescricao("biscoito"));
+		controle.adicionaItemParaDoacao("12345678901", "biscoito", 2, "napolitano,300g");
+		assertEquals("1 - biscoito, tags: [napolitano, 300g], quantidade: 2", controle.pesquisaItemParaDoacaoPorDescricao("biscoito"));
 	}
 	
 	
