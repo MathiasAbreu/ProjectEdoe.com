@@ -409,6 +409,15 @@ class ControllerUsuarioTest {
 	}
 	
 	@Test
+	@DisplayName("Testando metodo de listar item com parametros validos")
+	void testExibeItem01() throws Exception {
+		
+		String idItem = controle.adicionaItemParaDoacao("12345678901","camisa",4,"camisa,branca");
+		
+		assertEquals("",controle.exibeItem(idItem, "12345678901"));
+	}
+	
+	@Test
 	@DisplayName("Testando exibir descritores que foram adicionados em ordem nao alfabetica")
 	void testListaDescritorDeItensParaDoacao01() throws Exception {
 		controle.adicionaDescritor("calca");
