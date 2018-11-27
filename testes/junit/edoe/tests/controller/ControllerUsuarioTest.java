@@ -666,7 +666,7 @@ class ControllerUsuarioTest {
 		InvalidArgumentException ex2 = assertThrows(InvalidArgumentException.class, () -> {
 			controle.pesquisaItemPorDescricao("");
 		});
-		assertEquals("Entrada invalida: texto da pesquisa nao pode ser vazio ou nulo.", ex.getMessage());
+		assertEquals("Entrada invalida: texto da pesquisa nao pode ser vazio ou nulo.", ex2.getMessage());
 	}
 	
 	@Test

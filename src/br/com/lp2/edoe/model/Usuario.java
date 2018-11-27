@@ -324,5 +324,17 @@ public abstract class Usuario {
 	 * 
 	 */
 	public abstract String getStatus();
+
+	/**
+	 * @param idItem
+	 * @return
+	 */
+	public Item buscarItemPorId(String idItem) {
+		
+		if(itens.containsKey(idItem))
+			return itens.get(idItem);
+		
+		return null;
+	}
 	
 }

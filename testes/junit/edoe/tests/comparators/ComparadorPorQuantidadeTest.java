@@ -9,7 +9,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import br.com.lp2.edoe.comparators.ComparadorItemPorDescricao;
-import br.com.lp2.edoe.comparators.ComparadorItemPorId;
 import br.com.lp2.edoe.model.Item;
 
 class ComparadorPorQuantidadeTest {

@@ -2,6 +2,7 @@ package br.com.lp2.edoe.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -565,5 +566,70 @@ public class ControllerEdoe {
 		}	
 		
 		return pesquisa;	
+	}
+
+	/**
+	 * @param idReceptor
+	 * @param idItem
+	 * @return
+	 */
+	public String match(String idReceptor, String idItem) throws Exception {
+		
+		if(idReceptor == null || idReceptor.trim().isEmpty())
+			throw new InvalidArgumentException("id","do usuario");
+		if(Integer.parseInt(idItem) < 0)
+			throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");
+		
+		if(usuarios.containsKey(idReceptor)) {
+			if(usuarios.get(idReceptor).getStatus().equals("Receptor")) {
+				
+				return procurarPorMatchs(idItem);
+			}
+			throw new NullPointerException("O Usuario deve ser um receptor: " + idReceptor + ".");
+		}
+		
+		throw new InvalidUserException(idReceptor);
+	}
+
+	/**
+	 * @param idItem
+	 * @return
+	 */
+	private String procurarPorMatchs(String idItem) {
+		
+		Item retornoBusca = buscarItemEspecifico(idItem);
+		ArrayList<Item> possiveisMatchs = new ArrayList<>();
+		
+		for(Usuario usuario : usuarios.values()) {
+			
+			possiveisMatchs.addAll(usuario.pesquisaItemPorDescricao(retornoBusca.getDescritor()));
+		}
+		
+		String retorno = "";
+		for (Item item : possiveisMatchs) {
+			
+			if(item.getId().equals(idItem)) {
+				continue;
+			}
+			retorno += " | " + item.toString();
+		}
+		
+		return retorno;
+	}
+
+	/**
+	 * @param idItem
+	 * @return
+	 */
+	private Item buscarItemEspecifico(String idItem) {
+		
+		for(Usuario usuario : usuarios.values()) {
+			
+			Item retorno = usuario.buscarItemPorId(idItem);
+			if(retorno != null)
+				return retorno;
+			
+		}
+		throw new NullPointerException("Item nao encontrado: " + idItem + ".");
 	}
 }
