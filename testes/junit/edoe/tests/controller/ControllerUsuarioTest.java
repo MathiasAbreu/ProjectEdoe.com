@@ -409,6 +409,169 @@ class ControllerUsuarioTest {
 	}
 	
 	@Test
+	@DisplayName("Testando metodo de exibir item com parametros validos")
+	void testExibeItem01() throws Exception {
+		
+		String idItem = controle.adicionaItemParaDoacao("12345678901","camisa",4,"camisa,branca");
+		
+		assertEquals("1367748024 - camisa, tags: [camisa, branca], quantidade: 4",controle.exibeItem(idItem, "12345678901"));
+	}
+	
+	@Test
+	@DisplayName("Testando metodo de exibir item com item inexistente")
+	void testExibeItem02() throws Exception {
+		NullPointerException npe = assertThrows(NullPointerException.class,() -> {
+			
+			controle.exibeItem("357986533","12345678901");
+		});
+		
+		assertEquals("Item nao encontrado: 357986533.",npe.getMessage());
+	}
+	
+	@Test
+	@DisplayName("Testando metodo de exibir item com idDoDoador invalido")
+	void testExibeItem03() throws Exception {
+		InvalidArgumentException iae = assertThrows(InvalidArgumentException.class,() -> {
+			
+			controle.exibeItem("1234567890",null);
+		});
+		
+		assertEquals("Entrada invalida: id do usuario nao pode ser vazio ou nulo.",iae.getMessage());
+	}
+	
+	@Test
+	@DisplayName("Testando metodo de exibir item com usuario inexistente")
+	void testExibeItem04() throws Exception {
+		InvalidUserException iue = assertThrows(InvalidUserException.class,() -> {
+			
+			controle.exibeItem("12345678","109876543");
+		});
+		
+		assertEquals("Usuario nao encontrado: 109876543.",iue.getMessage());
+	}
+	
+	@Test
+	@DisplayName("Testando metodo de exibir item com idItem invalido")
+	void testExibeItem05() throws Exception {
+		InvalidArgumentException iae = assertThrows(InvalidArgumentException.class,() -> {
+			
+			controle.exibeItem("","12345678901");
+		});
+		
+		assertEquals("Entrada invalida: id do item nao pode ser vazio ou nulo.",iae.getMessage());
+	}
+	
+	@Test
+	@DisplayName("Testando metodo de atualizar item com id invalido")
+	void testAtualizarItem01() {
+		IllegalArgumentException iae = assertThrows(IllegalArgumentException.class,() -> {
+			
+			controle.atualizaItemParaDoacao("-5","12345678901",4,"camisa,branca");
+		});
+		
+		assertEquals("Entrada invalida: id do item nao pode ser negativo.",iae.getMessage());
+	}
+	
+	@Test
+	@DisplayName("Testando metodo de atualizar item com id do doador invalido")
+	void testAtualizarItem02() {
+		InvalidArgumentException iue = assertThrows(InvalidArgumentException.class,() -> {
+			
+			controle.atualizaItemParaDoacao("12345678",null,4,"camisa,branca");
+		});
+		
+		assertEquals("Entrada invalida: id do usuario nao pode ser vazio ou nulo.",iue.getMessage());
+	}
+	
+	@Test
+	@DisplayName("Testando metodo de atualizar item com quantidade invalida")
+	void testAtualizarItem03() {
+		IllegalArgumentException iae = assertThrows(IllegalArgumentException.class,() -> {
+			
+			String id = controle.adicionaItemParaDoacao("12345678901","blusa",2,"camisa,amarela");
+
+			controle.atualizaItemParaDoacao(id,"12345678901",-5,"camisa,branca");
+		});
+		
+		assertEquals("Entrada invalida: quantidade do item nao pode ser negativo.",iae.getMessage());
+	}
+	
+	@Test
+	@DisplayName("Testando metodo de atualizar item com um item que nao existe")
+	void testAtualizarItem04() {
+		NullPointerException npe = assertThrows(NullPointerException.class,() -> {
+			
+			controle.atualizaItemParaDoacao("1234567","12345678901",4,"camisa,branca");
+		});
+		
+		assertEquals("Item nao encontrado: 1234567.",npe.getMessage());
+	}
+	
+	@Test
+	@DisplayName("Testando metodo de atualizar item alterando a quantidade")
+	void testAtualizarItem05() throws Exception {
+		
+		String id = controle.adicionaItemParaDoacao("12345678901","blusa",2,"camisa,amarela");
+		
+		assertEquals("93838585 - blusa, tags: [camisa, amarela], quantidade: 5",controle.atualizaItemParaDoacao(id, "12345678901",5,""));
+	}
+	
+	@Test
+	@DisplayName("Testando metodo de atualizar item alterando as tags")
+	void testAtualizarItem06() throws Exception {
+		
+		String id = controle.adicionaItemParaDoacao("12345678901","blusa",2,"camisa,amarela");
+		
+		assertEquals("93838585 - blusa, tags: [blusa, pequena, amarela], quantidade: 2",controle.atualizaItemParaDoacao(id, "12345678901",2,"blusa,pequena,amarela"));
+	}
+	
+	@Test
+	@DisplayName("Testando metodo de remover item com id invalido")
+	void testRemoverItem01() {
+		IllegalArgumentException iae = assertThrows(IllegalArgumentException.class,() -> {
+			
+			controle.removeItemParaDoacao("-8653777","12345678901");
+		});
+		
+		assertEquals("Entrada invalida: id do item nao pode ser negativo.",iae.getMessage());
+	}
+	
+	@Test
+	@DisplayName("Testando metodo de remover item com id do doador invalido")
+	void testRemoverItem02() {
+		InvalidArgumentException iae = assertThrows(InvalidArgumentException.class,() -> {
+			
+			controle.removeItemParaDoacao("12345678",null);
+		});
+		
+		assertEquals("Entrada invalida: id do usuario nao pode ser vazio ou nulo.",iae.getMessage());
+	}
+	
+	@Test
+	@DisplayName("Testando metodo de remover item com usuario inexistente")
+	void testRemoverItem03() {
+		InvalidUserException iue = assertThrows(InvalidUserException.class,() -> {
+			
+			controle.removeItemParaDoacao("12345678","12345678");
+		});
+		
+		assertEquals("Usuario nao encontrado: 12345678.",iue.getMessage());
+	}
+	
+	@Test
+	@DisplayName("Testando metodo de remover item com item cadastrado")
+	void testRemoverItem04() throws Exception {
+		NullPointerException npe = assertThrows(NullPointerException.class,() -> {
+			
+			String id = controle.adicionaItemParaDoacao("12345678901","blusa",2,"camisa,amarela");
+			controle.removeItemParaDoacao(id, "12345678901");
+			controle.exibeItem(id, "12345678901");
+		});
+		
+		assertEquals("Item nao encontrado: 93838585.",npe.getMessage());
+	}
+	
+	@Test
 	@DisplayName("Testando exibir descritores que foram adicionados em ordem nao alfabetica")
 	void testListaDescritorDeItensParaDoacao01() throws Exception {
 		controle.adicionaDescritor("calca");
@@ -439,6 +602,54 @@ class ControllerUsuarioTest {
 		controle.adicionaItemParaDoacao("12345678901", "cadeira", 1, "madeira");
 		assertEquals("1 - cadeira | 0 - sofa",controle.listaDescritorDeItensParaDoacao());
 	}
+	
+	@Test
+	@DisplayName("Testando se excecao eh lancada ao tentar listar descritores sem haver nenhum registrado")
+	void testListaDescritorDeItensParaDoacao04() {
+		NullPointerException ex = assertThrows(NullPointerException.class, () -> {
+			controle.listaDescritorDeItensParaDoacao();
+		});
+		assertEquals("Erro: Nao ha Itens nem Descritores cadastrados no sistema.", ex.getMessage());
+	}
+	
+	@Test
+	@DisplayName("Testando se excecao eh lancada ao tentar listar itens sem haver nenhum registrado")
+	void testListaItensParaDoacao01() {
+		NullPointerException ex = assertThrows(NullPointerException.class, () -> {
+			controle.listaItensParaDoacao();
+		});
+		assertEquals("Erro: Nao ha itens cadastrados", ex.getMessage());
+	}
+	
+	@Test
+	@DisplayName("Testando se iten sao listados em ordem decrescente de quantidade")
+	void testListaItensParaDoacao02() throws Exception {
+		controle.adicionaItemParaDoacao("12345678901", "arroz", 64, "integral");
+		controle.adicionaItemParaDoacao("12345678901", "feijao", 108, "verde");
+		assertEquals("1278285234 - feijao, tags: [verde], quantidade: 108, doador: Mathias/12345678901 | "
+				+ "93090828 - arroz, tags: [integral], quantidade: 64, doador: Mathias/12345678901"
+				, controle.listaItensParaDoacao());
+		controle.adicionaItemParaDoacao("12345678901", "sabao", 80, "antibacteriano");
+		assertEquals("1278285234 - feijao, tags: [verde], quantidade: 108, doador: Mathias/12345678901 | "
+				+ "109191938 - sabao, tags: [antibacteriano], quantidade: 80, doador: Mathias/12345678901 | "
+				+ "93090828 - arroz, tags: [integral], quantidade: 64, doador: Mathias/12345678901"
+				, controle.listaItensParaDoacao());
+	}
+	
+	@Test
+	@DisplayName("Testando se iten sao reorganizado apos mudar quantidade do item")
+	void testListaItensParaDoacao03() throws Exception {
+		controle.adicionaItemParaDoacao("12345678901", "arroz", 64, "integral");
+		controle.adicionaItemParaDoacao("12345678901", "feijao", 108, "verde");
+		controle.adicionaItemParaDoacao("12345678901", "sabao", 80, "antibacteriano");
+		controle.adicionaItemParaDoacao("12345678901", "feijao", 1, "verde");
+		assertEquals("109191938 - sabao, tags: [antibacteriano], quantidade: 80, doador: Mathias/12345678901 | "
+				+ "93090828 - arroz, tags: [integral], quantidade: 64, doador: Mathias/12345678901 | "
+				+ "1278285234 - feijao, tags: [verde], quantidade: 1, doador: Mathias/12345678901"
+				, controle.listaItensParaDoacao());
+		System.out.println(controle.listaItensParaDoacao());
+	}
+	
 	
 	
 }

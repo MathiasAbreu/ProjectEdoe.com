@@ -423,6 +423,9 @@ public class ControllerEdoe {
 	 */
 	public String listaDescritorDeItensParaDoacao() {
 		
+		if(descritores.isEmpty())
+			throw new NullPointerException("Erro: Nao ha Itens nem Descritores cadastrados no sistema.");
+		
 		List<String> descritoresOrdenados = new ArrayList<>();
 		
 		for (String descritor : descritores) {
@@ -499,6 +502,9 @@ public class ControllerEdoe {
 			itens.addAll(itensDoUsuario);
 			
 		}
+		
+		if(itens.size() == 0)
+			throw new NullPointerException("Erro: Nao ha itens cadastrados");
 		
 		Collections.sort(itens,new ComparadorItemPorQuantidade());
 		
