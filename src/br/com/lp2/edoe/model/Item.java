@@ -92,6 +92,13 @@ public class Item {
 	}
 
 	/**
+	 * @param id the id to set
+	 */
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	/**
 	 * Metodo responsavel por gerar um numero de identificao que pode ser usado internamente para armazenar o item em 
 	 * alguma colecao de armazenamento especifica.
 	 * 

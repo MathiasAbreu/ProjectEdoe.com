@@ -8,7 +8,7 @@ package br.com.lp2.edoe.model;
  * @author Mathias Abreu Trajano - mathias.trajano@ccc.ufcg.edu.br
  *
  */
-public class UsuarioDoador extends Usuario implements Doador {
+public class UsuarioDoador extends Usuario {
 	
 	/**
 	 * Construtor reponsavel por instanciar um novo Usuario do tipo {@link Doador}, ele recebe todos os parametros necessarios para preencher 
@@ -24,16 +24,6 @@ public class UsuarioDoador extends Usuario implements Doador {
 	public UsuarioDoador(String nome, String email, String celular, String classe, String identificacao) {
 		
 		super(nome, email, celular, classe, identificacao);
-
-	}
-
-	/**
-	 * Metodo responsavel por realizar uma doacao de item.
-	 * 
-	 */
-	@Override
-	public void RealizaDoacao() {
-		// TODO Auto-generated method stub
 
 	}
 

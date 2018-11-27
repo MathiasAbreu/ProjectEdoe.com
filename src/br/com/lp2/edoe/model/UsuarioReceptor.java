@@ -8,7 +8,7 @@ package br.com.lp2.edoe.model;
  * @author Mathias Abreu Trajano - mathias.trajano@ccc.ufcg.edu.br
  *
  */
-public class UsuarioReceptor extends Usuario implements Receptor {
+public class UsuarioReceptor extends Usuario {
 	
 	/**
 	 * Construtor reponsavel por instanciar um novo Usuario do tipo {@link Receptor}, ele recebe todos os parametros necessarios para preencher 
@@ -25,16 +25,6 @@ public class UsuarioReceptor extends Usuario implements Receptor {
 		
 		super(nome, email, celular, classe, identificacao);
 
-	}
-
-	/**
-	 * Metodo responsavel por receber uma nova doacao de item.
-	 * 
-	 */
-	@Override
-	public void receberDoacao() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	/**

@@ -186,9 +186,8 @@ public abstract class Usuario {
 	 * 
 	 * @return Retorna o id unico gerado para o novo item.
 	 */
-	public String adicionaItem(String descricaoItem, int quantidade, String[] tagsArray) {
+	public String adicionaItem(int id,String descricaoItem, int quantidade, String[] tagsArray) {
 		
-		int id = descricaoItem.hashCode();
 		String idDoItem = Integer.toString(id > 0 ? id : id * -1);
 		
 		Item itemnovo = new Item(descricaoItem, tagsArray, idDoItem, quantidade);
@@ -196,7 +195,9 @@ public abstract class Usuario {
 		for(Item item : itens.values()) {
 			if (itemnovo.equals(item)) {
 				item.setQuantidade(quantidade);
+				return item.getId();
 			}
+
 		}
 		
 		itens.put(idDoItem, itemnovo);
@@ -241,12 +242,11 @@ public abstract class Usuario {
 			throw new NullPointerException("Item nao encontrado: " + id + ".");
 		}
 		
-		if(quantidade < 0)
-			throw new IllegalArgumentException("Entrada invalida: quantidade do item nao pode ser negativo.");
-		if(quantidade != 0) {
+		if(quantidade > 0) {
+			
 			itens.get(id).setQuantidade(quantidade);
 		}
-		
+				
 		if(tags != null && !tags.trim().isEmpty()) {
 			itens.get(id).setTags(tags.split(","));
 		}

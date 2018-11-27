@@ -1,15 +1,12 @@
 package br.com.lp2.edoe.controller;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import br.com.lp2.edoe.comparators.ComparadorItemPorDescricao;
@@ -32,11 +29,11 @@ import br.com.lp2.edoe.model.UsuarioReceptor;
  */
 public class ControllerEdoe {
 	
+	private int indiceId;
+	
 	private LinkedHashMap<String,Usuario> usuarios;
 	private ReceptoresDao arquivoReceptores;
-	
-	private Comparator<Item> comparador;
-	
+		
 	private HashSet<String> descritores;
 		
 	/**
@@ -46,6 +43,8 @@ public class ControllerEdoe {
 	 */
 	public ControllerEdoe() {
 				
+		indiceId = 0;
+		
 		usuarios = new LinkedHashMap<>();
 		arquivoReceptores = new ReceptoresDao();
 		
@@ -330,7 +329,8 @@ public class ControllerEdoe {
 		if(usuarios.containsKey(idDoador)) {
 			
 			String[] tagsArray = tags.split(",");
-			return usuarios.get(idDoador).adicionaItem(descricaoItem.toLowerCase().replaceAll("\\s"," "),quantidade,tagsArray);
+			indiceId ++;
+			return usuarios.get(idDoador).adicionaItem(indiceId,descricaoItem.toLowerCase().replaceAll("\\s"," "),quantidade,tagsArray);
 		}
 		
 		throw new InvalidUserException(idDoador);
