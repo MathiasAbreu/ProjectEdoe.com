@@ -42,7 +42,7 @@ public class UsuarioReceptor extends Usuario {
 
 	@Override
 	public String getStatus() {
-		return "doador";
+		return "Receptor";
 	}
 
 }
