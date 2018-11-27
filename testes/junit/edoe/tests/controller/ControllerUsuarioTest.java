@@ -622,7 +622,7 @@ class ControllerUsuarioTest {
 	}
 	
 	@Test
-	@DisplayName("Testando se iten sao listados em ordem decrescente de quantidade")
+	@DisplayName("Testando se itens sao listados em ordem decrescente de quantidade")
 	void testListaItensParaDoacao02() throws Exception {
 		controle.adicionaItemParaDoacao("12345678901", "arroz", 64, "integral");
 		controle.adicionaItemParaDoacao("12345678901", "feijao", 108, "verde");
@@ -637,7 +637,7 @@ class ControllerUsuarioTest {
 	}
 	
 	@Test
-	@DisplayName("Testando se iten sao reorganizado apos mudar quantidade do item")
+	@DisplayName("Testando se itens sao reorganizado apos mudar quantidade do item")
 	void testListaItensParaDoacao03() throws Exception {
 		controle.adicionaItemParaDoacao("12345678901", "arroz", 64, "integral");
 		controle.adicionaItemParaDoacao("12345678901", "feijao", 108, "verde");
@@ -647,9 +647,46 @@ class ControllerUsuarioTest {
 				+ "93090828 - arroz, tags: [integral], quantidade: 64, doador: Mathias/12345678901 | "
 				+ "1278285234 - feijao, tags: [verde], quantidade: 1, doador: Mathias/12345678901"
 				, controle.listaItensParaDoacao());
-		System.out.println(controle.listaItensParaDoacao());
 	}
 	
+	@Test
+	@DisplayName("Testando pesquisar por uma descricao nula")
+	void testPesquisaItemParaDoacaoPorDescricao01() throws Exception {
+		InvalidArgumentException ex = assertThrows(InvalidArgumentException.class, () -> {
+			controle.pesquisaItemParaDoacaoPorDescricao(null);
+		});
+		assertEquals("Entrada invalida: texto da pesquisa nao pode ser vazio ou nulo.", ex.getMessage());
+	}
+	
+	@Test
+	@DisplayName("Testando pesquisar por descricoes vazias")
+	void testPesquisaItemParaDoacaoPorDescricao02() throws Exception {
+		InvalidArgumentException ex = assertThrows(InvalidArgumentException.class, () -> {
+			controle.pesquisaItemParaDoacaoPorDescricao("   ");
+		});
+		assertEquals("Entrada invalida: texto da pesquisa nao pode ser vazio ou nulo.", ex.getMessage());
+		
+		InvalidArgumentException ex2 = assertThrows(InvalidArgumentException.class, () -> {
+			controle.pesquisaItemParaDoacaoPorDescricao("");
+		});
+		assertEquals("Entrada invalida: texto da pesquisa nao pode ser vazio ou nulo.", ex.getMessage());
+	}
+	
+	@Test
+	@DisplayName("Testando pesquisar um item cadastrado")
+	void testPesquisaItemParaDoacaoPorDescricao03() throws Exception {
+		controle.adicionaItemParaDoacao("12345678901", "ps5", 1, "legitimo, nao eh pirata");
+		assertEquals("111250 - ps5, tags: [legitimo,  nao eh pirata], quantidade: 1", controle.pesquisaItemParaDoacaoPorDescricao("ps5"));
+	}
+	
+	@Test
+	@DisplayName("Testando pesquisar um item cadastrado apos alterar sua quantidade e tags")
+	void testPesquisaItemParaDoacaoPorDescricao04() throws Exception {
+		controle.adicionaItemParaDoacao("12345678901", "biscoito", 6, "napolitano, 300g");
+		assertEquals("1082519340 - biscoito, tags: [napolitano,  300g], quantidade: 6", controle.pesquisaItemParaDoacaoPorDescricao("biscoito"));
+		controle.adicionaItemParaDoacao("12345678901", "biscoito", 2, "chocolate, 200g");
+		assertEquals("1082519340 - biscoito, tags: [chocolate,  200g], quantidade: 2", controle.pesquisaItemParaDoacaoPorDescricao("biscoito"));
+	}
 	
 	
 }
