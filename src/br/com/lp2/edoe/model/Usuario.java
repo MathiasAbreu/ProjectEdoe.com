@@ -214,7 +214,7 @@ public abstract class Usuario {
 	 */
 	public String exibeItem(String id) {
 		if (!itens.containsKey(id)) {
-			throw new IllegalArgumentException("Item nao encontrado: " + id + ".");
+			throw new NullPointerException("Item nao encontrado: " + id + ".");
 		}
 		
 		return itens.get(id).toString();

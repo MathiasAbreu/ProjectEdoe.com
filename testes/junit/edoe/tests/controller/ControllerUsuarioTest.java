@@ -414,7 +414,18 @@ class ControllerUsuarioTest {
 		
 		String idItem = controle.adicionaItemParaDoacao("12345678901","camisa",4,"camisa,branca");
 		
-		assertEquals("",controle.exibeItem(idItem, "12345678901"));
+		assertEquals("1367748024 - camisa, tags: [camisa, branca], quantidade: 4",controle.exibeItem(idItem, "12345678901"));
+	}
+	
+	@Test
+	@DisplayName("Testando metodo de exibir item com item inexistente")
+	void testExibeItem02() throws Exception {
+		NullPointerException npe = assertThrows(NullPointerException.class,() -> {
+			
+			controle.exibeItem("357986533","12345678901");
+		});
+		
+		assertEquals("Item nao encontrado: 357986533.",npe.getMessage());
 	}
 	
 	@Test
