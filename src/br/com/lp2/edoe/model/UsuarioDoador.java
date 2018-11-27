@@ -38,4 +38,11 @@ public class UsuarioDoador extends Usuario {
 		return String.format("%s/%s, %s, %s, status: doador",getNome(),getIdentificacao(),getEmail(),getCelular());
 	}
 
+	@Override
+	public String getStatus() {
+		return "doador";
+	}
+
+	
+	
 }

@@ -616,7 +616,7 @@ class ControllerUsuarioTest {
 	@DisplayName("Testando se excecao eh lancada ao tentar listar itens sem haver nenhum registrado")
 	void testListaItensParaDoacao01() {
 		NullPointerException ex = assertThrows(NullPointerException.class, () -> {
-			controle.listaItensParaDoacao();
+			controle.listaItensParaDoacao("doador");
 		});
 		assertEquals("Erro: Nao ha itens cadastrados", ex.getMessage());
 	}
@@ -628,12 +628,12 @@ class ControllerUsuarioTest {
 		controle.adicionaItemParaDoacao("12345678901", "feijao", 108, "verde");
 		assertEquals("1278285234 - feijao, tags: [verde], quantidade: 108, doador: Mathias/12345678901 | "
 				+ "93090828 - arroz, tags: [integral], quantidade: 64, doador: Mathias/12345678901"
-				, controle.listaItensParaDoacao());
+				, controle.listaItensParaDoacao("doador"));
 		controle.adicionaItemParaDoacao("12345678901", "sabao", 80, "antibacteriano");
 		assertEquals("1278285234 - feijao, tags: [verde], quantidade: 108, doador: Mathias/12345678901 | "
 				+ "109191938 - sabao, tags: [antibacteriano], quantidade: 80, doador: Mathias/12345678901 | "
 				+ "93090828 - arroz, tags: [integral], quantidade: 64, doador: Mathias/12345678901"
-				, controle.listaItensParaDoacao());
+				, controle.listaItensParaDoacao("doador"));
 	}
 	
 	@Test
@@ -646,7 +646,7 @@ class ControllerUsuarioTest {
 		assertEquals("109191938 - sabao, tags: [antibacteriano], quantidade: 80, doador: Mathias/12345678901 | "
 				+ "93090828 - arroz, tags: [integral], quantidade: 64, doador: Mathias/12345678901 | "
 				+ "1278285234 - feijao, tags: [verde], quantidade: 1, doador: Mathias/12345678901"
-				, controle.listaItensParaDoacao());
+				, controle.listaItensParaDoacao("doador"));
 	}
 	
 	@Test

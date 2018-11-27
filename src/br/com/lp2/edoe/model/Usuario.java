@@ -315,4 +315,7 @@ public abstract class Usuario {
 		return itensAchados;
 	}
 	
+	public abstract String getStatus();
+	
+	
 }
