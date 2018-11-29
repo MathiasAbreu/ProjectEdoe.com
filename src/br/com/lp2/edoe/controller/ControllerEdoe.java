@@ -322,17 +322,16 @@ public class ControllerEdoe {
 		else
 			adicionaDescritor(descricaoItem.toLowerCase().replaceAll("\\s"," "));
 		
-		if(usuarios.containsKey(idDoador) || !itensDoUsuario.containsKey(idDoador)) {
-			itensDoUsuario.put(idDoador, new ArrayList<Item>());
+		if(usuarios.containsKey(idDoador)) {
+			
+			indiceId ++; 
+			
+			if(!itensDoUsuario.containsKey(idDoador))
+				itensDoUsuario.put(idDoador, new ArrayList<Item>());
+			
+			itensDoUsuario.get(idDoador).add(new Item(descricaoItem.toLowerCase().replaceAll("\\s"," "), tags.split(","), String.valueOf(indiceId), quantidade));
+			return String.valueOf(indiceId);
 		}
-		
-		if(usuarios.containsKey(idDoador) || itensDoUsuario.containsKey(idDoador)) {
-			String[] tagsArray = tags.split(",");
-			indiceId ++;
-			itensDoUsuario.get(idDoador).add(new Item(descricaoItem.toLowerCase().replaceAll("\\s"," "), tagsArray,String.valueOf(indiceId), quantidade));
-			return itensDoUsuario.get(idDoador).get(-1).toString();
-		}
-		
 		
 		throw new InvalidUserException(idDoador);
 	}
@@ -367,7 +366,7 @@ public class ControllerEdoe {
 			}
 		}
 		
-		throw new InvalidUserException(idItem);
+		throw new NullPointerException("Item nao encontrado: " + idItem + ".");
 	}
 	
 	/**
@@ -387,6 +386,9 @@ public class ControllerEdoe {
 	 */
 	public String atualizaItem(String id, String idDoador, int quantidade, String tags) throws Exception {
 		
+		if(Integer.parseInt(id) < 0)
+			throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");
+		
 		if(idDoador == null || idDoador.trim().isEmpty()) {
 			throw new InvalidArgumentException("id", "do usuario");
 		}
@@ -395,9 +397,66 @@ public class ControllerEdoe {
 			throw new InvalidUserException(idDoador);
 		}
 		
-		return usuarios.get(idDoador).atualizaItem(id, quantidade, tags);
+		if(itensDoUsuario.containsKey(idDoador)) {
+			
+			Item item = obterItem(id,idDoador);
+			if(quantidade > 0) {
+				
+				item.setQuantidade(quantidade);
+			}
+					
+			if(tags != null && !tags.trim().isEmpty()) {
+				item.setTags(tags.split(","));
+			}
+			
+			recolocarItem(idDoador,item);
+			return item.toString();
+		}
+		
+		throw new NullPointerException("O usuario não tem itens cadastrados");
 	}
 	
+	/**
+	 * @param id
+	 * @param idDoador
+	 * @return
+	 */
+	private Item obterItem(String id, String idDoador) {
+		
+		for(Item item : itensDoUsuario.get(idDoador)) {
+			
+			if(item.getId().equals(id))
+				return item;
+		}
+		
+		throw new NullPointerException("Item nao encontrado: " + id + ".");
+	}
+	
+	private boolean verificaExistencia(String id,String idDoador) {
+		
+		for(Item item : itensDoUsuario.get(idDoador)) {
+				
+			if(item.getId().equals(id))
+				return true;
+		}
+		
+		throw new NullPointerException("Item nao encontrado: " + id + ".");
+	}
+	
+	private void recolocarItem(String idDoador,Item novoItem) {
+		
+		ArrayList<Item> itens = itensDoUsuario.get(idDoador);
+
+		for(int i = 0; i < itens.size(); i++) {
+			
+			if(novoItem.getId().equals(itens.get(i).getId())) {
+				
+				itens.remove(i);
+				itens.add(novoItem);
+			}
+		}
+	}
+
 	/**
 	 * Metodo que remove um item de um determinado usuario, passado como parametro.
 	 * O usuario e buscado pelo id, e caso exista, tanto o usuario como o item, o mesmo e removido.
@@ -411,21 +470,33 @@ public class ControllerEdoe {
 	 */
 	public void removeItem(String id, String idDoador) throws Exception {
 		
+		if(Integer.parseInt(id) < 0)
+			throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");
 		
 		if (idDoador == null || idDoador.trim().isEmpty()) {
 			throw new InvalidArgumentException("id", "do usuario");
 		} 
-		if (!usuarios.containsKey(idDoador)) {
-			throw new InvalidUserException(idDoador);
-		}
 		
-		for (int i = 0; i < itensDoUsuario.size(); i++) {
-			if(itensDoUsuario.get(idDoador).get(i).getId().equals(id)) {
-				itensDoUsuario.get(idDoador).remove(i);
+		if(usuarios.containsKey(idDoador)) {
+			
+			if(itensDoUsuario.get(idDoador).isEmpty())
+				throw new NullPointerException("O Usuario nao possui itens cadastrados.");
+			
+			for(Item item : itensDoUsuario.get(idDoador)) {
+				
+				if(id.equals(item.getId())) {
+					
+					itensDoUsuario.get(idDoador).remove(item);
+					return;
+				}
 			}
+			
+			throw new NullPointerException("Item nao encontrado: " + id + ".");
+
 		}
 		
-		throw new InvalidUserException(id);
+		throw new InvalidUserException(idDoador);
+
 	}
 
 	/**
