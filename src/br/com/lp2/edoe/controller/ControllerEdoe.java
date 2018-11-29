@@ -322,12 +322,17 @@ public class ControllerEdoe {
 		else
 			adicionaDescritor(descricaoItem.toLowerCase().replaceAll("\\s"," "));
 		
-		if(usuarios.containsKey(idDoador)) {
-			
+		if(usuarios.containsKey(idDoador) || !itensDoUsuario.containsKey(idDoador)) {
+			itensDoUsuario.put(idDoador, new ArrayList<Item>());
+		}
+		
+		if(usuarios.containsKey(idDoador) || itensDoUsuario.containsKey(idDoador)) {
 			String[] tagsArray = tags.split(",");
 			indiceId ++;
-			return usuarios.get(idDoador).adicionaItem(indiceId,descricaoItem.toLowerCase().replaceAll("\\s"," "),quantidade,tagsArray);
+			itensDoUsuario.get(idDoador).add(new Item(descricaoItem.toLowerCase().replaceAll("\\s"," "), tagsArray,String.valueOf(indiceId), quantidade));
+			return itensDoUsuario.get(idDoador).get(-1).toString();
 		}
+		
 		
 		throw new InvalidUserException(idDoador);
 	}
@@ -355,7 +360,14 @@ public class ControllerEdoe {
 			throw new InvalidUserException(idDoador);
 		}
 		
-		return usuarios.get(idDoador).exibeItem(idItem);
+		for (Item item : itensDoUsuario.get(idDoador)) {
+			if(item.getId().equals(idItem)) {
+				return item.toString();
+				
+			}
+		}
+		
+		throw new InvalidUserException(idItem);
 	}
 	
 	/**
@@ -407,7 +419,13 @@ public class ControllerEdoe {
 			throw new InvalidUserException(idDoador);
 		}
 		
-		usuarios.get(idDoador).removeItem(id);
+		for (int i = 0; i < itensDoUsuario.size(); i++) {
+			if(itensDoUsuario.get(idDoador).get(i).getId().equals(id)) {
+				itensDoUsuario.get(idDoador).remove(i);
+			}
+		}
+		
+		throw new InvalidUserException(id);
 	}
 
 	/**
@@ -543,7 +561,11 @@ public class ControllerEdoe {
 		Set<String> usuariosChaves =usuarios.keySet();
 		
 		for (String chave : usuariosChaves) {
-			itensListados.addAll(usuarios.get(chave).pesquisaItemPorDescricao(desc));
+			int cont = 0;
+			if(itensDoUsuario.get(chave).get(cont).getDescritor().equals(desc)) {
+				itensListados.add(itensDoUsuario.get(chave).get(cont));
+			}
+			cont += 1;
 			
 		}
 		
