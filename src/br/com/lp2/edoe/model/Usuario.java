@@ -1,5 +1,6 @@
 package br.com.lp2.edoe.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
@@ -13,8 +14,9 @@ import java.util.Set;
  * @author Mathias Abreu Trajano - mathias.trajano@ccc.ufcg.edu.br
  *
  */
-public class Usuario {
+public class Usuario implements Serializable {
 
+	private static final long serialVersionUID = 1L;
 	private String nome;
 	private String email;
 	private String celular;
@@ -22,9 +24,6 @@ public class Usuario {
 	private String identificacao;
 	private String status;
 	
-	private HashMap<String, Item> itens;
-	
-			
 	/**
 	 * Construtor reponsavel por instanciar um novo Usuario, ele recebe todos os parametros necessarios para preencher 
 	 * os atributos basicos de um Usuario.
@@ -45,7 +44,6 @@ public class Usuario {
 		this.identificacao = identificacao;
 		this.status = status;
 		
-		itens = new HashMap<>();
 	}
 
 	/**
@@ -185,160 +183,4 @@ public class Usuario {
 		return String.format("%s/%s, %s, %s, status: %s",getNome(),getIdentificacao(),getEmail(),getCelular(),status.toLowerCase());
 	}
 
-	/**
-	 * Metodo que adiciona um novo item ao usuario.
-	 * 
-	 * @param descricaoItem descricao do item.
-	 * @param quantidade quantidade deisponivel do item
-	 * @param tagsArray tags do novo item
-	 * 
-	 * @return Retorna o id unico gerado para o novo item.
-	 */
-	public String adicionaItem(int id,String descricaoItem, int quantidade, String[] tagsArray) {
-		
-		String idDoItem = Integer.toString(id > 0 ? id : id * -1);
-		
-		Item itemnovo = new Item(descricaoItem, tagsArray, idDoItem, quantidade);
-		
-		for(Item item : itens.values()) {
-			if (itemnovo.equals(item)) {
-				item.setQuantidade(quantidade);
-				return item.getId();
-			}
-
-		}
-		
-		itens.put(idDoItem, itemnovo);
-		return idDoItem;
-	}
-	
-	/**
-	 * Metodo que busca e exibe um item de tal usuario.
-	 * 
-	 * @param id id unico do item a ser buscado.
-	 * 
-	 * @return Retorna, se encontrado, a representacao textual de tal item.
-	 * 
-	 * @throws IllegalArgumentException Excecao gerada caso o item desejado nao seja encontrado.
-	 * 
-	 */
-	public String exibeItem(String id) {
-		if (!itens.containsKey(id)) {
-			throw new NullPointerException("Item nao encontrado: " + id + ".");
-		}
-		
-		return itens.get(id).toString();
-	}
-	
-	/**
-	 * Atualiza um item passado como parametro. Pode ser alterado quantidade e tags do item.
-	 *  
-	 * @param id identificador do item
-	 * @param quantidade nova quantidade de itens oferecidos
-	 * @param tags novas tags de identificacao do item
-	 * 
-	 * @return Representacao textual do item atualizado
-	 * 
-	 * @throws IllegalArgumentException Essa excecao eh gerada caso o id inserido seja negativo ou o item nao seja encontrado.
-	 * 
-	 */
-	public String atualizaItem(String id, int quantidade, String tags) {
-		
-		if(Integer.parseInt(id) < 0)
-			throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");
-		if(!itens.containsKey(id)) {
-			throw new NullPointerException("Item nao encontrado: " + id + ".");
-		}
-		
-		if(quantidade > 0) {
-			
-			itens.get(id).setQuantidade(quantidade);
-		}
-				
-		if(tags != null && !tags.trim().isEmpty()) {
-			itens.get(id).setTags(tags.split(","));
-		}
-		
-		return itens.get(id).toString();
-	}
-	
-	/**
-	 * Remove um item, usando seu idenficador unico. 
-	 * 
-	 * @param id identificador do item a ser removido
-	 * 
-	 * @throws IllegalArgumentException Caso o usuario nao possua itens ou o id nao exista, essa excecao eh gerada.
-	 * 
-	 */
-	public void removeItem(String id) {
-		
-		if(Integer.parseInt(id) < 0)
-			throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");
-		
-		if(itens.size() == 0) {
-			throw new IllegalArgumentException("O Usuario nao possui itens cadastrados.");
-		}
-		
-		if(itens.containsKey(id)) {
-
-			itens.remove(id);
-		}
-		else
-			throw new IllegalArgumentException("Item nao encontrado: " + id + "." );
-			
-		
-	}
-
-	/**
-	 * Metodo que retorna uma colecao com todos os itens do usuario.
-	 * 
-	 * @return Retorna uma colecao com todos os itens do usuario.
-	 * 
-	 */
-	public ArrayList<Item> obterItens() {
-		
-		ArrayList<Item> itensParaRetornar = new ArrayList<>();
-		
-		for(Item item : itens.values())
-			itensParaRetornar.add(item);
-		
-		return itensParaRetornar;
-	}
-	
-	/**
-	 * Pesquisa um item atraves de um descritor passado como parametro
-	 * Checa os itens disponibilizados pelo usuario e adiciona a lista caso ache.
-	 * 
-	 * @param desc descritor a ser procurado
-	 * 
-	 * @return uma lista contendo os itens que possuem o descritor passado como parametro
-	 * 
-	 */
-	public ArrayList<Item> pesquisaItemPorDescricao(String desc) {
-		
-		Set<String> itensTodos = itens.keySet();
-		ArrayList<Item> itensAchados = new ArrayList<>();
-		
-		for (String item : itensTodos) {
-			
-			if (itens.get(item).getDescritor().toLowerCase().contains(desc.toLowerCase())) {
-				itensAchados.add(itens.get(item));
-			}
-		}
-		
-		return itensAchados;
-	}
-	
-	/**
-	 * @param idItem
-	 * @return
-	 */
-	public Item buscarItemPorId(String idItem) {
-		
-		if(itens.containsKey(idItem))
-			return itens.get(idItem);
-		
-		return null;
-	}
-	
 }

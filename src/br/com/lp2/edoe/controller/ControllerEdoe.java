@@ -32,6 +32,7 @@ public class ControllerEdoe {
 	
 	private LinkedHashMap<String,Usuario> usuarios;		
 	private HashSet<String> descritores;
+	private HashMap<String,ArrayList<Item>> itensDoUsuario;
 		
 	/**
 	 * Construtor responsavel pela construcao da instancia da classe, assim como da colecao de armazenamento dos 
@@ -44,6 +45,7 @@ public class ControllerEdoe {
 		
 		usuarios = new LinkedHashMap<>();		
 		descritores = new HashSet<>();
+		itensDoUsuario = new HashMap<>();
 		
 	}
 	

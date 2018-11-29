@@ -1,5 +1,6 @@
 package br.com.lp2.edoe.model;
 
+import java.io.Serializable;
 import java.util.Arrays;
 /**
  * Classe que representa um Item no sistema, contem todos os dados que compoem um item, assim como metodos que administram e 
@@ -10,7 +11,7 @@ import java.util.Arrays;
  * @author Mathias Abreu Trajano - mathias.trajano@ccc.ufcg.edu.br
  *
  */
-public class Item {
+public class Item implements Serializable {
 	
 	private String descritor;
 	private String id;
