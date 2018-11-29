@@ -2,7 +2,6 @@ package br.com.lp2.edoe.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -18,8 +17,6 @@ import br.com.lp2.edoe.exceptions.InvalidArgumentException;
 import br.com.lp2.edoe.exceptions.InvalidUserException;
 import br.com.lp2.edoe.model.Item;
 import br.com.lp2.edoe.model.Usuario;
-import br.com.lp2.edoe.model.UsuarioDoador;
-import br.com.lp2.edoe.model.UsuarioReceptor;
 
 /**
  * Classe responsavel pelo controle, manipulacao e armazenamento de Usuarios e suas especializacoes.
@@ -33,9 +30,7 @@ public class ControllerEdoe {
 	
 	private int indiceId;
 	
-	private LinkedHashMap<String,Usuario> usuarios;
-	private ReceptoresDao arquivoReceptores;
-		
+	private LinkedHashMap<String,Usuario> usuarios;		
 	private HashSet<String> descritores;
 		
 	/**
@@ -47,9 +42,7 @@ public class ControllerEdoe {
 				
 		indiceId = 0;
 		
-		usuarios = new LinkedHashMap<>();
-		arquivoReceptores = new ReceptoresDao();
-		
+		usuarios = new LinkedHashMap<>();		
 		descritores = new HashSet<>();
 		
 	}
@@ -93,7 +86,7 @@ public class ControllerEdoe {
 			
 			if(classe.equals("PESSOA_FISICA") || classe.equals("IGREJA") || classe.equals("ORGAO_PUBLICO_ESTADUAL") || classe.equals("ORGAO_PUBLICO_FEDERAL") || classe.equals("ONG") || classe.equals("ASSOCIACAO") || classe.equals("SOCIEDADE")) {
 				
-				usuarios.put(id, new UsuarioDoador(nome, email, celular, classe, id));
+				usuarios.put(id, new Usuario(nome, email, celular, classe, id, "Doador"));
 				return id;
 			}
 			
@@ -106,7 +99,7 @@ public class ControllerEdoe {
 		for (String receptor : receptores) {
 			
 			String[] dados = receptor.split(",");
-			usuarios.put(dados[0],new UsuarioReceptor(dados[1],dados[2],dados[3],dados[4],dados[0]));
+			usuarios.put(dados[0],new Usuario(dados[1],dados[2],dados[3],dados[4],dados[0],"Receptor"));
 		}
 	}
 
@@ -186,9 +179,8 @@ public class ControllerEdoe {
 	 */
 	public void lerReceptores(String caminho) throws IOException {
 		
-		ArrayList<String> receptores = arquivoReceptores.lerReceptores(caminho);
-		adicionarReceptores(receptores);
-		
+		adicionarReceptores(ReceptoresDao.lerReceptores(caminho));
+	
 	}
 
 	
@@ -258,7 +250,7 @@ public class ControllerEdoe {
 	 */
 	public void atualizarReceptores(String caminho) throws IOException {
 		
-		ArrayList<String> receptoresParaAtualizar = arquivoReceptores.lerReceptores(caminho);
+		ArrayList<String> receptoresParaAtualizar = ReceptoresDao.lerReceptores(caminho);
 		
 		for (String receptor : receptoresParaAtualizar) {
 			
@@ -269,7 +261,7 @@ public class ControllerEdoe {
 				if(usuarios.get(key).getIdentificacao().equals(dados[0])) {
 					
 					usuarios.remove(key);
-					usuarios.put(key,new UsuarioReceptor(dados[1],dados[2],dados[3],dados[4],dados[0]));
+					usuarios.put(key,new Usuario(dados[1],dados[2],dados[3],dados[4],dados[0],"Receptor"));
 				}
 			}
 		}
@@ -510,7 +502,7 @@ public class ControllerEdoe {
 		if(itens.size() == 0)
 			throw new NullPointerException("Erro: Nao ha itens cadastrados");
 		
-		Collections.sort(itens,classe.equals("doador") ? new ComparadorItemPorQuantidade() : new ComparadorItemPorId());
+		Collections.sort(itens,classe.equals("Doador") ? new ComparadorItemPorQuantidade() : new ComparadorItemPorId());
 		
 		return gerarListagem(itens, itensUsuarios);
 	}

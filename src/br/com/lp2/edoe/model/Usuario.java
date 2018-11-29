@@ -13,13 +13,14 @@ import java.util.Set;
  * @author Mathias Abreu Trajano - mathias.trajano@ccc.ufcg.edu.br
  *
  */
-public abstract class Usuario {
+public class Usuario {
 
 	private String nome;
 	private String email;
 	private String celular;
 	private String classe;
 	private String identificacao;
+	private String status;
 	
 	private HashMap<String, Item> itens;
 	
@@ -35,13 +36,14 @@ public abstract class Usuario {
 	 * @param identificacao numero de identificacao do usuario
 	 * 
 	 */
-	public Usuario(String nome, String email, String celular, String classe,String identificacao) {
+	public Usuario(String nome, String email, String celular, String classe,String identificacao,String status) {
 		
 		this.nome = nome;
 		this.email = email;
 		this.celular = celular;
 		this.classe = classe;
 		this.identificacao = identificacao;
+		this.status = status;
 		
 		itens = new HashMap<>();
 	}
@@ -127,6 +129,13 @@ public abstract class Usuario {
 	}
 
 	/**
+	 * @return the status
+	 */
+	public String getStatus() {
+		return status;
+	}
+
+	/**
 	 * Metodo responsavel por gerar um numero de identificao que pode ser usado internamente para armazenar o usuario em 
 	 * alguma colecao de armazenamento especifica.
 	 * 
@@ -171,7 +180,10 @@ public abstract class Usuario {
 	 * 
 	 */
 	@Override
-	public abstract String toString();
+	public String toString() {
+		
+		return String.format("%s/%s, %s, %s, status: %s",getNome(),getIdentificacao(),getEmail(),getCelular(),status.toLowerCase());
+	}
 
 	/**
 	 * Metodo que adiciona um novo item ao usuario.
@@ -317,14 +329,6 @@ public abstract class Usuario {
 		return itensAchados;
 	}
 	
-	/**
-	 * Metodo que retorna o status de um usuario.
-	 * 
-	 * @return Retorna 'doador' se for um usuario do tipo doador, e 'Receptor' se for um usuario do tipo receptor.
-	 * 
-	 */
-	public abstract String getStatus();
-
 	/**
 	 * @param idItem
 	 * @return

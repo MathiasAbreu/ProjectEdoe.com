@@ -98,7 +98,7 @@ public class EdoeFacade {
 	
 	public String listaItensParaDoacao() {
 		
-		return controle.listaItens("doador");
+		return controle.listaItens("Doador");
 		
 	}
 	

@@ -27,7 +27,7 @@ public class ReceptoresDao {
 	 * @throws IOException Excecao gerada caso haja algum problema na leitura do arquivo.
 	 * 
 	 */
-	public ArrayList<String> lerReceptores(String caminho) throws IOException {
+	public static ArrayList<String> lerReceptores(String caminho) throws IOException {
 		
 		ArrayList<String> receptores = new ArrayList<>();
 		
