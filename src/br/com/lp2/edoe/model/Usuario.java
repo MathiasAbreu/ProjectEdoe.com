@@ -180,7 +180,7 @@ public class Usuario implements Serializable {
 	@Override
 	public String toString() {
 		
-		return String.format("%s/%s, %s, %s, status: %s",getNome(),getIdentificacao(),getEmail(),getCelular(),status.toLowerCase());
+		return String.format("%s/%s, %s, %s, status: %s",getNome(),getIdentificacao(),getEmail(),getCelular(),status);
 	}
 
 }

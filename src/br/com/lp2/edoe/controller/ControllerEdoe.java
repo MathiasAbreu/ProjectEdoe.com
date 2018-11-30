@@ -88,7 +88,7 @@ public class ControllerEdoe {
 			
 			if(classe.equals("PESSOA_FISICA") || classe.equals("IGREJA") || classe.equals("ORGAO_PUBLICO_ESTADUAL") || classe.equals("ORGAO_PUBLICO_FEDERAL") || classe.equals("ONG") || classe.equals("ASSOCIACAO") || classe.equals("SOCIEDADE")) {
 				
-				usuarios.put(id, new Usuario(nome, email, celular, classe, id, "Doador"));
+				usuarios.put(id, new Usuario(nome, email, celular, classe, id, "doador"));
 				return id;
 			}
 			
@@ -101,7 +101,7 @@ public class ControllerEdoe {
 		for (String receptor : receptores) {
 			
 			String[] dados = receptor.split(",");
-			usuarios.put(dados[0],new Usuario(dados[1],dados[2],dados[3],dados[4],dados[0],"Receptor"));
+			usuarios.put(dados[0],new Usuario(dados[1],dados[2],dados[3],dados[4],dados[0],"receptor"));
 		}
 	}
 
@@ -316,9 +316,7 @@ public class ControllerEdoe {
 		if(quantidade <= 0)
 			throw new IllegalArgumentException("Entrada invalida: quantidade deve ser maior que zero.");
 		
-		if(descritores.contains(descricaoItem.toLowerCase().replaceAll("\\s"," "))) { 
-			
-		}
+		if(descritores.contains(descricaoItem.toLowerCase().replaceAll("\\s"," "))) { }
 		else
 			adicionaDescritor(descricaoItem.toLowerCase().replaceAll("\\s"," "));
 		
@@ -329,6 +327,15 @@ public class ControllerEdoe {
 			if(!itensDoUsuario.containsKey(idDoador))
 				itensDoUsuario.put(idDoador, new ArrayList<Item>());
 			
+			Item novoItem = new Item(descricaoItem.toLowerCase().replaceAll("\\s"," "), tags.split(","), String.valueOf(indiceId), quantidade);
+			for (Item item : itensDoUsuario.get(idDoador)) {
+				
+				if(item.equals(novoItem)) {
+					
+					atualizaItem(item.getId(), idDoador, quantidade,"");
+					return item.getId();
+				}
+			}
 			itensDoUsuario.get(idDoador).add(new Item(descricaoItem.toLowerCase().replaceAll("\\s"," "), tags.split(","), String.valueOf(indiceId), quantidade));
 			return String.valueOf(indiceId);
 		}
@@ -431,18 +438,7 @@ public class ControllerEdoe {
 		
 		throw new NullPointerException("Item nao encontrado: " + id + ".");
 	}
-	
-	private boolean verificaExistencia(String id,String idDoador) {
-		
-		for(Item item : itensDoUsuario.get(idDoador)) {
-				
-			if(item.getId().equals(id))
-				return true;
-		}
-		
-		throw new NullPointerException("Item nao encontrado: " + id + ".");
-	}
-	
+
 	private void recolocarItem(String idDoador,Item novoItem) {
 		
 		ArrayList<Item> itens = itensDoUsuario.get(idDoador);
@@ -477,9 +473,9 @@ public class ControllerEdoe {
 			throw new InvalidArgumentException("id", "do usuario");
 		} 
 		
-		if(usuarios.containsKey(idDoador)) {
+		if(usuarios.containsKey(idDoador) ) {
 			
-			if(itensDoUsuario.get(idDoador).isEmpty())
+			if(!itensDoUsuario.containsKey(idDoador))
 				throw new NullPointerException("O Usuario nao possui itens cadastrados.");
 			
 			for(Item item : itensDoUsuario.get(idDoador)) {
@@ -551,12 +547,11 @@ public class ControllerEdoe {
 
 	private ArrayList<Item> obterTodosOsItens() {
 		
+		Set<String> chaves = itensDoUsuario.keySet();
 		ArrayList<Item> retorno = new ArrayList<>();
 		
-		for(Usuario usuario : usuarios.values()) {
-			
-			retorno.addAll(usuario.obterItens());
-		}
+		for(String chave : chaves)
+			retorno.addAll(itensDoUsuario.get(chave));
 		
 		return retorno;
 	}
@@ -574,42 +569,51 @@ public class ControllerEdoe {
 	 */
 	public String listaItens(String classe) {
 		
-		HashMap<String,String> itensUsuarios = new HashMap<>();
+		Set<String> chaves = itensDoUsuario.keySet();
 		List<Item> itens = new ArrayList<>();
 		
-		for (Usuario usuario : usuarios.values()) {
+		for (String chave : chaves) {
 			
-			if(usuario.getStatus().equals(classe)) {
+			if(usuarios.get(chave).getStatus().equals(classe)) {
 				
-				ArrayList<Item> itensDoUsuario = usuario.obterItens();
-				for(Item item : itensDoUsuario) {
-					
-					itensUsuarios.put(item.getId(),usuario.getIdentificacao());
-				}
-				itens.addAll(itensDoUsuario);
+				itens.addAll(itensDoUsuario.get(chave));
+				
 			}
 		}
 		
 		if(itens.size() == 0)
 			throw new NullPointerException("Erro: Nao ha itens cadastrados");
 		
-		Collections.sort(itens,classe.equals("Doador") ? new ComparadorItemPorQuantidade() : new ComparadorItemPorId());
-		
-		return gerarListagem(itens, itensUsuarios);
+		Collections.sort(itens,classe.equals("doador") ? new ComparadorItemPorQuantidade() : new ComparadorItemPorId());
+		return gerarListagem(itens);
 	}
 	
-	private String gerarListagem(List<Item> itens,HashMap<String,String> itensUsuarios) {
+	private String gerarListagem(List<Item> itens) {
 		
-		Usuario user0 = usuarios.get(itensUsuarios.get(itens.get(0).getId()));
+		Usuario user0 = usuarios.get(buscarUsuario(itens.get(0).getId()));
 		String retorno = itens.get(0).toString() + String.format(", %s: %s/%s",user0.getStatus(),user0.getNome(),user0.getIdentificacao());
 		
 		for(int i = 1; i < itens.size(); i++) {
 			
-			Usuario userI = usuarios.get(itensUsuarios.get(itens.get(i).getId()));
+			Usuario userI = usuarios.get(buscarUsuario(itens.get(i).getId()));
 			retorno += " | " + itens.get(i).toString() + String.format(", %s: %s/%s",userI.getStatus(),userI.getNome(),userI.getIdentificacao());
 		
 		}
 		return retorno;
+	}
+	
+	private String buscarUsuario(String idDoItem) {
+		
+		Set<String> chaves = usuarios.keySet();
+		
+		for(String chave : chaves)
+			if(itensDoUsuario.containsKey(chave))
+				for(Item item : itensDoUsuario.get(chave)) {
+					if(item.getId().equals(idDoItem))
+						return chave;
+				}
+		
+		throw new NullPointerException("Item sem usuario!");
 	}
 	
 	/**
@@ -632,12 +636,13 @@ public class ControllerEdoe {
 		Set<String> usuariosChaves =usuarios.keySet();
 		
 		for (String chave : usuariosChaves) {
-			int cont = 0;
-			if(itensDoUsuario.get(chave).get(cont).getDescritor().equals(desc)) {
-				itensListados.add(itensDoUsuario.get(chave).get(cont));
-			}
-			cont += 1;
 			
+			if(itensDoUsuario.containsKey(chave))
+				for(Item item : itensDoUsuario.get(chave)) {
+					
+					if(item.getDescritor().contains(desc))
+						itensListados.add(item);
+				}
 		}
 		
 		Collections.sort(itensListados, new ComparadorItemPorDescricao());
@@ -655,11 +660,8 @@ public class ControllerEdoe {
 		return pesquisa;	
 	}
 
-	/**
-	 * @param idReceptor
-	 * @param idItem
-	 * @return
-	 */
+
+
 	public String match(String idReceptor, String idItem) throws Exception {
 		
 		if(idReceptor == null || idReceptor.trim().isEmpty())
@@ -668,9 +670,9 @@ public class ControllerEdoe {
 			throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");
 		
 		if(usuarios.containsKey(idReceptor)) {
-			if(usuarios.get(idReceptor).getStatus().equals("Receptor")) {
+			if(usuarios.get(idReceptor).getStatus().equals("receptor")) {
 				
-				return procurarPorMatchs(idItem);
+				return "";
 			}
 			throw new NullPointerException("O Usuario deve ser um receptor: " + idReceptor + ".");
 		}
@@ -679,9 +681,6 @@ public class ControllerEdoe {
 	}
 
 	/**
-	 * @param idItem
-	 * @return
-	 */
 	private String procurarPorMatchs(String idItem) {
 		
 		Item retornoBusca = buscarItemEspecifico(idItem);
@@ -704,10 +703,6 @@ public class ControllerEdoe {
 		return retorno;
 	}
 
-	/**
-	 * @param idItem
-	 * @return
-	 */
 	private Item buscarItemEspecifico(String idItem) {
 		
 		for(Usuario usuario : usuarios.values()) {
@@ -719,4 +714,6 @@ public class ControllerEdoe {
 		}
 		throw new NullPointerException("Item nao encontrado: " + idItem + ".");
 	}
+	
+	*/
 }
