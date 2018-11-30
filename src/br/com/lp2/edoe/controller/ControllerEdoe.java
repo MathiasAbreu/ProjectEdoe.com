@@ -12,10 +12,12 @@ import java.util.Set;
 import br.com.lp2.edoe.comparators.ComparadorItemPorDescricao;
 import br.com.lp2.edoe.comparators.ComparadorItemPorId;
 import br.com.lp2.edoe.comparators.ComparadorItemPorQuantidade;
+import br.com.lp2.edoe.comparators.ComparadorMatch;
 import br.com.lp2.edoe.dao.ReceptoresDao;
 import br.com.lp2.edoe.exceptions.InvalidArgumentException;
 import br.com.lp2.edoe.exceptions.InvalidUserException;
 import br.com.lp2.edoe.model.Item;
+import br.com.lp2.edoe.model.Match;
 import br.com.lp2.edoe.model.Usuario;
 
 /**
@@ -423,11 +425,6 @@ public class ControllerEdoe {
 		throw new NullPointerException("O usuario não tem itens cadastrados");
 	}
 	
-	/**
-	 * @param id
-	 * @param idDoador
-	 * @return
-	 */
 	private Item obterItem(String id, String idDoador) {
 		
 		for(Item item : itensDoUsuario.get(idDoador)) {
@@ -613,7 +610,7 @@ public class ControllerEdoe {
 						return chave;
 				}
 		
-		throw new NullPointerException("Item sem usuario!");
+		throw new NullPointerException("Item nao encontrado: " + idDoItem + ".");
 	}
 	
 	/**
@@ -660,8 +657,13 @@ public class ControllerEdoe {
 		return pesquisa;	
 	}
 
-
-
+	/**
+	 * 
+	 * @param idReceptor
+	 * @param idItem
+	 * @return
+	 * @throws Exception
+	 */
 	public String match(String idReceptor, String idItem) throws Exception {
 		
 		if(idReceptor == null || idReceptor.trim().isEmpty())
@@ -672,7 +674,7 @@ public class ControllerEdoe {
 		if(usuarios.containsKey(idReceptor)) {
 			if(usuarios.get(idReceptor).getStatus().equals("receptor")) {
 				
-				return "";
+				return procurarPorMatchs(idItem);
 			}
 			throw new NullPointerException("O Usuario deve ser um receptor: " + idReceptor + ".");
 		}
@@ -680,40 +682,36 @@ public class ControllerEdoe {
 		throw new InvalidUserException(idReceptor);
 	}
 
-	/**
+	
 	private String procurarPorMatchs(String idItem) {
 		
-		Item retornoBusca = buscarItemEspecifico(idItem);
-		ArrayList<Item> possiveisMatchs = new ArrayList<>();
+		Item retornoBusca = obterItem(idItem,buscarUsuario(idItem));
+		ArrayList<Match> possiveisMatchs = new ArrayList<>();
 		
-		for(Usuario usuario : usuarios.values()) {
+		for(Item item : obterTodosOsItens()) {
 			
-			possiveisMatchs.addAll(usuario.pesquisaItemPorDescricao(retornoBusca.getDescritor()));
-		}
-		
-		String retorno = "";
-		for (Item item : possiveisMatchs) {
-			
-			if(item.getId().equals(idItem)) {
-				continue;
+			if(retornoBusca.getDescritor().equals(item.getDescritor())) {
+				if(item.equals(retornoBusca))
+					continue;
+				else
+					possiveisMatchs.add(new Match(retornoBusca, item));
 			}
-			retorno += " | " + item.toString();
 		}
 		
-		return retorno;
-	}
-
-	private Item buscarItemEspecifico(String idItem) {
+		if(possiveisMatchs.isEmpty())
+			return "";
 		
-		for(Usuario usuario : usuarios.values()) {
-			
-			Item retorno = usuario.buscarItemPorId(idItem);
-			if(retorno != null)
-				return retorno;
-			
+		Collections.sort(possiveisMatchs, new ComparadorMatch());
+		
+		for (Match match : possiveisMatchs) {
+			System.out.println(match.getCoeficienteDeCombinacao());
 		}
-		throw new NullPointerException("Item nao encontrado: " + idItem + ".");
+		System.out.println();
+		
+		ArrayList<Item> itens = new ArrayList<>();
+		for(Match match : possiveisMatchs)
+			itens.add(match.getItem());
+		
+		return gerarListagem(itens);
 	}
-	
-	*/
 }
