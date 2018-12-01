@@ -20,10 +20,10 @@ public class ComparadorMatch implements Comparator<Match> {
 	public int compare(Match match01, Match match02) {
 		
 		if(match01.getCoeficienteDeCombinacao() > match02.getCoeficienteDeCombinacao())
-			return 1;
+			return -1;
 		
 		if(match01.getCoeficienteDeCombinacao() < match02.getCoeficienteDeCombinacao())
-			return -1;
+			return 1;
 		
 		return match01.getItem().getId().compareTo(match02.getItem().getId());
 	}

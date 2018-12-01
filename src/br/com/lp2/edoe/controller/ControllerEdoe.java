@@ -446,6 +446,7 @@ public class ControllerEdoe {
 				
 				itens.remove(i);
 				itens.add(novoItem);
+				return;
 			}
 		}
 	}
@@ -689,8 +690,8 @@ public class ControllerEdoe {
 		ArrayList<Match> possiveisMatchs = new ArrayList<>();
 		
 		for(Item item : obterTodosOsItens()) {
-			
-			if(retornoBusca.getDescritor().equals(item.getDescritor())) {
+			System.out.println(item.toString());
+			if(retornoBusca.getDescritor().equals(item.getDescritor()) && usuarios.get(buscarUsuario(item.getId())).getStatus().equals("doador")) {
 				if(item.equals(retornoBusca))
 					continue;
 				else

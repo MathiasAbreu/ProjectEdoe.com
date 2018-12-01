@@ -58,6 +58,18 @@ public class Match {
 					coeficienteTemp += 5;
 			}
 		}
+		else {
+			
+			for(int i = 0; i < item.getTags().length; i++) {
+				if(i < itemDeReferencia.getTags().length) {
+					
+					if(item.getTags()[i].equals(itemDeReferencia.getTags()[i]))
+						coeficienteTemp += 10;
+					else
+						coeficienteTemp += 5;
+				}
+			}
+		}
 		
 		return coeficienteTemp;
 	}
