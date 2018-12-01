@@ -692,10 +692,7 @@ public class ControllerEdoe {
 		for(Item item : obterTodosOsItens()) {
 			System.out.println(item.toString());
 			if(retornoBusca.getDescritor().equals(item.getDescritor()) && usuarios.get(buscarUsuario(item.getId())).getStatus().equals("doador")) {
-				if(item.equals(retornoBusca))
-					continue;
-				else
-					possiveisMatchs.add(new Match(retornoBusca, item));
+				possiveisMatchs.add(new Match(retornoBusca, item));
 			}
 		}
 		
