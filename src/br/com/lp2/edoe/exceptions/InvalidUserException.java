@@ -10,6 +10,8 @@ package br.com.lp2.edoe.exceptions;
  */
 public class InvalidUserException extends Exception {
 
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * Metodo que gera um excecao do tipo {@link InvalidUserException} recebendo como parametro o (id ou nome) do usuario que gerou esse erro. 
 	 * O erro eh gerado caso haja algum problema com o usuario buscado.

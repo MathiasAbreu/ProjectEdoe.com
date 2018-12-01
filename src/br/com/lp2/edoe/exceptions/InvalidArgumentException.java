@@ -9,7 +9,9 @@ package br.com.lp2.edoe.exceptions;
  * 
  */
 public class InvalidArgumentException extends Exception {
-	
+
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * Metodo que gera um excecao do tipo {@link InvalidArgumentException} recebendo como parametro o nome do atributo que gerou esse erro.
 	 * 

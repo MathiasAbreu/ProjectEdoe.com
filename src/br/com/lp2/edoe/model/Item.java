@@ -13,6 +13,8 @@ import java.util.Arrays;
  */
 public class Item implements Serializable {
 	
+	private static final long serialVersionUID = 1L;
+	
 	private String descritor;
 	private String id;
 	

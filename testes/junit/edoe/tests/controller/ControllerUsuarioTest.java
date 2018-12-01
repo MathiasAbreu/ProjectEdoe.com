@@ -501,7 +501,7 @@ class ControllerUsuarioTest {
 			controle.atualizaItem("1234567","12345678901",4,"camisa,branca");
 		});
 		
-		assertEquals("Item nao encontrado: 1234567.",npe.getMessage());
+		assertEquals("O usuario não tem itens cadastrados",npe.getMessage());
 	}
 	
 	@Test

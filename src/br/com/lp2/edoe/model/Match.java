@@ -1,7 +1,5 @@
 package br.com.lp2.edoe.model;
 
-import java.util.Arrays;
-
 /**
  *
  * @author Caio Fernandes Moreira - caio.moreira@ccc.ufcg.edu.br

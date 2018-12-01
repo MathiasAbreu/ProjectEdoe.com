@@ -368,13 +368,15 @@ public class ControllerEdoe {
 			throw new InvalidUserException(idDoador);
 		}
 		
-		for (Item item : itensDoUsuario.get(idDoador)) {
-			if(item.getId().equals(idItem)) {
-				return item.toString();
-				
+		if(itensDoUsuario.containsKey(idDoador)) {
+			
+			for (Item item : itensDoUsuario.get(idDoador)) {
+				if(item.getId().equals(idItem)) {
+					return item.toString();
+					
+				}
 			}
 		}
-		
 		throw new NullPointerException("Item nao encontrado: " + idItem + ".");
 	}
 	
@@ -690,7 +692,7 @@ public class ControllerEdoe {
 		ArrayList<Match> possiveisMatchs = new ArrayList<>();
 		
 		for(Item item : obterTodosOsItens()) {
-			System.out.println(item.toString());
+
 			if(retornoBusca.getDescritor().equals(item.getDescritor()) && usuarios.get(buscarUsuario(item.getId())).getStatus().equals("doador")) {
 				possiveisMatchs.add(new Match(retornoBusca, item));
 			}
@@ -700,11 +702,6 @@ public class ControllerEdoe {
 			return "";
 		
 		Collections.sort(possiveisMatchs, new ComparadorMatch());
-		
-		for (Match match : possiveisMatchs) {
-			System.out.println(match.getCoeficienteDeCombinacao());
-		}
-		System.out.println();
 		
 		ArrayList<Item> itens = new ArrayList<>();
 		for(Match match : possiveisMatchs)
