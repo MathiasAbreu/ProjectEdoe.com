@@ -26,7 +26,7 @@ public class InvalidUserException extends Exception {
 	
 	/**
 	 * Metodo que gera um excecao do tipo {@link InvalidUserException} recebendo como parametro o (id ou nome) do usuario que gerou esse erro, 
-	 * como também algum complemento adicional que precise participar da mensagem de erro. 
+	 * como tambem algum complemento adicional que precise participar da mensagem de erro. 
 	 * O erro eh gerado caso haja algum problema com o usuario buscado.
 	 * 
 	 * @param usuario (id ou nome) do usuario que gerou esse erro.

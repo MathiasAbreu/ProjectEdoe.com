@@ -19,6 +19,9 @@ class ControllerUsuarioTest {
 		controle = new ControllerEdoe();
 		
 		controle.adicionarDoador("12345678901","Mathias","mathias.trajano","18584257","PESSOA_FISICA");
+		controle.adicionarDoador("99999999999","Fulano","fulano@gmail.com","68545354","PESSOA_FISICA");
+		controle.adicionarDoador("88888888888","Beltrano","beltrano@gmail.com","55465852","PESSOA_FISICA");
+		controle.lerReceptores("arquivos_sistema/novosReceptores.csv");
 	}
 
 	@Test
@@ -685,5 +688,97 @@ class ControllerUsuarioTest {
 		assertEquals("1 - biscoito, tags: [napolitano, 300g], quantidade: 2", controle.pesquisaItemPorDescricao("biscoito"));
 	}
 	
+	@Test
+	@DisplayName("Testando se o metodo retorna excecao ao tentar dar match com um id vazio")
+	void testMatch01() throws Exception {
+		InvalidArgumentException iae = assertThrows(InvalidArgumentException.class,() -> {
+			
+			controle.match("", "1");
+		});
+		assertEquals("Entrada invalida: id do usuario nao pode ser vazio ou nulo.",iae.getMessage());
+		
+		InvalidArgumentException iae2 = assertThrows(InvalidArgumentException.class,() -> {
+			
+			controle.match("       ", "1");
+		});
+		assertEquals("Entrada invalida: id do usuario nao pode ser vazio ou nulo.",iae2.getMessage());
+	}
+	
+	@Test
+	@DisplayName("Testando se o metodo retorna excecao ao tentar dar match com um id nulo")
+	void testMatch02() throws Exception {
+		InvalidArgumentException iae = assertThrows(InvalidArgumentException.class,() -> {
+			
+			controle.match(null, "1");
+		});
+		assertEquals("Entrada invalida: id do usuario nao pode ser vazio ou nulo.",iae.getMessage());
+	}
+	
+	@Test
+	@DisplayName("Testando se o metodo retorna excecao ao tentar dar match com um id nao existente")
+	void testMatch03() throws Exception {
+		InvalidUserException iue = assertThrows(InvalidUserException.class,() -> {
+			
+			controle.match("11111111111", "1");
+		});
+		assertEquals("Usuario nao encontrado: 11111111111.",iue.getMessage());
+	}
+	
+	@Test
+	@DisplayName("Testando se o metodo retorna excecao ao tentar dar match com um id de um doador")
+	void testMatch04() throws Exception {
+		NullPointerException npe = assertThrows(NullPointerException.class,() -> {
+			
+			controle.match("12345678901", "1");
+		});
+		assertEquals("O Usuario deve ser um receptor: 12345678901.",npe.getMessage());
+	}
+	
+	@Test
+	@DisplayName("Testando se o metodo retorna excecao ao tentar dar match com um id de item negativo")
+	void testMatch05() throws Exception {
+		IllegalArgumentException iae = assertThrows(IllegalArgumentException.class,() -> {
+			
+			controle.match("98624406000140", "-1");
+		});
+		assertEquals("Entrada invalida: id do item nao pode ser negativo.", iae.getMessage());
+	}
+	
+	@Test
+	@DisplayName("Testando se o metodo retorna excecao ao tentar dar match com um id de item nao cadastrado")
+	void testMatch06() throws Exception {
+		NullPointerException npe = assertThrows(NullPointerException.class,() -> {
+			
+			controle.match("98624406000140", "23");
+		});
+		assertEquals("Item nao encontrado: 23.", npe.getMessage());
+	}
+	
+	@Test
+	@DisplayName("Testando se o metodo retorna os matches corretamente")
+	void testMatch07() throws Exception {
+		controle.adicionaItem("99999999999", "computador", 5, "dell,vermelho");
+		controle.adicionaItem("12345678901", "computador", 2, "dell,preto");
+		controle.adicionaItem("88888888888", "computador", 3, "dell,vermelho");
+		
+		assertEquals("2 - computador, tags: [dell, preto], quantidade: 2, doador: Mathias/12345678901 |"
+				+ " 1 - computador, tags: [dell, vermelho], quantidade: 5, doador: Fulano/99999999999 |"
+				+ " 3 - computador, tags: [dell, vermelho], quantidade: 3, doador: Beltrano/88888888888", controle.match("98624406000140", "2"));
+	}
+
+	@Test
+	@DisplayName("Testando se o metodo retorna os matches corretamente apos alterar quantidades de itens e adicionar mais itens")
+	void testMatch08() throws Exception {
+		controle.adicionaItem("99999999999", "computador", 5, "dell,vermelho");
+		controle.adicionaItem("12345678901", "computador", 2, "dell,preto");
+		controle.adicionaItem("88888888888", "computador", 3, "dell,vermelho");
+		controle.adicionaItem("88888888888", "computador", 999, "dell,vermelho");
+		controle.adicionaItem("99999999999", "computador", 4, "dell,preto");
+		
+		assertEquals("2 - computador, tags: [dell, preto], quantidade: 2, doador: Mathias/12345678901 |"
+				+ " 5 - computador, tags: [dell, preto], quantidade: 4, doador: Fulano/99999999999 |"
+				+ " 1 - computador, tags: [dell, vermelho], quantidade: 5, doador: Fulano/99999999999 |"
+				+ " 3 - computador, tags: [dell, vermelho], quantidade: 999, doador: Beltrano/88888888888", controle.match("98624406000140", "2"));
+	}
 	
 }
