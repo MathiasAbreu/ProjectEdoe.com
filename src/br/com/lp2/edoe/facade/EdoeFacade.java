@@ -133,6 +133,18 @@ public class EdoeFacade {
 		return controle.match(idReceptor,idItemNecessario);
 	}
 	
+	
+	public String realizaDoacao(String idItemNec, String idItemDoado, String data) throws Exception {
+		
+		return controle.realizaDoacao(idItemNec, idItemDoado, data);
+	}
+	
+	public String listaDoacoes() {
+		
+		return controle.listaDoacoes();
+	}
+
+	
 	public static void main(String[] args) {
 		
 		args = new String[] {"br.com.lp2.edoe.facade.EdoeFacade",
@@ -140,7 +152,8 @@ public class EdoeFacade {
 				 "src/br/com/lp2/edoe/easyAccept/use_case_2.txt",
 				 "src/br/com/lp2/edoe/easyAccept/use_case_3.txt",
 				 "src/br/com/lp2/edoe/easyAccept/use_case_4.txt",
-				 "src/br/com/lp2/edoe/easyAccept/use_case_5.txt"};
+				 "src/br/com/lp2/edoe/easyAccept/use_case_5.txt",
+				 "src/br/com/lp2/edoe/easyAccept/use_case_6.txt"};
 		
 		EasyAccept.main(args);
 		

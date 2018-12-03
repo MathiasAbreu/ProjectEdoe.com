@@ -35,6 +35,7 @@ public class ControllerEdoe {
 	private LinkedHashMap<String,Usuario> usuarios;		
 	private HashSet<String> descritores;
 	private HashMap<String,ArrayList<Item>> itensDoUsuario;
+	private ArrayList<String> registroDoacoes;
 		
 	/**
 	 * Construtor responsavel pela construcao da instancia da classe, assim como da colecao de armazenamento dos 
@@ -709,4 +710,68 @@ public class ControllerEdoe {
 		
 		return gerarListagem(itens);
 	}
+	
+	/**
+	 * 
+	 * @param idItemNec
+	 * @param idItemDoado
+	 * @param data
+	 * @return
+	 * @throws Exception
+	 */
+	public String realizaDoacao(String idItemNec, String idItemDoado, String data) throws Exception {
+		
+		if(Integer.parseInt(idItemNec) < 0)
+			throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");
+		if(Integer.parseInt(idItemDoado) < 0)
+			throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");
+		
+		if(idItemNec == null || idItemNec.trim().isEmpty() || idItemDoado == null || idItemDoado.trim().isEmpty())
+			throw new InvalidArgumentException("id");
+		if(data == null || data.trim().isEmpty())
+			throw new InvalidArgumentException("data");
+		
+		String idReceptor = buscarUsuario(idItemNec);
+		String idDoador = buscarUsuario(idItemDoado);	
+		Item itemDoado = obterItem(idItemDoado, idDoador);
+		Item itemNec = obterItem(idItemNec, idReceptor);
+		
+		if (!itemDoado.getDescritor().equals(itemNec.getDescritor())) {
+			throw new IllegalArgumentException("Os itens nao tem descricoes iguais.");
+		}
+		
+		int quantidadeDisp = itemDoado.getQuantidade();
+		int quantidadeNec = itemNec.getQuantidade();
+		
+		int quantidadeDoada;
+		
+		if (quantidadeDisp > quantidadeNec) {
+			quantidadeDoada = quantidadeNec;
+			itemDoado.setQuantidade(itemDoado.getQuantidade() - quantidadeNec);
+			removeItem(idItemNec, idReceptor);
+		}
+		else if (quantidadeDisp == quantidadeNec) {
+			quantidadeDoada = quantidadeNec;
+			removeItem(idItemDoado, idDoador);
+			removeItem(idItemNec, idReceptor);
+		}
+		else {
+			quantidadeDoada = quantidadeDisp;
+			removeItem(idItemDoado, idDoador);
+			itemNec.setQuantidade(itemNec.getQuantidade() - quantidadeDisp);
+		}
+		
+		
+		String retorno = String.format("%s - doador: %s/%s, item: %s, quantidade: %s, receptor: %s/%s", data , usuarios.get(idDoador).getNome() , idDoador , itemDoado.getDescritor() , quantidadeDoada , usuarios.get(idReceptor).getNome() , idReceptor );
+		return retorno;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public String listaDoacoes() {
+		return "";
+	}
+	
 }

@@ -20,7 +20,7 @@ public class InvalidArgumentException extends Exception {
 	 */
 	public InvalidArgumentException(String atributo) {
 		
-		super(atributo.equals("classe") || atributo.equals("descricao") ? "Entrada invalida: " + atributo + " nao pode ser vazia ou nula." : "Entrada invalida: " + atributo + " nao pode ser vazio ou nulo.");
+		super(atributo.equals("classe") || atributo.equals("descricao") || atributo.equals("data") ? "Entrada invalida: " + atributo + " nao pode ser vazia ou nula." : "Entrada invalida: " + atributo + " nao pode ser vazio ou nulo.");
 	}
 	
 	/**
