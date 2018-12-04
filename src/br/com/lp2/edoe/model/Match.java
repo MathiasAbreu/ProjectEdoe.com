@@ -11,7 +11,6 @@ public class Match {
 	
 	private Item itemDeReferencia;
 	private Item item;
-
 	private int coeficienteDeCombinacao;
 	
 	public Match(Item itemDeReferencia, Item item) {
