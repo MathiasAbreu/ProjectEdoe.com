@@ -596,6 +596,17 @@ public class ControllerEdoe {
 		return listarTodosOsDescritores(descritoresOrdenados);
 	}
 
+	private int capturarQuantidade(String descritor) {
+		
+		int quantidade = 0;
+		for(Item item : obterTodosOsItens()) {
+			
+			if(item.getDescritor().equals(descritor))
+				quantidade += item.getQuantidade();
+		}
+		
+		return quantidade;
+	}
 	private String listarTodosOsDescritores(List<String> descritoresOrdenados) {
 		
 		String retorno = "";
@@ -606,10 +617,10 @@ public class ControllerEdoe {
 				if(item.getDescritor().equals(descritoresOrdenados.get(i))) {
 					
 					if(i == 0) {
-						retorno += String.format("%d - %s",item.getQuantidade(),item.getDescritor());
+						retorno += String.format("%d - %s",capturarQuantidade(item.getDescritor()),item.getDescritor());
 						continue LOOP_EXTERNO;
 					}
-					retorno += String.format(" | %d - %s",item.getQuantidade(),item.getDescritor());
+					retorno += String.format(" | %d - %s",capturarQuantidade(item.getDescritor()),item.getDescritor());
 					continue LOOP_EXTERNO;
 				}
 			}
