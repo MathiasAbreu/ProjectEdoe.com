@@ -578,9 +578,10 @@ public class ControllerEdoe {
 	 * associados ou nao.
 	 * 
 	 * @return Retorna uma representacao com todos os descritores do sistema, ordenados alfabeticamente.
+	 * @throws InvalidArgumentException 
 	 * 
 	 */
-	public String listaDescritorDeItens() {
+	public String listaDescritorDeItens() throws InvalidArgumentException {
 		
 		if(descritores.isEmpty())
 			throw new NullPointerException("Erro: Nao ha Itens nem Descritores cadastrados no sistema.");
@@ -601,15 +602,17 @@ public class ControllerEdoe {
 		int quantidade = 0;
 		for(Item item : obterTodosOsItens()) {
 			
-			if(item.getDescritor().equals(descritor))
+			if(item.getDescritor().equals(descritor) && usuarios.get(buscarUsuario(item.getId())).getStatus().equals("doador"))
 				quantidade += item.getQuantidade();
 		}
 		
 		return quantidade;
 	}
-	private String listarTodosOsDescritores(List<String> descritoresOrdenados) {
+	private String listarTodosOsDescritores(List<String> descritoresOrdenados) throws InvalidArgumentException {
 		
 		String retorno = "";
+		
+		verificarItens(descritoresOrdenados);
 		
 		LOOP_EXTERNO : for(int i = 0; i < descritoresOrdenados.size(); i++) {
 			for(Item item : obterTodosOsItens()) {
@@ -632,6 +635,31 @@ public class ControllerEdoe {
 		}
 		
 		return retorno;
+	}
+
+	/**
+	 * @param descritoresOrdenados
+	 * @throws InvalidArgumentException 
+	 */
+	private void verificarItens(List<String> descritoresOrdenados) throws InvalidArgumentException {
+		
+		LOOP_EXTERNO : for(int i = 0; i < descritoresOrdenados.size(); i++) {
+			
+			for(Item item : obterTodosOsItens()) {
+				
+				if(item.getDescritor().equals(descritoresOrdenados.get(i))) {
+					if(usuarios.get(buscarUsuario(item.getId())).getStatus().equals("doador"))
+						continue LOOP_EXTERNO;
+					
+				}
+			}
+			
+			if(!pesquisaItemPorDescricao(descritoresOrdenados.get(i)).equals("")) {
+				descritoresOrdenados.remove(i);
+				i = -1;
+			}
+		}
+		
 	}
 
 	private ArrayList<Item> obterTodosOsItens() {

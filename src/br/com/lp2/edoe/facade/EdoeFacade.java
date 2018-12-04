@@ -91,7 +91,7 @@ public class EdoeFacade {
 		return controle.exibeItem(id, idDoador);
 	}
 	
-	public String listaDescritorDeItensParaDoacao() {
+	public String listaDescritorDeItensParaDoacao() throws Exception {
 		
 		return controle.listaDescritorDeItens();
 	}
