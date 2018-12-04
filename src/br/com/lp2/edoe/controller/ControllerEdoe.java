@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.ResourceBundle;
 import java.util.Set;
 
 import br.com.lp2.edoe.comparators.ComparadorDoacao;
@@ -16,6 +15,7 @@ import br.com.lp2.edoe.comparators.ComparadorItemPorId;
 import br.com.lp2.edoe.comparators.ComparadorItemPorQuantidade;
 import br.com.lp2.edoe.comparators.ComparadorMatch;
 import br.com.lp2.edoe.dao.ReceptoresDao;
+import br.com.lp2.edoe.dao.UsuariosDAO;
 import br.com.lp2.edoe.exceptions.InvalidArgumentException;
 import br.com.lp2.edoe.exceptions.InvalidUserException;
 import br.com.lp2.edoe.model.Doacao;
@@ -49,6 +49,8 @@ public class ControllerEdoe {
 	 */
 	public ControllerEdoe() {
 				
+		lerUsuarios(UsuariosDAO.lerUsuarios());
+		
 		indiceId = 0;
 		
 		usuarios = new LinkedHashMap<>();		
@@ -59,6 +61,21 @@ public class ControllerEdoe {
 		
 	}
 	
+	private void lerUsuarios(ArrayList<Usuario> lerUsuarios) {
+		
+		for(Usuario usuario : lerUsuarios) {
+			
+			if(!usuarios.containsKey(usuario.getIdentificacao()))
+				usuarios.put(usuario.getIdentificacao(),usuario);
+		}
+		
+	}
+	
+	public void escreverUsuarios() {
+		
+		UsuariosDAO.escreverUsuarios(usuarios.values());
+	}
+
 	/**
 	 * Metodo responsavel pelo cadastro de Usuarios do tipo {@link UsuarioDoador} no sistema, ele recebe todos os parametros 
 	 * necessarios para a criacao dos mesmos. O processo comeca verificando a validade dos dados recebidos, seguido pela verificao 
