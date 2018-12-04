@@ -26,16 +26,16 @@ expect ${idItem17}" - jaqueta de couro, tags: [outfit, couro de boi, couro de bo
 expectError "Item nao encontrado: "${idItem19}"." exibeItem id=${idItem19} idDoador=${id6}
 expectError "Item nao encontrado: "${idItem4}"." exibeItem id=${idItem4} idDoador=${id2}
 
-expect ${itemNecId1}" - livro, tags: [Infantil, Matematica], quantidade: 8, Receptor: Murilo Luiz Brito/84473712044\
- | "${itemNecId2}" - toalha de banho, tags: [Infantil, TAM P], quantidade: 5, Receptor: Sonia Daniela/31862316040\
- | "${itemNecId3}" - toalha de banho, tags: [Adulto, TAM G, Azul], quantidade: 2, Receptor: Sara Jennifer Vieira/24875800037\
- | "${itemNecId4}" - frauda, tags: [Higiene, Infantil, P], quantidade: 15, Receptor: Luiza Elisa Lopes/72859801000118\
- | "${itemNecId5}" - frauda, tags: [Higiene, Infantil, M], quantidade: 10, Receptor: Cristiane Isabella Caldeira/87831113000117\
- | "${itemNecId7}" - alimento, tags: [Alimentacao, Saude], quantidade: 5, Receptor: Lucca Iago/57091431030\
- | "${itemNecId8}" - sabonete, tags: [Higiene], quantidade: 8, Receptor: Sara Jennifer Vieira/24875800037\
- | "${itemNecId9}" - livro, tags: [], quantidade: 1, Receptor: Sara Jennifer Vieira/24875800037\
- | "${itemNecId11}" - colchao, tags: [colchao kingsize, conforto], quantidade: 10, Receptor: Murilo Luiz Brito/84473712044\
- | "${itemNecId14}" - camiseta, tags: [outfit, poliester, roupa], quantidade: 12, Receptor: Murilo Luiz Brito/84473712044" listaItensNecessarios
+expect ${itemNecId1}" - livro, tags: [Infantil, Matematica], quantidade: 8, receptor: Murilo Luiz Brito/84473712044\
+ | "${itemNecId2}" - toalha de banho, tags: [Infantil, TAM P], quantidade: 5, receptor: Sonia Daniela/31862316040\
+ | "${itemNecId3}" - toalha de banho, tags: [Adulto, TAM G, Azul], quantidade: 2, receptor: Sara Jennifer Vieira/24875800037\
+ | "${itemNecId4}" - frauda, tags: [Higiene, Infantil, P], quantidade: 15, receptor: Luiza Elisa Lopes/72859801000118\
+ | "${itemNecId5}" - frauda, tags: [Higiene, Infantil, M], quantidade: 10, receptor: Cristiane Isabella Caldeira/87831113000117\
+ | "${itemNecId7}" - alimento, tags: [Alimentacao, Saude], quantidade: 5, receptor: Lucca Iago/57091431030\
+ | "${itemNecId8}" - sabonete, tags: [Higiene], quantidade: 8, receptor: Sara Jennifer Vieira/24875800037\
+ | "${itemNecId9}" - livro, tags: [], quantidade: 1, receptor: Sara Jennifer Vieira/24875800037\
+ | "${itemNecId11}" - colchao, tags: [colchao kingsize, conforto], quantidade: 10, receptor: Murilo Luiz Brito/84473712044\
+ | "${itemNecId14}" - camiseta, tags: [outfit, poliester, roupa], quantidade: 12, receptor: Murilo Luiz Brito/84473712044" listaItensNecessarios
  
 ## Listando doacoes ##
 

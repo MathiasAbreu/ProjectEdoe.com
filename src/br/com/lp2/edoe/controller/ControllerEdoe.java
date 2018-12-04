@@ -721,9 +721,7 @@ public class ControllerEdoe {
 	 */
 	public String realizaDoacao(String idItemNec, String idItemDoado, String data) throws Exception {
 		
-		if(Integer.parseInt(idItemNec) < 0)
-			throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");
-		if(Integer.parseInt(idItemDoado) < 0)
+		if(Integer.parseInt(idItemNec) < 0 || Integer.parseInt(idItemDoado) < 0)
 			throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");
 		
 		if(idItemNec == null || idItemNec.trim().isEmpty() || idItemDoado == null || idItemDoado.trim().isEmpty())

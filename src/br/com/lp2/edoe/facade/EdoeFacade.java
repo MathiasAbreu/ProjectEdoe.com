@@ -132,8 +132,7 @@ public class EdoeFacade {
 		
 		return controle.match(idReceptor,idItemNecessario);
 	}
-	
-	
+		
 	public String realizaDoacao(String idItemNec, String idItemDoado, String data) throws Exception {
 		
 		return controle.realizaDoacao(idItemNec, idItemDoado, data);
