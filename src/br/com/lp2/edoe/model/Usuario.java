@@ -127,6 +127,10 @@ public class Usuario implements Serializable {
 	 * @return the status
 	 */
 	public String getStatus() {
+		
+		if(status.equals("receptor")) {
+			return status.substring(0,1).toUpperCase().concat(status.substring(1));
+		}
 		return status;
 	}
 

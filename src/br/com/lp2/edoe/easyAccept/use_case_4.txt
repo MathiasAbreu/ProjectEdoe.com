@@ -34,20 +34,20 @@ expectError "Entrada invalida: id do usuario nao pode ser vazio ou nulo." adicio
 
 ## Listagem de itens necessarios ##
 
-expect ${itemNecId1}" - livro, tags: [Infantil, Matematica, Didatico], quantidade: 3, receptor: Murilo Luiz Brito/84473712044\
- | "${itemNecId2}" - toalha de banho, tags: [Adulto, TAM G, Azul], quantidade: 2, receptor: Sonia Daniela/31862316040\
- | "${itemNecId3}" - toalha de banho, tags: [Adulto, TAM G, Branca], quantidade: 1, receptor: Sara Jennifer Vieira/24875800037\
- | "${itemNecId4}" - frauda, tags: [Higiene, Infantil, P], quantidade: 15, receptor: Luiza Elisa Lopes/72859801000118\
- | "${itemNecId5}" - frauda, tags: [Higiene, Infantil, M], quantidade: 10, receptor: Cristiane Isabella Caldeira/87831113000117\
- | "${itemNecId6}" - frauda, tags: [Higiene, Adulto, GG], quantidade: 30, receptor: Luiza Elisa Lopes/72859801000118\
- | "${itemNecId7}" - alimento, tags: [Alimentacao, Saude], quantidade: 5, receptor: Lucca Iago/57091431030\
- | "${itemNecId8}" - sabonete, tags: [Higiene], quantidade: 8, receptor: Sara Jennifer Vieira/24875800037\
- | "${itemNecId9}" - livro, tags: [], quantidade: 1, receptor: Sara Jennifer Vieira/24875800037\
- | "${itemNecId10}" - cadeira de rodas, tags: [roda grande, 80kg, conforto], quantidade: 7, receptor: Luiza Elisa Lopes/72859801000118\
- | "${itemNecId11}" - colchao, tags: [colchao kingsize, conforto], quantidade: 6, receptor: Murilo Luiz Brito/84473712044\
- | "${itemNecId12}" - jaqueta de couro, tags: [outfit, couro de bode], quantidade: 3, receptor: Antonella Sonia Moraes/32719454000103\
- | "${itemNecId13}" - travesseiro, tags: [travesseiro de pena, conforto, dormir], quantidade: 2, receptor: Rafaela Beatriz/51567490000143\
- | "${itemNecId14}" - camiseta, tags: [outfit, poliester, roupa], quantidade: 11, receptor: Murilo Luiz Brito/84473712044" listaItensNecessarios
+expect ${itemNecId1}" - livro, tags: [Infantil, Matematica, Didatico], quantidade: 3, Receptor: Murilo Luiz Brito/84473712044\
+ | "${itemNecId2}" - toalha de banho, tags: [Adulto, TAM G, Azul], quantidade: 2, Receptor: Sonia Daniela/31862316040\
+ | "${itemNecId3}" - toalha de banho, tags: [Adulto, TAM G, Branca], quantidade: 1, Receptor: Sara Jennifer Vieira/24875800037\
+ | "${itemNecId4}" - frauda, tags: [Higiene, Infantil, P], quantidade: 15, Receptor: Luiza Elisa Lopes/72859801000118\
+ | "${itemNecId5}" - frauda, tags: [Higiene, Infantil, M], quantidade: 10, Receptor: Cristiane Isabella Caldeira/87831113000117\
+ | "${itemNecId6}" - frauda, tags: [Higiene, Adulto, GG], quantidade: 30, Receptor: Luiza Elisa Lopes/72859801000118\
+ | "${itemNecId7}" - alimento, tags: [Alimentacao, Saude], quantidade: 5, Receptor: Lucca Iago/57091431030\
+ | "${itemNecId8}" - sabonete, tags: [Higiene], quantidade: 8, Receptor: Sara Jennifer Vieira/24875800037\
+ | "${itemNecId9}" - livro, tags: [], quantidade: 1, Receptor: Sara Jennifer Vieira/24875800037\
+ | "${itemNecId10}" - cadeira de rodas, tags: [roda grande, 80kg, conforto], quantidade: 7, Receptor: Luiza Elisa Lopes/72859801000118\
+ | "${itemNecId11}" - colchao, tags: [colchao kingsize, conforto], quantidade: 6, Receptor: Murilo Luiz Brito/84473712044\
+ | "${itemNecId12}" - jaqueta de couro, tags: [outfit, couro de bode], quantidade: 3, Receptor: Antonella Sonia Moraes/32719454000103\
+ | "${itemNecId13}" - travesseiro, tags: [travesseiro de pena, conforto, dormir], quantidade: 2, Receptor: Rafaela Beatriz/51567490000143\
+ | "${itemNecId14}" - camiseta, tags: [outfit, poliester, roupa], quantidade: 11, Receptor: Murilo Luiz Brito/84473712044" listaItensNecessarios
 
 ## Atualizacao de itens necessarios ##
 

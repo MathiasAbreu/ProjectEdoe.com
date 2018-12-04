@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.Set;
 
 import br.com.lp2.edoe.comparators.ComparadorDoacao;
@@ -31,7 +32,7 @@ import br.com.lp2.edoe.model.Usuario;
  *
  */
 public class ControllerEdoe {
-	
+		
 	private int indiceId;
 	
 	private LinkedHashMap<String,Usuario> usuarios;	
@@ -260,7 +261,7 @@ public class ControllerEdoe {
 				if(usuarios.get(key).getIdentificacao().equals(dados[0])) {
 					
 					usuarios.remove(key);
-					usuarios.put(key,new Usuario(dados[1],dados[2],dados[3],dados[4],dados[0],"Receptor"));
+					usuarios.put(key,new Usuario(dados[1],dados[2],dados[3],dados[4],dados[0],"receptor"));
 				}
 			}
 		}
@@ -656,7 +657,7 @@ public class ControllerEdoe {
 			throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");
 		
 		if(usuarios.containsKey(idReceptor)) {
-			if(usuarios.get(idReceptor).getStatus().equals("receptor")) {
+			if(usuarios.get(idReceptor).getStatus().equals("Receptor")) {
 				
 				return procurarPorMatchs(idItem);
 			}
@@ -717,15 +718,16 @@ public class ControllerEdoe {
 		
 		String idReceptor = buscarUsuario(idItemNec);
 		String idDoador = buscarUsuario(idItemDoado);	
-		Item itemDoado = obterItem(idItemDoado, idDoador);
-		Item itemNec = obterItem(idItemNec, idReceptor);
 		
-		if (!itemDoado.getDescritor().equals(itemNec.getDescritor())) {
+		Item itemDoado = obterItem(idItemDoado, idDoador);
+		Item itemNecessario = obterItem(idItemNec, idReceptor);
+		
+		if (!itemDoado.getDescritor().equals(itemNecessario.getDescritor())) {
 			throw new IllegalArgumentException("Os itens nao tem descricoes iguais.");
 		}
 		
 		int quantidadeDisp = itemDoado.getQuantidade();
-		int quantidadeNec = itemNec.getQuantidade();
+		int quantidadeNec = itemNecessario.getQuantidade();
 		
 		int quantidadeDoada;
 		
@@ -742,7 +744,7 @@ public class ControllerEdoe {
 		else {
 			quantidadeDoada = quantidadeDisp;
 			removeItem(idItemDoado, idDoador);
-			itemNec.setQuantidade(itemNec.getQuantidade() - quantidadeDisp);
+			itemNecessario.setQuantidade(itemNecessario.getQuantidade() - quantidadeDisp);
 		}
 		
 		Doacao doacao = new Doacao(usuarios.get(idDoador).getNome(),idDoador,usuarios.get(idReceptor).getNome(),idReceptor, data, itemDoado.getDescritor(), quantidadeDoada);
