@@ -14,7 +14,7 @@ import java.util.ArrayList;
  * @author Mathias Abreu Trajano - mathias.trajano@ccc.ufcg.edu.br
  *
  */
-public class ReceptoresDao {
+public class ReceptoresDAO {
 	
 	/**
 	 * Metodo que recebe o caminho do arquivo a ser lido, le o determinado arquivo e retorna todos os usuarios encontrados 

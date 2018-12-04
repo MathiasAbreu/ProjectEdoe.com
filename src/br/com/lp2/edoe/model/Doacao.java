@@ -1,5 +1,7 @@
 package br.com.lp2.edoe.model;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Caio Fernandes Moreira - caio.moreira@ccc.ufcg.edu.br
@@ -7,7 +9,9 @@ package br.com.lp2.edoe.model;
  * @author Mathias Abreu Trajano - mathias.trajano@ccc.ufcg.edu.br
  * 
  */
-public class Doacao {
+public class Doacao implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 	
 	private String nomeDoador;
 	private String idDoDoador;

@@ -14,8 +14,12 @@ import br.com.lp2.edoe.comparators.ComparadorItemPorDescricao;
 import br.com.lp2.edoe.comparators.ComparadorItemPorId;
 import br.com.lp2.edoe.comparators.ComparadorItemPorQuantidade;
 import br.com.lp2.edoe.comparators.ComparadorMatch;
-import br.com.lp2.edoe.dao.ReceptoresDao;
+import br.com.lp2.edoe.dao.DescritoresDAO;
+import br.com.lp2.edoe.dao.DoacoesDAO;
+import br.com.lp2.edoe.dao.ItensDAO;
+import br.com.lp2.edoe.dao.ReceptoresDAO;
 import br.com.lp2.edoe.dao.UsuariosDAO;
+import br.com.lp2.edoe.dao.UsuariosQuePossuemItensDAO;
 import br.com.lp2.edoe.exceptions.InvalidArgumentException;
 import br.com.lp2.edoe.exceptions.InvalidUserException;
 import br.com.lp2.edoe.model.Doacao;
@@ -48,9 +52,7 @@ public class ControllerEdoe {
 	 * 
 	 */
 	public ControllerEdoe() {
-				
-		lerUsuarios(UsuariosDAO.lerUsuarios());
-		
+						
 		indiceId = 0;
 		
 		usuarios = new LinkedHashMap<>();		
@@ -59,6 +61,28 @@ public class ControllerEdoe {
 		
 		registroDoacoes = new ArrayList<>();
 		
+	}
+	
+	public void iniciaSistema() {
+		
+		lerUsuarios(UsuariosDAO.lerUsuarios());
+		lerDescritores(DescritoresDAO.lerDescritores());
+		lerItens(UsuariosQuePossuemItensDAO.lerUsuarios(),ItensDAO.lerItens());
+		lerDoacoes(DoacoesDAO.lerDoacoes());
+	}
+	
+	public void finalizaSistema() {
+		
+		escreverUsuarios();
+		escreverDescritores();
+		escreverItens();
+		escreverDoacoes();
+	}
+	
+	private void lerDescritores(ArrayList<String> descritores) {
+		
+		for(String descritor : descritores)
+			this.descritores.add(descritor);
 	}
 	
 	private void lerUsuarios(ArrayList<Usuario> lerUsuarios) {
@@ -71,9 +95,62 @@ public class ControllerEdoe {
 		
 	}
 	
-	public void escreverUsuarios() {
+	private void lerItens(ArrayList<String> usuariosItens,ArrayList<Item> itens) {
+		
+		int indice = 0;
+		for(String usuario : usuariosItens) {
+			
+			ArrayList<Item> temp = new ArrayList<>();
+			
+			while(itens.get(indice) != null && indice < itens.size()) {
+				temp.add(itens.get(indice));
+				indice ++;
+			}
+			
+			if(!temp.isEmpty())
+				itensDoUsuario.put(usuario,temp);
+			
+			indice ++;
+		}
+	}
+	
+	private void lerDoacoes(ArrayList<Doacao> doacoes) {
+		
+		for(Doacao doacao : doacoes)
+			registroDoacoes.add(doacao);
+		
+	}
+	
+	private void escreverDescritores() {
+		
+		DescritoresDAO.escreverDescritores(this.descritores);
+		
+	}
+	
+	private void escreverUsuarios() {
 		
 		UsuariosDAO.escreverUsuarios(usuarios.values());
+	}
+	
+	private void escreverItens() {
+		
+		UsuariosQuePossuemItensDAO.escreverUsuarios(itensDoUsuario.keySet());
+		
+		ArrayList<Item> itens = new ArrayList<>();
+		
+		for(String usuario : itensDoUsuario.keySet()) {
+			
+			for(Item item : itensDoUsuario.get(usuario))
+				itens.add(item);
+			itens.add(null);
+		}
+		
+		ItensDAO.escreverItens(itens);
+	}
+	
+	private void escreverDoacoes() {
+		
+		DoacoesDAO.escreverDoacoes(registroDoacoes);
 	}
 
 	/**
@@ -198,7 +275,7 @@ public class ControllerEdoe {
 	 */
 	public void lerReceptores(String caminho) throws IOException {
 		
-		adicionarReceptores(ReceptoresDao.lerReceptores(caminho));
+		adicionarReceptores(ReceptoresDAO.lerReceptores(caminho));
 	
 	}
 
@@ -267,7 +344,7 @@ public class ControllerEdoe {
 	 */
 	public void atualizarReceptores(String caminho) throws IOException {
 		
-		ArrayList<String> receptoresParaAtualizar = ReceptoresDao.lerReceptores(caminho);
+		ArrayList<String> receptoresParaAtualizar = ReceptoresDAO.lerReceptores(caminho);
 		
 		for (String receptor : receptoresParaAtualizar) {
 			

@@ -1,3 +1,6 @@
+/**
+ * 
+ */
 package br.com.lp2.edoe.dao;
 
 import java.io.IOException;
@@ -9,8 +12,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.NoSuchElementException;
 
-import br.com.lp2.edoe.model.Usuario;
-
 /**
  *
  * @author Caio Fernandes Moreira - caio.moreira@ccc.ufcg.edu.br
@@ -18,47 +19,43 @@ import br.com.lp2.edoe.model.Usuario;
  * @author Mathias Abreu Trajano - mathias.trajano@ccc.ufcg.edu.br
  * 
  */
-public class UsuariosDAO {
+public class UsuariosQuePossuemItensDAO {
 
 	private static ObjectOutputStream outputUsuario;
 	private static ObjectInputStream inputUsuario;
 	
-	public UsuariosDAO() {
-				
-	}
-	
-	public static ArrayList<Usuario> lerUsuarios(){
+	public static ArrayList<String> lerUsuarios() {
 		
-		ArrayList<Usuario> usuarios = new ArrayList<>();
+		ArrayList<String> usuarios = new ArrayList<>();
 		
 		try {
 			
-			inputUsuario = new ObjectInputStream(Files.newInputStream(Paths.get("src/br/com/lp2/edoe/dao/files/Usuarios.ser")));
+			inputUsuario = new ObjectInputStream(Files.newInputStream(Paths.get("src/br/com/lp2/edoe/dao/files/UsuariosQuePossuemItens.ser")));
 			
 			while(true) {
 				
-				Usuario usuario = (Usuario) inputUsuario.readObject();
+				String usuario = (String) inputUsuario.readObject();
 				usuarios.add(usuario);
 			}
-		
+			
 		} catch (IOException ioe) {
 			
 			return usuarios;
 			
 		} catch (ClassNotFoundException cnf) {
 			
-			throw new NullPointerException("Erro no arquivo 'Usuarios.ser'");
+			throw new NullPointerException("Erro no arquivo 'UsuariosQuePossuemItens.ser");
 			
 		}
 	}
 	
-	public static void escreverUsuarios(Collection<Usuario> usuarios) {
+	public static void escreverUsuarios(Collection<String> usuarios) {
 		
 		try {
 			
-			outputUsuario = new ObjectOutputStream(Files.newOutputStream(Paths.get("src/br/com/lp2/edoe/dao/files/Usuarios.ser")));
-
-			for(Usuario usuario : usuarios) 
+			outputUsuario = new ObjectOutputStream(Files.newOutputStream(Paths.get("src/br/com/lp2/edoe/dao/files/UsuariosQuePossuemItens.ser")));
+			
+			for(String usuario : usuarios)
 				outputUsuario.writeObject(usuario);
 			
 			outputUsuario.close();
@@ -68,7 +65,8 @@ public class UsuariosDAO {
 			
 		} catch (NoSuchElementException nse) {
 			
-			throw new RuntimeException("Erro ao escrever usuarios");
+			throw new RuntimeException("Erro ao escrever usuarios que possuem itens.");
+			
 		}
 	}
 }

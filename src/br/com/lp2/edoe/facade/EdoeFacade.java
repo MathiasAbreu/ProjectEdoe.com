@@ -16,7 +16,7 @@ import easyaccept.EasyAccept;
  */
 public class EdoeFacade {
 
-	private static ControllerEdoe controle;
+	private ControllerEdoe controle;
 	
 	public EdoeFacade() {
 		
@@ -142,6 +142,17 @@ public class EdoeFacade {
 		
 		return controle.listaDoacoes();
 	}
+	
+	public void iniciaSistema() {
+		
+		controle.iniciaSistema();
+	}
+	
+	public void finalizaSistema() {
+		
+		controle.finalizaSistema();
+		controle = new ControllerEdoe();
+	}
 
 	public static void main(String[] args) {
 		
@@ -151,7 +162,8 @@ public class EdoeFacade {
 				 "src/br/com/lp2/edoe/easyAccept/use_case_3.txt",
 				 "src/br/com/lp2/edoe/easyAccept/use_case_4.txt",
 				 "src/br/com/lp2/edoe/easyAccept/use_case_5.txt",
-				 "src/br/com/lp2/edoe/easyAccept/use_case_6.txt"};
+				 "src/br/com/lp2/edoe/easyAccept/use_case_6.txt",
+				 "src/br/com/lp2/edoe/easyAccept/use_case_7.txt"};
 		
 		EasyAccept.main(args);
 		
