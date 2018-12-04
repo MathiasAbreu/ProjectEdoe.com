@@ -6,6 +6,7 @@ import java.io.ObjectOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.NoSuchElementException;
 
 import br.com.lp2.edoe.model.Usuario;
 
@@ -22,17 +23,16 @@ public class UsuariosDAO {
 	private static ObjectInputStream inputUsuario;
 	
 	public UsuariosDAO() throws IOException {
-		
-		outputUsuario = new ObjectOutputStream(Files.newOutputStream(Paths.get("src/br/com/lp2/edoe/dao/Usuarios.ser")));
-		inputUsuario = new ObjectInputStream(Files.newInputStream(Paths.get("src/br/com/lp2/edoe/dao/Usuarios.ser")));
-		
+				
 	}
 	
-	public static ArrayList<Usuario> lerUsuarios() {
+	public static ArrayList<Usuario> lerUsuarios() throws ClassNotFoundException {
 		
 		ArrayList<Usuario> usuarios = new ArrayList<>();
 		
 		try {
+			
+			inputUsuario = new ObjectInputStream(Files.newInputStream(Paths.get("src/br/com/lp2/edoe/dao/Usuarios.ser")));
 			
 			while(true) {
 				
@@ -43,6 +43,30 @@ public class UsuariosDAO {
 		} catch (IOException ioe) {
 			
 			return usuarios;
+			
+		} catch (ClassNotFoundException cnf) {
+			
+			throw new ClassNotFoundException("Erro no arquivo 'Usuarios.ser'");
+			
+		}
+	}
+	
+	public static void escreverUsuarios(ArrayList<Usuario> usuarios) {
+		
+		try {
+			
+			outputUsuario = new ObjectOutputStream(Files.newOutputStream(Paths.get("src/br/com/lp2/edoe/dao/Usuarios.ser")));
+
+			for(Usuario usuario : usuarios) 
+				outputUsuario.writeObject(usuario);
+			
+			outputUsuario.close();
+		} catch (IOException ioe) {
+			
+			return;
+		} catch (NoSuchElementException nse) {
+			
+			throw new RuntimeException("Erro ao escrever usuarios");
 		}
 	}
 }
