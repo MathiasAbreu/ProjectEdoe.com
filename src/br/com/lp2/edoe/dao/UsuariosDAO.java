@@ -6,6 +6,7 @@ import java.io.ObjectOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.NoSuchElementException;
 
 import br.com.lp2.edoe.model.Usuario;
@@ -26,7 +27,7 @@ public class UsuariosDAO {
 				
 	}
 	
-	public static ArrayList<Usuario> lerUsuarios() throws ClassNotFoundException {
+	public static ArrayList<Usuario> lerUsuarios(){
 		
 		ArrayList<Usuario> usuarios = new ArrayList<>();
 		
@@ -46,12 +47,12 @@ public class UsuariosDAO {
 			
 		} catch (ClassNotFoundException cnf) {
 			
-			throw new ClassNotFoundException("Erro no arquivo 'Usuarios.ser'");
+			throw new NullPointerException("Erro no arquivo 'Usuarios.ser'");
 			
 		}
 	}
 	
-	public static void escreverUsuarios(ArrayList<Usuario> usuarios) {
+	public static void escreverUsuarios(Collection<Usuario> usuarios) {
 		
 		try {
 			

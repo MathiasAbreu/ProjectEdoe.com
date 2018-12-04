@@ -16,7 +16,7 @@ import easyaccept.EasyAccept;
  */
 public class EdoeFacade {
 
-	private ControllerEdoe controle;
+	private static ControllerEdoe controle;
 	
 	public EdoeFacade() {
 		
@@ -143,7 +143,6 @@ public class EdoeFacade {
 		return controle.listaDoacoes();
 	}
 
-	
 	public static void main(String[] args) {
 		
 		args = new String[] {"br.com.lp2.edoe.facade.EdoeFacade",
