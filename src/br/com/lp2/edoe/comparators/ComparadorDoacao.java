@@ -1,6 +1,3 @@
-/**
- * 
- */
 package br.com.lp2.edoe.comparators;
 
 import java.util.Comparator;

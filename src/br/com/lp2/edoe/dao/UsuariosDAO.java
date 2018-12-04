@@ -1,7 +1,13 @@
-/**
- * 
- */
 package br.com.lp2.edoe.dao;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+
+import br.com.lp2.edoe.model.Usuario;
 
 /**
  *
@@ -12,4 +18,31 @@ package br.com.lp2.edoe.dao;
  */
 public class UsuariosDAO {
 
+	private static ObjectOutputStream outputUsuario;
+	private static ObjectInputStream inputUsuario;
+	
+	public UsuariosDAO() throws IOException {
+		
+		outputUsuario = new ObjectOutputStream(Files.newOutputStream(Paths.get("src/br/com/lp2/edoe/dao/Usuarios.ser")));
+		inputUsuario = new ObjectInputStream(Files.newInputStream(Paths.get("src/br/com/lp2/edoe/dao/Usuarios.ser")));
+		
+	}
+	
+	public static ArrayList<Usuario> lerUsuarios() {
+		
+		ArrayList<Usuario> usuarios = new ArrayList<>();
+		
+		try {
+			
+			while(true) {
+				
+				Usuario usuario = (Usuario) inputUsuario.readObject();
+				usuarios.add(usuario);
+			}
+		
+		} catch (IOException ioe) {
+			
+			return usuarios;
+		}
+	}
 }

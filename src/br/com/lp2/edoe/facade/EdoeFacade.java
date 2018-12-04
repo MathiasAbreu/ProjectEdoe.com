@@ -115,7 +115,7 @@ public class EdoeFacade {
 	
 	public String listaItensNecessarios() {
 		
-		return controle.listaItens("receptor");
+		return controle.listaItens("Receptor");
 	}
 	
 	public String atualizaItemNecessario(String idReceptor,String idItem,int novaQuantidade,String novasTags) throws Exception {
