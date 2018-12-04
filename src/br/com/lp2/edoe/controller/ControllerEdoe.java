@@ -662,11 +662,13 @@ public class ControllerEdoe {
 	}
 
 	/**
+	 * Encontra matches (casamentos de itens) entre itens a serem doados e itens necessários.
+	 * A partir do id do receptor e do item que o mesmo precisa, encontra possíveis doadores que possam ofertar esse item.
 	 * 
-	 * @param idReceptor
-	 * @param idItem
-	 * @return
-	 * @throws Exception
+	 * @param idReceptor identificador do receptor dos itens
+	 * @param idItem id do item necessario ao receptor
+	 * @return retorna os itens que combinam
+	 * @throws Exception excecao em caso de alguns dos parametros ser nulo ou vazio, ou não estar cadastrado no sistema.
 	 */
 	public String match(String idReceptor, String idItem) throws Exception {
 		
@@ -686,7 +688,13 @@ public class ControllerEdoe {
 		throw new InvalidUserException(idReceptor);
 	}
 
-	
+	/**
+	 * Procura por matchs.
+	 * A partir de um identificador de item passado como parametro, retorna os matchs desse item.
+	 * 
+	 * @param idItem identificador do item a ser procurado pelos matches.
+	 * @return retorna os itens que casam com o id passado como parametro
+	 */
 	private String procurarPorMatchs(String idItem) {
 		
 		Item retornoBusca = obterItem(idItem,buscarUsuario(idItem));
