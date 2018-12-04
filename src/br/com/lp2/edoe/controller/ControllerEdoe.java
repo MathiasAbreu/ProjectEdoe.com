@@ -9,6 +9,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Set;
 
+import br.com.lp2.edoe.comparators.ComparadorDoacao;
 import br.com.lp2.edoe.comparators.ComparadorItemPorDescricao;
 import br.com.lp2.edoe.comparators.ComparadorItemPorId;
 import br.com.lp2.edoe.comparators.ComparadorItemPorQuantidade;
@@ -16,6 +17,7 @@ import br.com.lp2.edoe.comparators.ComparadorMatch;
 import br.com.lp2.edoe.dao.ReceptoresDao;
 import br.com.lp2.edoe.exceptions.InvalidArgumentException;
 import br.com.lp2.edoe.exceptions.InvalidUserException;
+import br.com.lp2.edoe.model.Doacao;
 import br.com.lp2.edoe.model.Item;
 import br.com.lp2.edoe.model.Match;
 import br.com.lp2.edoe.model.Usuario;
@@ -32,10 +34,12 @@ public class ControllerEdoe {
 	
 	private int indiceId;
 	
-	private LinkedHashMap<String,Usuario> usuarios;		
+	private LinkedHashMap<String,Usuario> usuarios;	
+	
 	private HashSet<String> descritores;
 	private HashMap<String,ArrayList<Item>> itensDoUsuario;
-	private ArrayList<String> registroDoacoes;
+	
+	private ArrayList<Doacao> registroDoacoes;
 		
 	/**
 	 * Construtor responsavel pela construcao da instancia da classe, assim como da colecao de armazenamento dos 
@@ -49,6 +53,8 @@ public class ControllerEdoe {
 		usuarios = new LinkedHashMap<>();		
 		descritores = new HashSet<>();
 		itensDoUsuario = new HashMap<>();
+		
+		registroDoacoes = new ArrayList<>();
 		
 	}
 	
@@ -662,13 +668,13 @@ public class ControllerEdoe {
 	}
 
 	/**
-	 * Encontra matches (casamentos de itens) entre itens a serem doados e itens necessários.
-	 * A partir do id do receptor e do item que o mesmo precisa, encontra possíveis doadores que possam ofertar esse item.
+	 * Encontra matches (casamentos de itens) entre itens a serem doados e itens necessï¿½rios.
+	 * A partir do id do receptor e do item que o mesmo precisa, encontra possï¿½veis doadores que possam ofertar esse item.
 	 * 
 	 * @param idReceptor identificador do receptor dos itens
 	 * @param idItem id do item necessario ao receptor
 	 * @return retorna os itens que combinam
-	 * @throws Exception excecao em caso de alguns dos parametros ser nulo ou vazio, ou não estar cadastrado no sistema.
+	 * @throws Exception excecao em caso de alguns dos parametros ser nulo ou vazio, ou nï¿½o estar cadastrado no sistema.
 	 */
 	public String match(String idReceptor, String idItem) throws Exception {
 		
@@ -767,9 +773,10 @@ public class ControllerEdoe {
 			itemNec.setQuantidade(itemNec.getQuantidade() - quantidadeDisp);
 		}
 		
+		Doacao doacao = new Doacao(usuarios.get(idDoador).getNome(),idDoador,usuarios.get(idReceptor).getNome(),idReceptor, data, itemDoado.getDescritor(), quantidadeDoada);
+		registroDoacoes.add(doacao);
 		
-		String retorno = String.format("%s - doador: %s/%s, item: %s, quantidade: %s, receptor: %s/%s", data , usuarios.get(idDoador).getNome() , idDoador , itemDoado.getDescritor() , quantidadeDoada , usuarios.get(idReceptor).getNome() , idReceptor );
-		return retorno;
+		return doacao.toString();
 	}
 	
 	/**
@@ -777,7 +784,18 @@ public class ControllerEdoe {
 	 * @return
 	 */
 	public String listaDoacoes() {
-		return "";
+		
+		if(registroDoacoes.isEmpty())
+			throw new NullPointerException("NÃ£o hÃ¡ doaÃ§Ãµes registradas!");
+		
+		Collections.sort(registroDoacoes, new ComparadorDoacao());
+		
+		String retorno = registroDoacoes.get(0).toString();
+		
+		for(int i = 1;i < registroDoacoes.size(); i++)
+			retorno += " | " + registroDoacoes.get(i).toString();
+		
+		return retorno;
 	}
 	
 }
