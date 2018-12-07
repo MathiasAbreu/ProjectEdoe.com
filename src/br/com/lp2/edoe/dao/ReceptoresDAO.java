@@ -5,6 +5,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import br.com.lp2.edoe.exceptions.FileReadErrorException;
+
 /**
  * Classe responsavel por acessar e realizar a leitura dos arquivos que contem os dados dos Usuarios Receptores a serem 
  * cadastrados no sistema.
@@ -25,9 +27,10 @@ public class ReceptoresDAO {
 	 * @return Retorna um colecao com todos os Usuarios lidos.
 	 * 
 	 * @throws IOException Excecao gerada caso haja algum problema na leitura do arquivo.
+	 * @throws FileReadErrorException 
 	 * 
 	 */
-	public static ArrayList<String> lerReceptores(String caminho) throws IOException {
+	public static ArrayList<String> lerReceptores(String caminho) throws FileReadErrorException {
 		
 		ArrayList<String> receptores = new ArrayList<>();
 		
@@ -48,7 +51,7 @@ public class ReceptoresDAO {
 	      
 		} catch (IOException e) {
 	    	
-			throw new IOException("Erro na abertura do arquivo: " + e.getMessage());
+			throw new FileReadErrorException("Receptores.csv");
 	    }
 		
 		receptores.remove(0);

@@ -12,6 +12,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.NoSuchElementException;
 
+import br.com.lp2.edoe.exceptions.FileReadErrorException;
+import br.com.lp2.edoe.exceptions.FileWriteErrorException;
+
 /**
  *
  * @author Caio Fernandes Moreira - caio.moreira@ccc.ufcg.edu.br
@@ -24,7 +27,7 @@ public class UsuariosQuePossuemItensDAO {
 	private static ObjectOutputStream outputUsuario;
 	private static ObjectInputStream inputUsuario;
 	
-	public static ArrayList<String> lerUsuarios() {
+	public static ArrayList<String> lerUsuarios() throws FileReadErrorException {
 		
 		ArrayList<String> usuarios = new ArrayList<>();
 		
@@ -44,12 +47,12 @@ public class UsuariosQuePossuemItensDAO {
 			
 		} catch (ClassNotFoundException cnf) {
 			
-			throw new NullPointerException("Erro no arquivo 'UsuariosQuePossuemItens.ser");
+			throw new FileReadErrorException("UsuariosQuePossuemItens.ser");
 			
 		}
 	}
 	
-	public static void escreverUsuarios(Collection<String> usuarios) {
+	public static void escreverUsuarios(Collection<String> usuarios) throws FileWriteErrorException {
 		
 		try {
 			
@@ -65,7 +68,7 @@ public class UsuariosQuePossuemItensDAO {
 			
 		} catch (NoSuchElementException nse) {
 			
-			throw new RuntimeException("Erro ao escrever usuarios que possuem itens.");
+			throw new FileWriteErrorException("UsuariosQuePossuemItens.ser");
 			
 		}
 	}

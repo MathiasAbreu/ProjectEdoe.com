@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.NoSuchElementException;
 
+import br.com.lp2.edoe.exceptions.FileReadErrorException;
+import br.com.lp2.edoe.exceptions.FileWriteErrorException;
 import br.com.lp2.edoe.model.Usuario;
 
 /**
@@ -27,7 +29,7 @@ public class UsuariosDAO {
 				
 	}
 	
-	public static ArrayList<Usuario> lerUsuarios(){
+	public static ArrayList<Usuario> lerUsuarios() throws FileReadErrorException{
 		
 		ArrayList<Usuario> usuarios = new ArrayList<>();
 		
@@ -47,12 +49,12 @@ public class UsuariosDAO {
 			
 		} catch (ClassNotFoundException cnf) {
 			
-			throw new NullPointerException("Erro no arquivo 'Usuarios.ser'");
+			throw new FileReadErrorException("Usuarios.ser");
 			
 		}
 	}
 	
-	public static void escreverUsuarios(Collection<Usuario> usuarios) {
+	public static void escreverUsuarios(Collection<Usuario> usuarios) throws FileWriteErrorException {
 		
 		try {
 			
@@ -68,7 +70,7 @@ public class UsuariosDAO {
 			
 		} catch (NoSuchElementException nse) {
 			
-			throw new RuntimeException("Erro ao escrever usuarios");
+			throw new FileWriteErrorException("Usuarios.ser");
 		}
 	}
 }

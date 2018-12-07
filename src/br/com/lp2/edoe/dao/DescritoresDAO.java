@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.NoSuchElementException;
 
+import br.com.lp2.edoe.exceptions.FileReadErrorException;
+import br.com.lp2.edoe.exceptions.FileWriteErrorException;
+
 /**
  *
  * @author Caio Fernandes Moreira - caio.moreira@ccc.ufcg.edu.br
@@ -21,7 +24,7 @@ public class DescritoresDAO {
 	private static ObjectOutputStream outputDescritores;
 	private static ObjectInputStream inputDescritores;
 	
-	public static ArrayList<String> lerDescritores() {
+	public static ArrayList<String> lerDescritores() throws FileReadErrorException {
 		
 		ArrayList<String> descritores = new ArrayList<>();
 		
@@ -41,12 +44,12 @@ public class DescritoresDAO {
 			
 		} catch (ClassNotFoundException cnf) {
 			
-			throw new NullPointerException("Erro no arquivo 'Descritores.ser'.");
+			throw new FileReadErrorException("Descritores.ser");
 			
 		}
 	}
 	
-	public static void escreverDescritores(Collection<String> descritores) {
+	public static void escreverDescritores(Collection<String> descritores) throws FileWriteErrorException {
 		
 		try {
 			
@@ -62,7 +65,7 @@ public class DescritoresDAO {
 			
 		} catch (NoSuchElementException nse) {
 			
-			throw new RuntimeException("Erro ao escrever no arquivo 'Descritores.ser'.");
+			throw new FileWriteErrorException("Descritores.ser");
 		}
 	}
 }

@@ -64,7 +64,7 @@ public class ControllerEdoe {
 		
 	}
 	
-	public void iniciaSistema() {
+	public void iniciaSistema() throws Exception {
 		
 		lerUsuarios(UsuariosDAO.lerUsuarios());
 		lerDescritores(DescritoresDAO.lerDescritores());
@@ -72,7 +72,7 @@ public class ControllerEdoe {
 		lerDoacoes(DoacoesDAO.lerDoacoes());
 	}
 	
-	public void finalizaSistema() {
+	public void finalizaSistema() throws Exception {
 		
 		escreverUsuarios();
 		escreverDescritores();
@@ -122,18 +122,18 @@ public class ControllerEdoe {
 		
 	}
 	
-	private void escreverDescritores() {
+	private void escreverDescritores() throws Exception {
 		
 		DescritoresDAO.escreverDescritores(this.descritores);
 		
 	}
 	
-	private void escreverUsuarios() {
+	private void escreverUsuarios() throws Exception{
 		
 		UsuariosDAO.escreverUsuarios(usuarios.values());
 	}
 	
-	private void escreverItens() {
+	private void escreverItens() throws Exception{
 		
 		UsuariosQuePossuemItensDAO.escreverUsuarios(itensDoUsuario.keySet());
 		
@@ -149,7 +149,7 @@ public class ControllerEdoe {
 		ItensDAO.escreverItens(itens);
 	}
 	
-	private void escreverDoacoes() {
+	private void escreverDoacoes() throws Exception {
 		
 		DoacoesDAO.escreverDoacoes(registroDoacoes);
 	}
@@ -172,7 +172,7 @@ public class ControllerEdoe {
 	 * 
 	 */
 	public String adicionarDoador(String id, String nome, String email, String celular, String classe) throws Exception {
-		checaNullVazio(id, "id", "do usuario");
+		checarNullVazio(id, "id", "do usuario");
 		
 		if(usuarios.containsKey(id)) {
 			
@@ -180,10 +180,10 @@ public class ControllerEdoe {
 		}
 		else {
 			
-			checaNullVazio(nome, "nome", "");
-			checaNullVazio(email, "email", "");
-			checaNullVazio(celular, "celular", "");
-			checaNullVazio(classe, "classe", "");
+			checarNullVazio(nome, "nome", "");
+			checarNullVazio(email, "email", "");
+			checarNullVazio(celular, "celular", "");
+			checarNullVazio(classe, "classe", "");
 			
 			if(classe.equals("PESSOA_FISICA") || classe.equals("IGREJA") || classe.equals("ORGAO_PUBLICO_ESTADUAL") || classe.equals("ORGAO_PUBLICO_FEDERAL") || classe.equals("ONG") || classe.equals("ASSOCIACAO") || classe.equals("SOCIEDADE")) {
 				
@@ -217,7 +217,7 @@ public class ControllerEdoe {
 	 * 
 	 */
 	public String buscarUsuarioPorId(String id) throws Exception {
-		checaNullVazio(id, "id", "do usuario");
+		checarNullVazio(id, "id", "do usuario");
 		
 		if(usuarios.containsKey(id)) {
 			
@@ -244,7 +244,7 @@ public class ControllerEdoe {
 	 * 
 	 */
 	public String buscarUsuarioPorNome(String nome) throws Exception {
-		checaNullVazio(nome, "nome", "");
+		checarNullVazio(nome, "nome", "");
 		
 		ArrayList<Usuario> usuariosPorNome = new ArrayList<>();
 		String retorno = "";
@@ -274,7 +274,7 @@ public class ControllerEdoe {
 	 * @throws IOException Excecao gerada caso haja algum problema na leitura do arquivo.
 	 * 
 	 */
-	public void lerReceptores(String caminho) throws IOException {
+	public void lerReceptores(String caminho) throws Exception {
 		
 		adicionarReceptores(ReceptoresDAO.lerReceptores(caminho));
 	
@@ -298,7 +298,7 @@ public class ControllerEdoe {
 	 * 
 	 */
 	public String atualizaUsuario(String id, String nome, String email, String celular) throws Exception {
-		checaNullVazio(id, "id", "do usuario");
+		checarNullVazio(id, "id", "do usuario");
 
 		if (!usuarios.containsKey(id)) {
 			throw new InvalidUserException(id);
@@ -325,7 +325,7 @@ public class ControllerEdoe {
 	 * 
 	 */
 	public void removeUsuario(String id) throws Exception {
-		checaNullVazio(id, "id", "do usuario");
+		checarNullVazio(id, "id", "do usuario");
 		
 		if (!usuarios.containsKey(id)) {
 			throw new InvalidUserException(id);
@@ -343,7 +343,7 @@ public class ControllerEdoe {
 	 * @throws IOException Excecao gerada caso haja algum problema na leitura do arquivo.
 	 * 
 	 */
-	public void atualizarReceptores(String caminho) throws IOException {
+	public void atualizarReceptores(String caminho) throws Exception {
 		
 		ArrayList<String> receptoresParaAtualizar = ReceptoresDAO.lerReceptores(caminho);
 		
@@ -375,7 +375,7 @@ public class ControllerEdoe {
 	 * 
 	 */
 	public void adicionaDescritor(String descricao) throws InvalidArgumentException {
-		checaNullVazio(descricao, "descricao", "");
+		checarNullVazio(descricao, "descricao", "");
 		
 		if(descritores.contains(descricao.toLowerCase().replaceAll("\\s"," ")))
 			throw new RuntimeException("Descritor de Item ja existente: " + descricao.toLowerCase().replaceAll("\\s"," ") + ".");
@@ -399,8 +399,8 @@ public class ControllerEdoe {
 	 * 
 	 */
 	public String adicionaItem(String idDoador, String descricaoItem, int quantidade, String tags) throws Exception {
-		checaNullVazio(idDoador, "id", "do usuario");
-		checaNullVazio(descricaoItem, "descricao", "");
+		checarNullVazio(idDoador, "id", "do usuario");
+		checarNullVazio(descricaoItem, "descricao", "");
 		if(quantidade <= 0)
 			throw new IllegalArgumentException("Entrada invalida: quantidade deve ser maior que zero.");
 		
@@ -444,8 +444,8 @@ public class ControllerEdoe {
 	 * 
 	 */
 	public String exibeItem(String idItem, String idDoador) throws Exception {
-		checaNullVazio(idItem, "id", "do item");
-		checaNullVazio(idDoador, "id", "do usuario");
+		checarNullVazio(idItem, "id", "do item");
+		checarNullVazio(idDoador, "id", "do usuario");
 
 		if (!usuarios.containsKey(idDoador)) {
 			throw new InvalidUserException(idDoador);
@@ -483,7 +483,7 @@ public class ControllerEdoe {
 		if(Integer.parseInt(id) < 0)
 			throw new NegativeIdException();
 		
-		checaNullVazio(idDoador, "id", "do usuario");
+		checarNullVazio(idDoador, "id", "do usuario");
 	
 		if(!usuarios.containsKey(idDoador)) {
 			throw new InvalidUserException(idDoador);
@@ -550,7 +550,7 @@ public class ControllerEdoe {
 		if(Integer.parseInt(id) < 0)
 			throw new NegativeIdException();
 		
-		checaNullVazio(idDoador, "id", "do usuario");
+		checarNullVazio(idDoador, "id", "do usuario");
 		
 		if(usuarios.containsKey(idDoador) ) {
 			
@@ -746,7 +746,7 @@ public class ControllerEdoe {
 	 * 
 	 */
 	public String pesquisaItemPorDescricao(String desc) throws InvalidArgumentException {
-		checaNullVazio(desc, "texto da pesquisa", "");
+		checarNullVazio(desc, "texto da pesquisa", "");
 		
 		ArrayList<Item> itensListados = new ArrayList<>();
 		Set<String> usuariosChaves =usuarios.keySet();
@@ -786,7 +786,7 @@ public class ControllerEdoe {
 	 * @throws Exception excecao em caso de alguns dos parametros ser nulo ou vazio, ou nao estar cadastrado no sistema.
 	 */
 	public String match(String idReceptor, String idItem) throws Exception {
-		checaNullVazio(idReceptor, "id", "do usuario");
+		checarNullVazio(idReceptor, "id", "do usuario");
 		if(Integer.parseInt(idItem) < 0)
 			throw new NegativeIdException();
 		
@@ -845,9 +845,9 @@ public class ControllerEdoe {
 		if(Integer.parseInt(idItemNec) < 0 || Integer.parseInt(idItemDoado) < 0)
 			throw new NegativeIdException();
 		
-		checaNullVazio(idItemNec, "id", "");
-		checaNullVazio(idItemDoado, "id", "");
-		checaNullVazio(data, "data" ,"");
+		checarNullVazio(idItemNec, "id", "");
+		checarNullVazio(idItemDoado, "id", "");
+		checarNullVazio(data, "data" ,"");
 		
 		String idReceptor = buscarUsuario(idItemNec);
 		String idDoador = buscarUsuario(idItemDoado);	
@@ -904,7 +904,7 @@ public class ControllerEdoe {
 		return retorno;
 	}
 	
-	private void checaNullVazio(String valor, String parametro, String adicional) throws InvalidArgumentException {
+	private void checarNullVazio(String valor, String parametro, String adicional) throws InvalidArgumentException {
 		
 		if (adicional.equals(""))
 			if (valor == null || valor.trim().isEmpty())

@@ -50,13 +50,13 @@ public class EdoeFacade {
 		
 	}
 	
-	public void lerReceptores(String caminho) throws IOException {
+	public void lerReceptores(String caminho) throws Exception {
 		
 		controle.lerReceptores(caminho);
 		
 	}
 	
-	public void atualizaReceptores(String caminho) throws IOException {
+	public void atualizaReceptores(String caminho) throws Exception {
 		
 		controle.atualizarReceptores(caminho);
 		
@@ -143,12 +143,12 @@ public class EdoeFacade {
 		return controle.listaDoacoes();
 	}
 	
-	public void iniciaSistema() {
+	public void iniciaSistema() throws Exception {
 		
 		controle.iniciaSistema();
 	}
 	
-	public void finalizaSistema() {
+	public void finalizaSistema() throws Exception {
 		
 		controle.finalizaSistema();
 		controle = new ControllerEdoe();
