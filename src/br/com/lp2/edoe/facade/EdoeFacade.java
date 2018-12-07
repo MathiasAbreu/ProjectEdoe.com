@@ -29,7 +29,7 @@ public class EdoeFacade {
 		
 	}
 	
-	public void adicionaDescritor(String descricao) throws InvalidArgumentException { 
+	public void adicionaDescritor(String descricao) throws Exception { 
 		
 		controle.adicionaDescritor(descricao);
 	}
@@ -102,7 +102,7 @@ public class EdoeFacade {
 		
 	}
 	
-	public String pesquisaItemParaDoacaoPorDescricao(String desc) throws InvalidArgumentException {
+	public String pesquisaItemParaDoacaoPorDescricao(String desc) throws Exception {
 		
 		return controle.pesquisaItemPorDescricao(desc);
 		

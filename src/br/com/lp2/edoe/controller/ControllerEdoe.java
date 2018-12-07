@@ -22,6 +22,7 @@ import br.com.lp2.edoe.dao.UsuariosDAO;
 import br.com.lp2.edoe.dao.UsuariosQuePossuemItensDAO;
 import br.com.lp2.edoe.exceptions.InvalidArgumentException;
 import br.com.lp2.edoe.exceptions.InvalidUserException;
+import br.com.lp2.edoe.exceptions.NegativeIdException;
 import br.com.lp2.edoe.model.Doacao;
 import br.com.lp2.edoe.model.Item;
 import br.com.lp2.edoe.model.Match;
@@ -480,7 +481,7 @@ public class ControllerEdoe {
 	public String atualizaItem(String id, String idDoador, int quantidade, String tags) throws Exception {
 		
 		if(Integer.parseInt(id) < 0)
-			throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");
+			throw new NegativeIdException();
 		
 		checaNullVazio(idDoador, "id", "do usuario");
 	
@@ -547,7 +548,7 @@ public class ControllerEdoe {
 	public void removeItem(String id, String idDoador) throws Exception {
 		
 		if(Integer.parseInt(id) < 0)
-			throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");
+			throw new NegativeIdException();
 		
 		checaNullVazio(idDoador, "id", "do usuario");
 		
@@ -787,7 +788,7 @@ public class ControllerEdoe {
 	public String match(String idReceptor, String idItem) throws Exception {
 		checaNullVazio(idReceptor, "id", "do usuario");
 		if(Integer.parseInt(idItem) < 0)
-			throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");
+			throw new NegativeIdException();
 		
 		if(usuarios.containsKey(idReceptor)) {
 			if(usuarios.get(idReceptor).getStatus().equals("Receptor")) {
@@ -842,7 +843,7 @@ public class ControllerEdoe {
 	public String realizaDoacao(String idItemNec, String idItemDoado, String data) throws Exception {
 		
 		if(Integer.parseInt(idItemNec) < 0 || Integer.parseInt(idItemDoado) < 0)
-			throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");
+			throw new NegativeIdException();
 		
 		checaNullVazio(idItemNec, "id", "");
 		checaNullVazio(idItemDoado, "id", "");
