@@ -7,7 +7,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import br.com.lp2.edoe.controller.ControllerEdoe;
 import br.com.lp2.edoe.exceptions.InvalidArgumentException;
+import br.com.lp2.edoe.exceptions.InvalidItemException;
 import br.com.lp2.edoe.exceptions.InvalidUserException;
+import br.com.lp2.edoe.exceptions.NegativeIdException;
 
 class ControllerUsuarioTest {
 
@@ -423,12 +425,12 @@ class ControllerUsuarioTest {
 	@Test
 	@DisplayName("Testando metodo de exibir item com item inexistente")
 	void testExibeItem02() throws Exception {
-		NullPointerException npe = assertThrows(NullPointerException.class,() -> {
+		InvalidItemException iie = assertThrows(InvalidItemException.class,() -> {
 			
 			controle.exibeItem("357986533","12345678901");
 		});
 		
-		assertEquals("Item nao encontrado: 357986533.",npe.getMessage());
+		assertEquals("Item nao encontrado: 357986533.",iie.getMessage());
 	}
 	
 	@Test
@@ -467,12 +469,12 @@ class ControllerUsuarioTest {
 	@Test
 	@DisplayName("Testando metodo de atualizar item com id invalido")
 	void testAtualizarItem01() {
-		IllegalArgumentException iae = assertThrows(IllegalArgumentException.class,() -> {
+		NegativeIdException nie = assertThrows(NegativeIdException.class,() -> {
 			
 			controle.atualizaItem("-5","12345678901",4,"camisa,branca");
 		});
 		
-		assertEquals("Entrada invalida: id do item nao pode ser negativo.",iae.getMessage());
+		assertEquals("Entrada invalida: id do item nao pode ser negativo.",nie.getMessage());
 	}
 	
 	@Test
@@ -499,12 +501,12 @@ class ControllerUsuarioTest {
 	@Test
 	@DisplayName("Testando metodo de atualizar item com um item que nao existe")
 	void testAtualizarItem04() {
-		NullPointerException npe = assertThrows(NullPointerException.class,() -> {
+		InvalidItemException iie = assertThrows(InvalidItemException.class,() -> {
 			
 			controle.atualizaItem("1234567","12345678901",4,"camisa,branca");
 		});
 		
-		assertEquals("O usuario nao tem itens cadastrados",npe.getMessage());
+		assertEquals("O Usuario nao possui itens cadastrados.",iie.getMessage());
 	}
 	
 	@Test
@@ -528,12 +530,12 @@ class ControllerUsuarioTest {
 	@Test
 	@DisplayName("Testando metodo de remover item com id invalido")
 	void testRemoverItem01() {
-		IllegalArgumentException iae = assertThrows(IllegalArgumentException.class,() -> {
+		NegativeIdException nie = assertThrows(NegativeIdException.class,() -> {
 			
 			controle.removeItem("-8653777","12345678901");
 		});
 		
-		assertEquals("Entrada invalida: id do item nao pode ser negativo.",iae.getMessage());
+		assertEquals("Entrada invalida: id do item nao pode ser negativo.",nie.getMessage());
 	}
 	
 	@Test
@@ -561,14 +563,14 @@ class ControllerUsuarioTest {
 	@Test
 	@DisplayName("Testando metodo de remover item com item cadastrado")
 	void testRemoverItem04() throws Exception {
-		NullPointerException npe = assertThrows(NullPointerException.class,() -> {
+		InvalidItemException iie = assertThrows(InvalidItemException.class,() -> {
 			
 			String id = controle.adicionaItem("12345678901","blusa",2,"camisa,amarela");
 			controle.removeItem(id, "12345678901");
 			controle.exibeItem(id, "12345678901");
 		});
 		
-		assertEquals("Item nao encontrado: 1.",npe.getMessage());
+		assertEquals("Item nao encontrado: 1.",iie.getMessage());
 	}
 	
 	@Test
@@ -615,10 +617,10 @@ class ControllerUsuarioTest {
 	@Test
 	@DisplayName("Testando se excecao eh lancada ao tentar listar itens sem haver nenhum registrado")
 	void testListaItensParaDoacao01() {
-		NullPointerException ex = assertThrows(NullPointerException.class, () -> {
+		InvalidItemException ex = assertThrows(InvalidItemException.class, () -> {
 			controle.listaItens("doador");
 		});
-		assertEquals("Erro: Nao ha itens cadastrados", ex.getMessage());
+		assertEquals("O Usuario nao possui itens cadastrados.", ex.getMessage());
 	}
 	
 	@Test
@@ -737,21 +739,21 @@ class ControllerUsuarioTest {
 	@Test
 	@DisplayName("Testando se o metodo retorna excecao ao tentar dar match com um id de item negativo")
 	void testMatch05() throws Exception {
-		IllegalArgumentException iae = assertThrows(IllegalArgumentException.class,() -> {
+		NegativeIdException nie = assertThrows(NegativeIdException.class,() -> {
 			
 			controle.match("98624406000140", "-1");
 		});
-		assertEquals("Entrada invalida: id do item nao pode ser negativo.", iae.getMessage());
+		assertEquals("Entrada invalida: id do item nao pode ser negativo.", nie.getMessage());
 	}
 	
 	@Test
 	@DisplayName("Testando se o metodo retorna excecao ao tentar dar match com um id de item nao cadastrado")
 	void testMatch06() throws Exception {
-		NullPointerException npe = assertThrows(NullPointerException.class,() -> {
+		InvalidItemException iie = assertThrows(InvalidItemException.class,() -> {
 			
 			controle.match("98624406000140", "23");
 		});
-		assertEquals("Item nao encontrado: 23.", npe.getMessage());
+		assertEquals("Item nao encontrado: 23.", iie.getMessage());
 	}
 	
 	@Test
