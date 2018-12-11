@@ -3,8 +3,8 @@ package br.com.lp2.edoe.model;
 import java.io.Serializable;
 
 /**
- * Classe que representa uma abstracao de um Usuario no sistema, eh uma classe basica que fornece atributos e metodos 
- * basicos para as classes especializadas deste mesmo tipo de Usuario.
+ * Classe que representa um Usuario no sistema, eh uma classe que fornece atributos e metodos 
+ * que controlam e manipulam tais dados.
  *
  * @author Caio Fernandes Moreira - caio.moreira@ccc.ufcg.edu.br
  * @author Klaywert Danillo Ferreira De Souza - klaywert.souza@ccc.ufcg.edu.br
@@ -14,6 +14,7 @@ import java.io.Serializable;
 public class Usuario implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	
 	private String nome;
 	private String email;
 	private String celular;
@@ -124,7 +125,10 @@ public class Usuario implements Serializable {
 	}
 
 	/**
-	 * @return the status
+	 * Metodo que retorna o status de um usuario.
+	 * 
+	 * @return Retorna 'doador' ou 'receptor'.
+	 * 
 	 */
 	public String getStatus() {
 		
@@ -150,7 +154,7 @@ public class Usuario implements Serializable {
 	}
 
 	/**
-	 * Metodo responsevel por verificar se dois usuarios sao iguais baseado nos seus documentos de identificao.
+	 * Metodo responsavel por verificar se dois usuarios sao iguais baseado nos seus documentos de identificao.
 	 * 
 	 * @param obj Recebe como parametro qualquer objeto.
 	 * 
@@ -183,5 +187,4 @@ public class Usuario implements Serializable {
 		
 		return String.format("%s/%s, %s, %s, status: %s",getNome(),getIdentificacao(),getEmail(),getCelular(),status);
 	}
-
 }

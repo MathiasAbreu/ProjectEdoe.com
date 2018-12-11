@@ -1,6 +1,5 @@
 package br.com.lp2.edoe.controller;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -14,13 +13,10 @@ import br.com.lp2.edoe.comparators.ComparadorItemPorDescricao;
 import br.com.lp2.edoe.comparators.ComparadorItemPorId;
 import br.com.lp2.edoe.comparators.ComparadorItemPorQuantidade;
 import br.com.lp2.edoe.comparators.ComparadorMatch;
-import br.com.lp2.edoe.dao.DescritoresDAO;
-import br.com.lp2.edoe.dao.DoacoesDAO;
-import br.com.lp2.edoe.dao.ItensDAO;
 import br.com.lp2.edoe.dao.ReceptoresDAO;
-import br.com.lp2.edoe.dao.UsuariosDAO;
-import br.com.lp2.edoe.dao.UsuariosQuePossuemItensDAO;
+import br.com.lp2.edoe.exceptions.FileReadErrorException;
 import br.com.lp2.edoe.exceptions.InvalidArgumentException;
+import br.com.lp2.edoe.exceptions.InvalidItemException;
 import br.com.lp2.edoe.exceptions.InvalidUserException;
 import br.com.lp2.edoe.exceptions.NegativeIdException;
 import br.com.lp2.edoe.model.Doacao;
@@ -29,7 +25,7 @@ import br.com.lp2.edoe.model.Match;
 import br.com.lp2.edoe.model.Usuario;
 
 /**
- * Classe responsavel pelo controle, manipulacao e armazenamento de Usuarios e suas especializacoes.
+ * Classe responsavel pelo controle e manipulaçao de usuarios, descritores, itens, matchs e doacoes do sistema.
  *
  * @author Caio Fernandes Moreira - caio.moreira@ccc.ufcg.edu.br
  * @author Klaywert Danillo Ferreira De Souza - klaywert.souza@ccc.ufcg.edu.br
@@ -38,7 +34,8 @@ import br.com.lp2.edoe.model.Usuario;
  */
 public class ControllerEdoe {
 		
-	private int indiceId;
+	private static int indiceId;
+	private ControllerDao controleArquivos;
 	
 	private LinkedHashMap<String,Usuario> usuarios;	
 	
@@ -48,13 +45,14 @@ public class ControllerEdoe {
 	private ArrayList<Doacao> registroDoacoes;
 		
 	/**
-	 * Construtor responsavel pela construcao da instancia da classe, assim como da colecao de armazenamento dos 
-	 * usuarios e o acesso aos arquivos de armazenamento.
+	 * Construtor responsavel pela construcao da instancia da classe, assim como das colecoes responsaveis pelo armazena
+	 * mento dos dados, e do controller que possibilita a escrita/leitura dos dados.
 	 * 
 	 */
 	public ControllerEdoe() {
 						
 		indiceId = 0;
+		controleArquivos = new ControllerDao();
 		
 		usuarios = new LinkedHashMap<>();		
 		descritores = new HashSet<>();
@@ -64,20 +62,34 @@ public class ControllerEdoe {
 		
 	}
 	
-	public void iniciaSistema() throws Exception {
+	/**
+	 * Metodo que inicia o sistema, iniciando o processo de leitura de todos os dados que esteja armazenados nos arquivos.
+	 * 
+	 * @throws FileReadErrorException Excecao gerada caso haja algum problema na leitura de algum dos arquivos.
+	 * 
+	 */
+	public void iniciaSistema() throws FileReadErrorException {
 		
-		lerUsuarios(UsuariosDAO.lerUsuarios());
-		lerDescritores(DescritoresDAO.lerDescritores());
-		lerItens(UsuariosQuePossuemItensDAO.lerUsuarios(),ItensDAO.lerItens());
-		lerDoacoes(DoacoesDAO.lerDoacoes());
+		lerUsuarios(controleArquivos.lerUsuarios());
+		lerDescritores(controleArquivos.lerDescritores());
+		lerItens(controleArquivos.lerUsuariosQuePossuemItens(),controleArquivos.lerItens());
+		lerDoacoes(controleArquivos.lerDoacoes());
 	}
 	
+	/**
+	 * Metodo que finaliza o sistema, controlando o processo de escrita dos dados em respectivos arquivos.
+	 * 
+	 * @throws FileReadErrorException Excecao gerada caso haja algum problema na escrita em algum dos arquivos.
+	 * 
+	 */
 	public void finalizaSistema() throws Exception {
 		
-		escreverUsuarios();
-		escreverDescritores();
-		escreverItens();
-		escreverDoacoes();
+		controleArquivos.escreverUsuarios(usuarios.values());
+		controleArquivos.escreverDescritores(this.descritores);
+		controleArquivos.escreverUsuariosQuePossuemItens(itensDoUsuario.keySet());
+		controleArquivos.escreverItens(escreverItens());
+		controleArquivos.escreverDoacoes(registroDoacoes);
+		
 	}
 	
 	private void lerDescritores(ArrayList<String> descritores) {
@@ -121,22 +133,9 @@ public class ControllerEdoe {
 			registroDoacoes.add(doacao);
 		
 	}
-	
-	private void escreverDescritores() throws Exception {
-		
-		DescritoresDAO.escreverDescritores(this.descritores);
-		
-	}
-	
-	private void escreverUsuarios() throws Exception{
-		
-		UsuariosDAO.escreverUsuarios(usuarios.values());
-	}
-	
-	private void escreverItens() throws Exception{
-		
-		UsuariosQuePossuemItensDAO.escreverUsuarios(itensDoUsuario.keySet());
-		
+
+	private ArrayList<Item> escreverItens() throws Exception{
+				
 		ArrayList<Item> itens = new ArrayList<>();
 		
 		for(String usuario : itensDoUsuario.keySet()) {
@@ -146,16 +145,11 @@ public class ControllerEdoe {
 			itens.add(null);
 		}
 		
-		ItensDAO.escreverItens(itens);
+		return itens;
 	}
 	
-	private void escreverDoacoes() throws Exception {
-		
-		DoacoesDAO.escreverDoacoes(registroDoacoes);
-	}
-
 	/**
-	 * Metodo responsavel pelo cadastro de Usuarios do tipo {@link UsuarioDoador} no sistema, ele recebe todos os parametros 
+	 * Metodo responsavel pelo cadastro de Usuarios do tipo {@link Usuario} Doador no sistema, ele recebe todos os parametros 
 	 * necessarios para a criacao dos mesmos. O processo comeca verificando a validade dos dados recebidos, seguido pela verificao 
 	 * da existencia de tal usuario no sistema e por fim armazena o mesmo na colecao.
 	 * 
@@ -168,10 +162,11 @@ public class ControllerEdoe {
 	 * @return Retorna a identificao do Usuario recem cadastrado.
 
 	 * @throws InvalidUserException Excecao gerada caso o usuario ja se encontre cadastrado no sistema.
-	 * @throws InvalidArgumentException Essa excecao eh gerada caso seja passada uma classe de usuario que nao conste no sistema.
+	 * @throws IllegalArgumentException Essa excecao eh gerada caso seja passada uma classe de usuario que nao conste no sistema.
 	 * 
 	 */
 	public String adicionarDoador(String id, String nome, String email, String celular, String classe) throws Exception {
+		
 		checarNullVazio(id, "id", "do usuario");
 		
 		if(usuarios.containsKey(id)) {
@@ -205,7 +200,7 @@ public class ControllerEdoe {
 	}
 
 	/**
-	 * Metodo que busca pela identificacao se determinado Usuario esta cadastrado no sistema. O metodo verifica se o numero da 
+	 * Metodo que busca pela identificacao se determinado {@link Usuario} esta cadastrado no sistema. O metodo verifica se o numero da 
 	 * identificao eh valido antes de realizar a busca em si.
 	 * 
 	 * @param id identificacao do usuario
@@ -271,18 +266,17 @@ public class ControllerEdoe {
 	 * 
 	 * @param caminho caminho do arquivo a ser lido.
 	 * 
-	 * @throws IOException Excecao gerada caso haja algum problema na leitura do arquivo.
+	 * @throws FileReadErrorException Excecao gerada caso haja algum problema na leitura do arquivo.
 	 * 
 	 */
-	public void lerReceptores(String caminho) throws Exception {
+	public void lerReceptores(String caminho) throws FileReadErrorException {
 		
 		adicionarReceptores(ReceptoresDAO.lerReceptores(caminho));
 	
 	}
-
 	
 	/**
-	 * Metodo que atualiza os dados de um usuario do sistema. Caso um dos parametros seja nulo
+	 * Metodo que atualiza os dados de um {@link Usuario} do sistema. Caso um dos parametros seja nulo
 	 * ou vazio, o dado correspondente nao eh editado. O metodo verifica se o numero da 
 	 * identificacao eh valido antes de realizar a remocao.
 	 * 
@@ -340,10 +334,10 @@ public class ControllerEdoe {
 	 * 
 	 * @param caminho caminho do arquivo que contem os dados atualizados.
 	 * 
-	 * @throws IOException Excecao gerada caso haja algum problema na leitura do arquivo.
+	 * @throws FileReadErrorException Excecao gerada caso haja algum problema na leitura do arquivo.
 	 * 
 	 */
-	public void atualizarReceptores(String caminho) throws Exception {
+	public void atualizarReceptores(String caminho) throws FileReadErrorException {
 		
 		ArrayList<String> receptoresParaAtualizar = ReceptoresDAO.lerReceptores(caminho);
 		
@@ -396,11 +390,14 @@ public class ControllerEdoe {
 	 * 
 	 * @throws InvalidArgumentException Excecao gerada caso algum dos dados informados sejam nulos ou invalidos.
 	 * @throws InvalidUserException Essa excecao eh gerada caso o usuario que disponibilizou o item nao seja encontrado.
+	 * @throws IllegalArgumentException Essa excecao eh gerada caso a quantidade informada seja invalida.
 	 * 
 	 */
 	public String adicionaItem(String idDoador, String descricaoItem, int quantidade, String tags) throws Exception {
+		
 		checarNullVazio(idDoador, "id", "do usuario");
 		checarNullVazio(descricaoItem, "descricao", "");
+		
 		if(quantidade <= 0)
 			throw new IllegalArgumentException("Entrada invalida: quantidade deve ser maior que zero.");
 		
@@ -460,7 +457,7 @@ public class ControllerEdoe {
 				}
 			}
 		}
-		throw new NullPointerException("Item nao encontrado: " + idItem + ".");
+		throw new InvalidItemException(idItem);
 	}
 	
 	/**
@@ -475,8 +472,11 @@ public class ControllerEdoe {
 	 * 
 	 * @return representacao textual do item atualizado
 	 * 
-	 * @throws InvalidArgumentException excecao em caso do id (usuario ou item) ser nulo ou vazio
-	 * @throws InvalidUserException excecao em caso do id (usuario ou item) nao for cadastrado no sistema
+	 * @throws InvalidArgumentException Excecao em caso do id (usuario ou item) ser nulo ou vazio.
+	 * @throws InvalidUserException Excecao em caso do id (usuario ou item) nao for cadastrado no sistema.
+	 * @throws NegativeIdException Excecao gerada caso o id informado seja negativo.
+	 * @throws InvalidItemException Excecao gerada cado o usuario nao possua itens.
+	 * 
 	 */
 	public String atualizaItem(String id, String idDoador, int quantidade, String tags) throws Exception {
 		
@@ -505,7 +505,7 @@ public class ControllerEdoe {
 			return item.toString();
 		}
 		
-		throw new NullPointerException("O usuario não tem itens cadastrados");
+		throw new InvalidItemException();
 	}
 	
 	private Item obterItem(String id, String idDoador) {
@@ -543,6 +543,8 @@ public class ControllerEdoe {
 	 * 
 	 * @throws InvalidArgumentException Excecao gerada caso algum dos dados informados sejam nulos ou invalidos.
 	 * @throws InvalidUserException Essa excecao eh gerada caso o usuario que disponibilizou o item nao seja encontrado.
+	 * @throws InvalidItemException Essa excecao eh gerada caso um item nao seja encontrado, ou um usuario nao possua nenhum 
+	 * item cadastrado.
 	 * 
 	 */
 	public void removeItem(String id, String idDoador) throws Exception {
@@ -555,7 +557,7 @@ public class ControllerEdoe {
 		if(usuarios.containsKey(idDoador) ) {
 			
 			if(!itensDoUsuario.containsKey(idDoador))
-				throw new NullPointerException("O Usuario nao possui itens cadastrados.");
+				throw new InvalidItemException();
 			
 			for(Item item : itensDoUsuario.get(idDoador)) {
 				
@@ -566,7 +568,7 @@ public class ControllerEdoe {
 				}
 			}
 			
-			throw new NullPointerException("Item nao encontrado: " + id + ".");
+			throw new InvalidItemException(id);
 
 		}
 		
@@ -579,10 +581,12 @@ public class ControllerEdoe {
 	 * associados ou nao.
 	 * 
 	 * @return Retorna uma representacao com todos os descritores do sistema, ordenados alfabeticamente.
-	 * @throws InvalidArgumentException 
+	 * 
+	 * @throws NullPointerException Excecao gerada caso nao haja descritores cadastrados no sistema.
+	 * @throws InvalidArgumentException Excecao gerada caso algum dos descritores buscado nao esteja com algum problema.
 	 * 
 	 */
-	public String listaDescritorDeItens() throws InvalidArgumentException {
+	public String listaDescritorDeItens() throws Exception {
 		
 		if(descritores.isEmpty())
 			throw new NullPointerException("Erro: Nao ha Itens nem Descritores cadastrados no sistema.");
@@ -598,7 +602,7 @@ public class ControllerEdoe {
 		return listarTodosOsDescritores(descritoresOrdenados);
 	}
 
-	private int capturarQuantidade(String descritor) {
+	private int capturarQuantidade(String descritor) throws InvalidItemException {
 		
 		int quantidade = 0;
 		for(Item item : obterTodosOsItens()) {
@@ -609,7 +613,8 @@ public class ControllerEdoe {
 		
 		return quantidade;
 	}
-	private String listarTodosOsDescritores(List<String> descritoresOrdenados) throws InvalidArgumentException {
+	
+	private String listarTodosOsDescritores(List<String> descritoresOrdenados) throws Exception {
 		
 		String retorno = "";
 		
@@ -638,11 +643,7 @@ public class ControllerEdoe {
 		return retorno;
 	}
 
-	/**
-	 * @param descritoresOrdenados
-	 * @throws InvalidArgumentException 
-	 */
-	private void verificarItens(List<String> descritoresOrdenados) throws InvalidArgumentException {
+	private void verificarItens(List<String> descritoresOrdenados) throws Exception {
 		
 		LOOP_EXTERNO : for(int i = 0; i < descritoresOrdenados.size(); i++) {
 			
@@ -682,10 +683,10 @@ public class ControllerEdoe {
 	 * 
 	 * @return Retorna uma representacao de todos os itens de determinados usuarios.
 	 * 
-	 * @throws NullPointerException Essa excecao eh gerada caso nao haja itens para serem listados.
+	 * @throws InvalidItemException Essa excecao eh gerada caso nao haja itens para serem listados.
 	 * 
 	 */
-	public String listaItens(String classe) {
+	public String listaItens(String classe) throws InvalidItemException {
 		
 		Set<String> chaves = itensDoUsuario.keySet();
 		List<Item> itens = new ArrayList<>();
@@ -700,13 +701,13 @@ public class ControllerEdoe {
 		}
 		
 		if(itens.size() == 0)
-			throw new NullPointerException("Erro: Nao ha itens cadastrados");
+			throw new InvalidItemException();
 		
 		Collections.sort(itens,classe.equals("doador") ? new ComparadorItemPorQuantidade() : new ComparadorItemPorId());
 		return gerarListagem(itens);
 	}
 	
-	private String gerarListagem(List<Item> itens) {
+	private String gerarListagem(List<Item> itens) throws InvalidItemException {
 		
 		Usuario user0 = usuarios.get(buscarUsuario(itens.get(0).getId()));
 		String retorno = itens.get(0).toString() + String.format(", %s: %s/%s",user0.getStatus(),user0.getNome(),user0.getIdentificacao());
@@ -720,7 +721,7 @@ public class ControllerEdoe {
 		return retorno;
 	}
 	
-	private String buscarUsuario(String idDoItem) {
+	private String buscarUsuario(String idDoItem) throws InvalidItemException {
 		
 		Set<String> chaves = usuarios.keySet();
 		
@@ -731,7 +732,7 @@ public class ControllerEdoe {
 						return chave;
 				}
 		
-		throw new NullPointerException("Item nao encontrado: " + idDoItem + ".");
+		throw new InvalidItemException(idDoItem);
 	}
 	
 	/**
@@ -742,10 +743,11 @@ public class ControllerEdoe {
 	 * 
 	 * @return representacao textual dos itens achados
 	 * 
-	 * @throws InvalidArgumentException excecao caso o parametro seja nulo ou vazio
+	 * @throws InvalidArgumentException Excecao gerada caso o parametro seja nulo ou vazio
 	 * 
 	 */
 	public String pesquisaItemPorDescricao(String desc) throws InvalidArgumentException {
+		
 		checarNullVazio(desc, "texto da pesquisa", "");
 		
 		ArrayList<Item> itensListados = new ArrayList<>();
@@ -778,14 +780,22 @@ public class ControllerEdoe {
 
 	/**
 	 * Encontra matches (casamentos de itens) entre itens a serem doados e itens necessarios.
-	 * A partir do id do receptor e do item que o mesmo precisa, encontra possiveis doadores que possam ofertar esse item.
+	 * A partir do id do receptor e do item que o mesmo precisa, encontra possiveis doadores 
+	 * que possam ofertar esse item.
 	 * 
 	 * @param idReceptor identificador do receptor dos itens
 	 * @param idItem id do item necessario ao receptor
+	 * 
 	 * @return retorna os itens que combinam
-	 * @throws Exception excecao em caso de alguns dos parametros ser nulo ou vazio, ou nao estar cadastrado no sistema.
+	 * 
+	 * @throws InvalidArgumentException excecao em caso de alguns dos parametros ser nulo ou vazio.
+	 * @throws InvalidUserException Excecao gerada caso o usuario nao seja encontrado no sistema.
+	 * @throws NegativeIdException Excecao gerada caso o id informado seja negativo.
+	 * @throws NullPointerException Excecao gerada caso o usuario informado seja doador, e nao receptor.
+	 * 
 	 */
 	public String match(String idReceptor, String idItem) throws Exception {
+		
 		checarNullVazio(idReceptor, "id", "do usuario");
 		if(Integer.parseInt(idItem) < 0)
 			throw new NegativeIdException();
@@ -806,9 +816,11 @@ public class ControllerEdoe {
 	 * A partir de um identificador de item passado como parametro, retorna os matchs desse item.
 	 * 
 	 * @param idItem identificador do item a ser procurado pelos matches.
-	 * @return retorna os itens que casam com o id passado como parametro
+	 * 
+	 * @return retorna os itens que casam com o id passado como parametro.
+	 * 
 	 */
-	private String procurarPorMatchs(String idItem) {
+	private String procurarPorMatchs(String idItem) throws InvalidItemException {
 		
 		Item retornoBusca = obterItem(idItem,buscarUsuario(idItem));
 		ArrayList<Match> possiveisMatchs = new ArrayList<>();
@@ -833,12 +845,21 @@ public class ControllerEdoe {
 	}
 	
 	/**
+	 * Metodo que realiza uma doacao no sistema. Esse metodo recebe todos os parametros necessarios, dados dos itens para 
+	 * serem doados e recebidos, verifica se todos os parametros sao validos e 
+	 * pertencem ao sistema, e por fim realiza a doacao.
 	 * 
-	 * @param idItemNec
-	 * @param idItemDoado
-	 * @param data
-	 * @return
-	 * @throws Exception
+	 * @param idItemNec id do item necessario para a doacao.
+	 * @param idItemDoado id do item a ser doado
+	 * @param data data da doacao
+	 * 
+	 * @return Retorna uma representacao textual da confirmacao, concluindo com exito o processo de doacao.
+	 * 
+	 * @throws NegativeIdException Excecao gerada cado um dos ids informado seja negativo.
+	 * @throws InvalidArgumentException Excecao gerada caso algum dos paramteros informados seja nulo ou invalido.
+	 * @throws IllegalArgumentException Excecao gerada caso os descritores dos itens sejam diferentes, impossibilitando 
+	 * a doacao.
+	 * 
 	 */
 	public String realizaDoacao(String idItemNec, String idItemDoado, String data) throws Exception {
 		
@@ -887,7 +908,11 @@ public class ControllerEdoe {
 	
 	/**
 	 * Metodo que retorna todas as doacoes realizadas.
+	 * 
 	 * @return Uma string com informacoes de todas as doacoes, organizadas pela data de doacao.
+	 * 
+	 * @throws NullPointerException Excecao gerada caso nao ha doadoes registradas no sistema.
+	 * 
 	 */
 	public String listaDoacoes() {
 		

@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"br.com.lp2.edoe.comparators"},{"l":"br.com.lp2.edoe.controller"},{"l":"br.com.lp2.edoe.dao"},{"l":"br.com.lp2.edoe.easyAccept"},{"l":"br.com.lp2.edoe.exceptions"},{"l":"br.com.lp2.edoe.facade"},{"l":"br.com.lp2.edoe.model"}]
+packageSearchIndex = [{"l":"br.com.lp2.edoe.comparators"},{"l":"br.com.lp2.edoe.controller"},{"l":"br.com.lp2.edoe.dao"},{"l":"br.com.lp2.edoe.dao.files"},{"l":"br.com.lp2.edoe.easyAccept"},{"l":"br.com.lp2.edoe.exceptions"},{"l":"br.com.lp2.edoe.facade"},{"l":"br.com.lp2.edoe.model"}]

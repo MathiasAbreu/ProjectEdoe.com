@@ -22,7 +22,7 @@ public class ComparadorItemPorId implements Comparator<Item> {
 	 * @param item01 primeiro item a ser comparado
 	 * @param item02 segundo item a ser comparado
 	 * 
-	 * @return Retorna um inteiro que sera utilizado como criterio de ordenacao.
+	 * @return Retorna um inteiro que sera utilizado como parametro de ordenacao.
 	 * 
 	 */
 	@Override

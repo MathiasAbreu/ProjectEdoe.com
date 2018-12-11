@@ -16,7 +16,8 @@ import br.com.lp2.edoe.exceptions.FileReadErrorException;
 import br.com.lp2.edoe.exceptions.FileWriteErrorException;
 
 /**
- *
+ * Classe responsavel pelas manipulacoes de leitura/escrita dos usuarios que possuem itens no sistema.
+ * 
  * @author Caio Fernandes Moreira - caio.moreira@ccc.ufcg.edu.br
  * @author Klaywert Danillo Ferreira De Souza - klaywert.souza@ccc.ufcg.edu.br
  * @author Mathias Abreu Trajano - mathias.trajano@ccc.ufcg.edu.br
@@ -27,6 +28,22 @@ public class UsuariosQuePossuemItensDAO {
 	private static ObjectOutputStream outputUsuario;
 	private static ObjectInputStream inputUsuario;
 	
+	/**
+	 * Construtor default da classe.
+	 * 
+	 */
+	public UsuariosQuePossuemItensDAO() {
+		
+	}
+	
+	/**
+	 * Metodo responsavel por ler todos os usuarios que possuem itens que estejam armazenados dentro do arquivo.
+	 * 
+	 * @return Retorna uma colecao com todos os usuarios que possuem itens encontrados no arquivo.
+	 * 
+	 * @throws FileReadErrorException Excecao gerada caso haja algum erro na leitura do arquivo.
+	 * 
+	 */
 	public static ArrayList<String> lerUsuarios() throws FileReadErrorException {
 		
 		ArrayList<String> usuarios = new ArrayList<>();
@@ -52,6 +69,15 @@ public class UsuariosQuePossuemItensDAO {
 		}
 	}
 	
+	/**
+	 * Metodo responsavel pela escrita de todos os usuarios que possuem itens no sistema no arquivo.
+	 * 
+	 * @param usuarios Recebe uma colecao com todos os usuarios que possuem itens do sistema.
+	 * 
+	 * @throws FileWriteErrorException Excecao gerada caso haja algum problema no momento na escrita dos 
+	 * usuarios que possuem itens no arquivo.
+	 * 
+	 */
 	public static void escreverUsuarios(Collection<String> usuarios) throws FileWriteErrorException {
 		
 		try {

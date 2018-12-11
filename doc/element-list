@@ -1,6 +1,7 @@
 br.com.lp2.edoe.comparators
 br.com.lp2.edoe.controller
 br.com.lp2.edoe.dao
+br.com.lp2.edoe.dao.files
 br.com.lp2.edoe.easyAccept
 br.com.lp2.edoe.exceptions
 br.com.lp2.edoe.facade

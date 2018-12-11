@@ -1,9 +1,7 @@
 package br.com.lp2.edoe.facade;
 
-import java.io.IOException;
 
 import br.com.lp2.edoe.controller.ControllerEdoe;
-import br.com.lp2.edoe.exceptions.InvalidArgumentException;
 import easyaccept.EasyAccept;
 
 /**
@@ -96,7 +94,7 @@ public class EdoeFacade {
 		return controle.listaDescritorDeItens();
 	}
 	
-	public String listaItensParaDoacao() {
+	public String listaItensParaDoacao() throws Exception {
 		
 		return controle.listaItens("doador");
 		
@@ -113,7 +111,7 @@ public class EdoeFacade {
 		return controle.adicionaItem(idReceptor, descricaoItem, quantidade, tags);
 	}
 	
-	public String listaItensNecessarios() {
+	public String listaItensNecessarios() throws Exception {
 		
 		return controle.listaItens("Receptor");
 	}

@@ -43,6 +43,7 @@ public class Item implements Serializable {
 	 * Metodo que retorna o Array de tags.
 	 * 
 	 * @return Retorna o Array de tags do item.
+	 * 
 	 */
 	public String[] getTags() {
 		
@@ -92,13 +93,6 @@ public class Item implements Serializable {
 	 */
 	public String getId() {
 		return id;
-	}
-
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(String id) {
-		this.id = id;
 	}
 
 	/**

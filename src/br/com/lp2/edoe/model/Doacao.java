@@ -3,7 +3,9 @@ package br.com.lp2.edoe.model;
 import java.io.Serializable;
 
 /**
- *
+ * Classe que representa uma doacao no sistema, ela contem todos os dados basicos de uma doacao, assim como metodos que 
+ * controlam e manipulam tais dados. 
+ * 
  * @author Caio Fernandes Moreira - caio.moreira@ccc.ufcg.edu.br
  * @author Klaywert Danillo Ferreira De Souza - klaywert.souza@ccc.ufcg.edu.br
  * @author Mathias Abreu Trajano - mathias.trajano@ccc.ufcg.edu.br
@@ -25,11 +27,14 @@ public class Doacao implements Serializable {
 	private int quantidade;
 	
 	/**
-	 * @param idDoDoador
-	 * @param idDoReceptor
-	 * @param data
-	 * @param item
-	 * @param quantidade
+	 * Construtor que inicializa uma nova doacao, recebe todos os dados necessarios de uma doacao.
+	 * 
+	 * @param idDoDoador id do doador do item
+	 * @param idDoReceptor id do receptor do item
+	 * @param data data da doacao
+	 * @param item id do item que foi doado
+	 * @param quantidade quantidade doada
+	 * 
 	 */
 	public Doacao(String nomeDoador,String idDoDoador,String nomeReceptor,String idDoReceptor, String data, String item, int quantidade) {
 
@@ -46,77 +51,60 @@ public class Doacao implements Serializable {
 	}
 	
 	/**
-	 * Método que retorna o idDoDoador
+	 * Método que retorna o Id do Doador.
 	 *
-	 * @return the idDoDoador
+	 * @return O id do doador.
+	 * 
 	 */
 	public String getIdDoDoador() {
 		return idDoDoador;
 	}
+	
 	/**
-	 * Método que altera o idDoDoador
+	 * Método que retorna o Id do Receptor.
 	 *
-	 * @param idDoDoador the idDoDoador to set
-	 */
-	public void setIdDoDoador(String idDoDoador) {
-		this.idDoDoador = idDoDoador;
-	}
-	/**
-	 * Método que retorna o idDoReceptor
-	 *
-	 * @return the idDoReceptor
+	 * @return O id do receptor.
+	 * 
 	 */
 	public String getIdDoReceptor() {
 		return idDoReceptor;
 	}
+	
 	/**
-	 * Método que altera o idDoReceptor
+	 * Método que retorna a data da doacao.
 	 *
-	 * @param idDoReceptor the idDoReceptor to set
-	 */
-	public void setIdDoReceptor(String idDoReceptor) {
-		this.idDoReceptor = idDoReceptor;
-	}
-	/**
-	 * Método que retorna o data
-	 *
-	 * @return the data
+	 * @return A data da doacao.
+	 * 
 	 */
 	public String getData() {
 		return data;
 	}
+	
 	/**
-	 * Método que altera o data
+	 * Método que retorna o id do item doado.
 	 *
-	 * @param data the data to set
-	 */
-	public void setData(String data) {
-		this.data = data;
-	}
-	/**
-	 * Método que retorna o item
-	 *
-	 * @return the item
+	 * @return O id do item doado.
+	 * 
 	 */
 	public String getItem() {
 		return item;
 	}
+	
 	/**
-	 * Método que altera o item
+	 * Método que retorna a quantidade doada.
 	 *
-	 * @param item the item to set
+	 * @return A quantidade doada.
+	 * 
 	 */
-	public void setItem(String item) {
-		this.item = item;
+	public int getQuantidade() {
+		return quantidade;
 	}
-	/**
-	 * Método que retorna o quantidade
-	 *
-	 * @return the quantidade
-	 */
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
+	/**
+	 * Metodo que retorna uma representacao textual com todos os dados da doacao.
+	 * 
+	 * @return Retorna uma representacao textual da doacao.
+	 * 
 	 */
 	@Override
 	public String toString() {
