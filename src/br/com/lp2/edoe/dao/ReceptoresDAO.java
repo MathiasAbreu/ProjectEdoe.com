@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import br.com.lp2.edoe.exceptions.FileReadErrorException;
-import br.com.lp2.edoe.exceptions.FileWriteErrorException;
 
 /**
  * Classe responsavel por acessar e realizar a leitura dos arquivos que contem os dados dos Usuarios Receptores a serem 

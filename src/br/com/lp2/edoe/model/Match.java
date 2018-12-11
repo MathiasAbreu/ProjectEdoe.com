@@ -32,7 +32,7 @@ public class Match {
 	}
 
 	/**
-	 * Método que retorna o Item De Referencia do match.
+	 * Metodo que retorna o Item De Referencia do match.
 	 *
 	 * @return O itme de referencia do match.
 	 * 
@@ -42,7 +42,7 @@ public class Match {
 	}
 
 	/**
-	 * Método que retorna o item possivel de doacao do match.
+	 * Metodo que retorna o item possivel de doacao do match.
 	 *
 	 * @return O item que pode ser doado.
 	 * 
@@ -52,7 +52,7 @@ public class Match {
 	}
 
 	/**
-	 * Método que retorna o coeficiente de combinacacao entre os dois itens.
+	 * Metodo que retorna o coeficiente de combinacacao entre os dois itens.
 	 * 
 	 *
 	 * @return O coeficiente de conbinacao dos dois itens.

@@ -135,7 +135,7 @@ class ControllerUsuarioTest {
 	}
 
 	@Test
-	@DisplayName("Teste que tenta adicionar um novo doador que já se encontra cadastrado no sistema")
+	@DisplayName("Teste que tenta adicionar um novo doador que ja se encontra cadastrado no sistema")
 	void adicionaDoadorExistenteTest() throws Exception {
 		controle.adicionarDoador("70513372911", "Paulo", "paulo.com", "(83) 3344-5566", "PESSOA_FISICA");
 		InvalidUserException ex = assertThrows(InvalidUserException.class, () -> {
@@ -504,7 +504,7 @@ class ControllerUsuarioTest {
 			controle.atualizaItem("1234567","12345678901",4,"camisa,branca");
 		});
 		
-		assertEquals("O usuario não tem itens cadastrados",npe.getMessage());
+		assertEquals("O usuario nao tem itens cadastrados",npe.getMessage());
 	}
 	
 	@Test

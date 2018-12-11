@@ -25,7 +25,7 @@ import br.com.lp2.edoe.model.Match;
 import br.com.lp2.edoe.model.Usuario;
 
 /**
- * Classe responsavel pelo controle e manipulaçao de usuarios, descritores, itens, matchs e doacoes do sistema.
+ * Classe responsavel pelo controle e manipulacao de usuarios, descritores, itens, matchs e doacoes do sistema.
  *
  * @author Caio Fernandes Moreira - caio.moreira@ccc.ufcg.edu.br
  * @author Klaywert Danillo Ferreira De Souza - klaywert.souza@ccc.ufcg.edu.br
@@ -917,7 +917,7 @@ public class ControllerEdoe {
 	public String listaDoacoes() {
 		
 		if(registroDoacoes.isEmpty())
-			throw new NullPointerException("Não ha doacoes registradas!");
+			throw new NullPointerException("Nao ha doacoes registradas!");
 		
 		Collections.sort(registroDoacoes, new ComparadorDoacao());
 		

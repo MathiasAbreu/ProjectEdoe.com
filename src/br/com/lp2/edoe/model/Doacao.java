@@ -51,7 +51,7 @@ public class Doacao implements Serializable {
 	}
 	
 	/**
-	 * Método que retorna o Id do Doador.
+	 * Metodo que retorna o Id do Doador.
 	 *
 	 * @return O id do doador.
 	 * 
@@ -61,7 +61,7 @@ public class Doacao implements Serializable {
 	}
 	
 	/**
-	 * Método que retorna o Id do Receptor.
+	 * Metodo que retorna o Id do Receptor.
 	 *
 	 * @return O id do receptor.
 	 * 
@@ -71,7 +71,7 @@ public class Doacao implements Serializable {
 	}
 	
 	/**
-	 * Método que retorna a data da doacao.
+	 * Metodo que retorna a data da doacao.
 	 *
 	 * @return A data da doacao.
 	 * 
@@ -81,7 +81,7 @@ public class Doacao implements Serializable {
 	}
 	
 	/**
-	 * Método que retorna o id do item doado.
+	 * Metodo que retorna o id do item doado.
 	 *
 	 * @return O id do item doado.
 	 * 
@@ -91,7 +91,7 @@ public class Doacao implements Serializable {
 	}
 	
 	/**
-	 * Método que retorna a quantidade doada.
+	 * Metodo que retorna a quantidade doada.
 	 *
 	 * @return A quantidade doada.
 	 * 

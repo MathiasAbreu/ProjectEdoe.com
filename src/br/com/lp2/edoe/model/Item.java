@@ -96,7 +96,7 @@ public class Item implements Serializable {
 	}
 
 	/**
-	 * Metodo responsavel por gerar um numero de identificao que pode ser usado internamente para armazenar o item em 
+	 * Metodo responsavel por gerar um numero de identificacao que pode ser usado internamente para armazenar o item em 
 	 * alguma colecao de armazenamento especifica.
 	 * 
 	 * @return Retorna o numero usado para armazenar em determinado indice.

@@ -139,7 +139,7 @@ public class Usuario implements Serializable {
 	}
 
 	/**
-	 * Metodo responsavel por gerar um numero de identificao que pode ser usado internamente para armazenar o usuario em 
+	 * Metodo responsavel por gerar um numero de identificacao que pode ser usado internamente para armazenar o usuario em 
 	 * alguma colecao de armazenamento especifica.
 	 * 
 	 * @return Retorna o numero usado para armazenar em determinado indice.
@@ -154,7 +154,7 @@ public class Usuario implements Serializable {
 	}
 
 	/**
-	 * Metodo responsavel por verificar se dois usuarios sao iguais baseado nos seus documentos de identificao.
+	 * Metodo responsavel por verificar se dois usuarios sao iguais baseado nos seus documentos de identificacao.
 	 * 
 	 * @param obj Recebe como parametro qualquer objeto.
 	 * 

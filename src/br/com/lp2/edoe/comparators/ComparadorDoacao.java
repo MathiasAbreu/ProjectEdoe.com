@@ -7,7 +7,7 @@ import br.com.lp2.edoe.model.Doacao;
 /**
  *
  * Classe utilizada para ordenar doacoes, esta classe implementa uma inteface que permite 
- * que duas doacoes sejam comparadas gerando um numero utilizado para ordenar uma coleção de doacoes.
+ * que duas doacoes sejam comparadas gerando um numero utilizado para ordenar uma colecao de doacoes.
  * 
  * @author Caio Fernandes Moreira - caio.moreira@ccc.ufcg.edu.br
  * @author Klaywert Danillo Ferreira De Souza - klaywert.souza@ccc.ufcg.edu.br

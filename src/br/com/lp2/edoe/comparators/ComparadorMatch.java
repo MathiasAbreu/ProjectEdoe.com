@@ -6,7 +6,7 @@ import br.com.lp2.edoe.model.Match;
 
 /**
  * Classe utilizada para ordenar matchs de acordo com seu coeficiente de combinacao , esta classe implementa uma inteface que permite 
- * que dois matchs sejam comparados gerando um numero utilizado para ordenar uma coleção de matchs.
+ * que dois matchs sejam comparados gerando um numero utilizado para ordenar uma colecao de matchs.
  *
  * @author Caio Fernandes Moreira - caio.moreira@ccc.ufcg.edu.br
  * @author Klaywert Danillo Ferreira De Souza - klaywert.souza@ccc.ufcg.edu.br
