@@ -51,6 +51,24 @@ public class Doacao implements Serializable {
 	}
 	
 	/**
+	 * Método que retorna o nome do Doador.
+	 *
+	 * @return O nome do Doador.
+	 */
+	public String getNomeDoador() {
+		return nomeDoador;
+	}
+
+	/**
+	 * Método que retorna o nome do Receptor.
+	 *
+	 * @return O nome do Receptor.
+	 */
+	public String getNomeReceptor() {
+		return nomeReceptor;
+	}
+
+	/**
 	 * Metodo que retorna o Id do Doador.
 	 *
 	 * @return O id do doador.

@@ -14,7 +14,7 @@ import br.com.lp2.edoe.model.Match;
  * 
  */
 public class ComparadorMatch implements Comparator<Match> {
-
+ 
 	/**
 	 * Metodo que compara dois matchs de acordo com seus coneficientes de combinacao, ele recebe os dois matchs como parametro, 
 	 * e retorna um inteiro que seja utilizado no criterio de ordenacao.

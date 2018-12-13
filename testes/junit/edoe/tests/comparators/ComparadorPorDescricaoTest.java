@@ -16,7 +16,7 @@ class ComparadorPorDescricaoTest {
 	private Item item01;
 	private Item item02;
 	
-	private Comparator<Item> comparador;
+	private Comparator<Item> comparador; 
 	
 	@BeforeEach
 	void setUp() throws Exception {
