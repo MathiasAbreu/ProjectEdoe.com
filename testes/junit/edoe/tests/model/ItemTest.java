@@ -63,4 +63,11 @@ class ItemTest {
 		assertEquals(false,item03.equals(item04));
 		
 	}
+	
+	@Test
+	@DisplayName("Testando se o hascode de item funciona")
+	void testHascode() {
+		
+		item01.hashCode();
+	}
 }

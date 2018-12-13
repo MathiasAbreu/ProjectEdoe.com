@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import br.com.lp2.edoe.model.Item;
 import br.com.lp2.edoe.model.Usuario;
 
 class UsuarioTest {
@@ -60,8 +61,9 @@ class UsuarioTest {
 		usuario02 = new Usuario("Casa das primas", "primas@hotmail.com", "(83) 3396-1173", "associacao", "01234567000189", "receptor");
 		usuario03 = new Usuario("Liu Kang", "liu@hotmail.com", "1234-5678", "pessoa fisica", "66677766677766", "receptor");
 
-		assertEquals(usuario01, usuario02);
+		assertEquals(true, usuario01.equals(usuario02));
 		assertEquals(usuario01.equals(usuario03), false);
+		assertEquals(false,usuario03.equals(new Item("cadeira", "cadeira,branca".split(","), "23456789", 5)));
 	}
 	
 	@Test
@@ -73,6 +75,13 @@ class UsuarioTest {
 		assertEquals(usuario01.toString(),"Casa da mae joana/01234567000189, novo@hotmail.com, (11) 1111-2222, status: receptor");
 		usuario01.setNome("Janna");
 		assertEquals(usuario01.toString(),"Janna/01234567000189, novo@hotmail.com, (11) 1111-2222, status: receptor");
+	}
+	
+	@Test
+	@DisplayName("Testando se hashcode de Usuario funciona")
+	void testHashCode() {
+		
+		usuario01.hashCode();
 	}
 
 }
