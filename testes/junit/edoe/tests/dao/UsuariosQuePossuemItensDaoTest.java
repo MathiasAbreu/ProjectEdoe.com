@@ -51,7 +51,7 @@ private String usuario;
 		assertEquals(true, retorno.contains(usuario));
 		
 		retorno.remove(usuario);
-		UsuariosQuePossuemItensDAO.escreverUsuarios(usuariosQUePossuemDefault);
+		UsuariosQuePossuemItensDAO.escreverUsuarios(retorno);
 	}
 
 }

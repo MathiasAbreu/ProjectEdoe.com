@@ -32,7 +32,7 @@ class DescritoresDaoTest {
 	
 	@Test
 	@DisplayName("Testando a persistencia do arquivo que mantem os descritores, lendo todos os descritores do sistema")
-	void testLeituraUsuarios() throws FileReadErrorException {
+	void testLeituraDescritores() throws FileReadErrorException {
 			
 		ArrayList<String> descritores = DescritoresDAO.lerDescritores();
 		
@@ -41,7 +41,7 @@ class DescritoresDaoTest {
 	
 	@Test
 	@DisplayName("Testando o metodo que escrever os descritores no arquivo")
-	void testEscreverUsuarios() throws FileWriteErrorException,FileReadErrorException {
+	void testEscreverDescritores() throws FileWriteErrorException,FileReadErrorException {
 		
 		ArrayList<String> descritoresDefault = DescritoresDAO.lerDescritores();
 		HashSet<String> descritors = new HashSet<>();

@@ -30,7 +30,7 @@ class ItensDaoTest {
 	
 	@Test
 	@DisplayName("Testando a persistencia do arquivo que mantem os itens, lendo todos os itens do sistema")
-	void testLeituraUsuarios() throws FileReadErrorException {
+	void testLeituraItens() throws FileReadErrorException {
 			
 		ArrayList<Item> itens = ItensDAO.lerItens();
 		
@@ -39,7 +39,7 @@ class ItensDaoTest {
 	
 	@Test
 	@DisplayName("Testando o metodo que escrever os itens no arquivo")
-	void testEscreverUsuarios() throws FileWriteErrorException,FileReadErrorException {
+	void testEscreverItens() throws FileWriteErrorException,FileReadErrorException {
 		
 		ArrayList<Item> itensDefault = ItensDAO.lerItens();
 		itensDefault.add(item);
@@ -47,7 +47,7 @@ class ItensDaoTest {
 		ItensDAO.escreverItens(itensDefault);
 		ArrayList<Item> retorno = ItensDAO.lerItens();
 		
-		ItensDAO.escreverItens(itensDefault);
+		ItensDAO.escreverItens(retorno);
 	}
 
 }

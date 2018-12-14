@@ -32,7 +32,7 @@ class DoacoesDaoTest {
 	
 	@Test
 	@DisplayName("Testando a persistencia do arquivo que mantem as doacoes, lendo todas as doacoes do sistema")
-	void testLeituraUsuarios() throws FileReadErrorException {
+	void testLeituraDoacoes() throws FileReadErrorException {
 			
 		ArrayList<Doacao> descritores = DoacoesDAO.lerDoacoes();
 		
@@ -41,7 +41,7 @@ class DoacoesDaoTest {
 	
 	@Test
 	@DisplayName("Testando o metodo que escrever as doacoes no arquivo")
-	void testEscreverUsuarios() throws FileWriteErrorException,FileReadErrorException {
+	void testEscreverDoacoes() throws FileWriteErrorException,FileReadErrorException {
 		
 		ArrayList<Doacao> doacoesDefault = DoacoesDAO.lerDoacoes();
 		doacoesDefault.add(doacao);
