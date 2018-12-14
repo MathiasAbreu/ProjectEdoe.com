@@ -6,7 +6,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import br.com.lp2.edoe.model.Item;
 import br.com.lp2.edoe.model.Usuario;
 
 class UsuarioTest {
@@ -63,7 +62,6 @@ class UsuarioTest {
 
 		assertEquals(true, usuario01.equals(usuario02));
 		assertEquals(usuario01.equals(usuario03), false);
-		assertEquals(false,usuario03.equals(new Item("cadeira", "cadeira,branca".split(","), "23456789", 5)));
 	}
 	
 	@Test
